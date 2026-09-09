@@ -708,6 +708,18 @@ long column, which is worse than a scrollable table.
   `/decks/week-01/` slide by slide. Fix what is wrong.
 - **Refactor:** consolidate any rule duplicated during Tasks 1–7 into a single
   declaration in `src/styles/course.css`.
+- **Execution note:** verified with `agent-browser` at both viewports across
+  the homepage, `/lectures/`, `/sessions/`, week-01/06/11 lecture+Lab pairs,
+  `/assessments/`, the Assignment 3 rubric table, `/people/`, `/policies/`,
+  and `/decks/week-01/` slide by slide (all 9 slides at 1920×1080; the title
+  and assessment-scheme table slides also at 390×844, the two most likely to
+  overflow). No horizontal scroll anywhere; reduced motion forced via
+  `agent-browser set media reduced-motion` confirmed `transition-duration`
+  and `animation-duration` both collapse to the theme's `0.01ms`. Also spot-
+  checked light mode (homepage, `/lectures/`) since every prior task's
+  screenshots were dark — contrast and treatment hold in both. Reviewed
+  `course.css` for the refactor step: no duplicated rule found to
+  consolidate. No defect required a fix.
 - **Acceptance criteria:**
   - No page scrolls horizontally at 390×844.
   - No text is clipped, overlapped or below ~14px effective size at 390×844.
@@ -722,19 +734,19 @@ long column, which is worse than a scrollable table.
 
 ## 6. Feature-level Definition of Done
 
-- [ ] Every task in §5 complete and its tests passing
-- [ ] `pnpm test` passes (runs `pnpm build` then `vitest run spec`)
-- [ ] `pnpm check` passes (typecheck + the above)
-- [ ] `src/styles/course.css` is the only home for site-wide treatment — no
+- [x] Every task in §5 complete and its tests passing
+- [x] `pnpm test` passes (runs `pnpm build` then `vitest run spec`)
+- [x] `pnpm check` passes (typecheck + the above)
+- [x] `src/styles/course.css` is the only home for site-wide treatment — no
       treatment rule left in a page's scoped `<style>`
-- [ ] The three brand inks are not redeclared anywhere in `src/styles/`
-- [ ] `spec/glossary.test.ts` passes with every occurrence of all six terms
+- [x] The three brand inks are not redeclared anywhere in `src/styles/`
+- [x] `spec/glossary.test.ts` passes with every occurrence of all six terms
       inside a `<code>` element
-- [ ] Manually verified per Task 8's checklist at both `1920 1080` and
+- [x] Manually verified per Task 8's checklist at both `1920 1080` and
       `390 844`, with screenshots
-- [ ] With `prefers-reduced-motion: reduce`, no animation or transition runs
-- [ ] Every requirement in §2 is covered — see §7
-- [ ] No item remains in §8
+- [x] With `prefers-reduced-motion: reduce`, no animation or transition runs
+- [x] Every requirement in §2 is covered — see §7
+- [x] No item remains in §8
 
 ## 7. Requirements coverage check
 
