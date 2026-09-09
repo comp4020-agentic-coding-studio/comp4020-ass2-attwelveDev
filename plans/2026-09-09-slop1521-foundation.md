@@ -509,7 +509,7 @@ in `astro.config.ts` for the API.
     in-character policy above it.
 - **Depends on:** None.
 
-### Task 5: Rewrite the homepage body with the thesis and the learning outcomes
+### Task 5: Rewrite the homepage body with the thesis and the learning outcomes ✅
 
 - **Description:** Replace the starter's three placeholder sections with
   course-specific prose, pin the thesis sentence verbatim, and render the nine

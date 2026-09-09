@@ -68,7 +68,7 @@ export const courseMeta = slopCourseMetaSchema.parse({
     "Recognise when a device is the root cause of a personal-systems fault and intervene manually.",
     "Conduct real-time, unscripted conversation as a practical interpersonal protocol.",
     "Maintain a friendship or working relationship across a full semester with no dropped commitments.",
-    "Initiate and manage a personal relationship's logistics without a written specification.",
+    "Initiate and manage the logistics of a personal relationship without a written specification.",
     "Integrate every subsystem above into a single functioning adult under examination conditions.",
   ],
 }) satisfies CourseMetaInput;
