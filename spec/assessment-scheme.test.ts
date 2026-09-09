@@ -108,3 +108,28 @@ describe("assessment scheme", () => {
     }
   });
 });
+
+describe("weekly reflections", () => {
+  const html = readFileSync(resolve("dist/assessments/weekly-reflections/index.html"), "utf8");
+
+  it("states the reflection arithmetic", () => {
+    for (const token of ["11", "10", "1.5%", "15%"]) {
+      expect(html, `missing "${token}"`).toContain(token);
+    }
+  });
+
+  it("publishes eleven prompts", () => {
+    for (let week = 1; week <= 11; week++) {
+      expect(html, `missing prompt for Week ${week}`).toMatch(new RegExp(`Week ${week}\\b`));
+    }
+  });
+
+  it("sets week 12's prompt without grading it", () => {
+    expect(html).toMatch(/Week 12/);
+    expect(html).toMatch(/ungraded|not graded|not marked/i);
+  });
+
+  it("declares the drop-lowest rule", () => {
+    expect(html).toMatch(/lowest/i);
+  });
+});
