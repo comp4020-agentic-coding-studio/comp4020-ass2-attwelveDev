@@ -223,3 +223,32 @@ describe("assignment 3 adulting", () => {
     expect(html).toMatch(/not been specified|unspecified|confirm/i);
   });
 });
+
+describe("final exam", () => {
+  const html = readFileSync(resolve("dist/assessments/final-exam/index.html"), "utf8");
+
+  it("runs five stations", () => {
+    for (let station = 1; station <= 5; station++) {
+      expect(html, `missing Station ${station}`).toMatch(new RegExp(`Station ${station}\\b`));
+    }
+  });
+
+  it("publishes each station's duration", () => {
+    expect(html).toMatch(/10 minutes/);
+    expect(html).toMatch(/2 hours/);
+  });
+
+  it("warns that the examiner may leave", () => {
+    expect(html).toMatch(/leave/i);
+  });
+
+  it("sits after teaching ends", () => {
+    const finalExam = assessments.find((node) => node.id === "assessments/final-exam");
+    const week12Lecture = api.nodes.find(
+      (node) => node.type === "lectures" && node.meta?.week === 12,
+    );
+    expect(finalExam?.meta?.week).toBe(12);
+    expect(String(finalExam?.meta?.due)).toMatch(/^2027-06-09/);
+    expect(String(week12Lecture?.meta?.date)).toBe("2027-05-25");
+  });
+});

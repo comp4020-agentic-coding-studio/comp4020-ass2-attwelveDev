@@ -25,4 +25,25 @@ spec:
   - the survival station's output is edible
 ---
 
-Placeholder body — filled in by Task 6.
+## The five stations
+
+Each station runs back to back on exam day, in order:
+
+1. **Station 1: Hygiene and Health (10 minutes).** A rapid check of your
+   hygiene and sleep schedules against what you actually ran this
+   semester.
+2. **Station 2: Fashion (10 minutes).** Assemble one outfit for an
+   occasion given to you on the day, from a rack of provided items.
+3. **Station 3: Small Talk (10 minutes).** Hold a conversation with an
+   examiner playing a stranger at a low-stakes social event. The examiner
+   may leave early if the conversation stalls past recovery, and will
+   leave at the ten-minute mark regardless.
+4. **Station 4: Social Debugging (10 minutes).** Diagnose a friend-group
+   or workplace scenario read to you, and propose a root cause and a fix.
+5. **Station 5: Daily Survival (2 hours 10 minutes).** Cook a complete,
+   edible meal from a provided pantry, on a budget stated at the door,
+   within the station's time.
+
+Total examined time is 2 hours 50 minutes, of which the four ten-minute
+stations are worth as much combined as the long cooking station alone —
+duration is not difficulty.
