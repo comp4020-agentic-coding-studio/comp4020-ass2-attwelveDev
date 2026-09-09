@@ -475,7 +475,7 @@ in `astro.config.ts` for the API.
   - `git grep -F STARTER_CONTENT -- src/content/people` returns nothing.
 - **Depends on:** None. (Task 1 is unrelated; run either order.)
 
-### Task 4: Write the policies page with its one plain-register section
+### Task 4: Write the policies page with its one plain-register section ✅
 
 - **Description:** Replace the placeholder policies page with a real,
   in-character policies page carrying exactly one plain-register **Content and
