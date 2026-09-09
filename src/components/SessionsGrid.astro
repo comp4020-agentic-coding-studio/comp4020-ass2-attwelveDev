@@ -1,6 +1,7 @@
 ---
 import { getPublishedCollection } from "astro-course-university/content";
 import { withBase } from "astro-theme-university/url";
+import TopicChips from "./TopicChips.astro";
 import { formatCourseDate } from "../lib/dates";
 
 const sessions = await getPublishedCollection("sessions");
@@ -14,6 +15,7 @@ const visible = sessions.sort((a, b) => a.data.week - b.data.week);
         <th scope="col">Week</th>
         <th scope="col">Date</th>
         <th scope="col">Title</th>
+        <th scope="col">Topics</th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +26,9 @@ const visible = sessions.sort((a, b) => a.data.week - b.data.week);
             <td>{formatCourseDate(session.data.date)}</td>
             <td>
               <a href={withBase(`/sessions/${session.id}/`)}>{session.data.title}</a>
+            </td>
+            <td>
+              <TopicChips topics={session.data.spec} />
             </td>
           </tr>
         ))

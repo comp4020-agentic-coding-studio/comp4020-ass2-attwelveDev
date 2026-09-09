@@ -296,6 +296,21 @@ describe("treatment — topics", () => {
     expect(week06Row, "no row found for week 6").toBeDefined();
     expect(week06Row).toMatch(/<code>manual override<\/code>/);
   });
+
+  it("gives the Labs table a Topics column", () => {
+    const html = readFileSync(resolve("dist/sessions/index.html"), "utf8");
+    const thead = html.match(/<thead[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? "";
+    expect(thead).toContain("Topics");
+  });
+
+  it("shows one topic chip per spec item for a Lab", () => {
+    const html = readFileSync(resolve("dist/sessions/index.html"), "utf8");
+    const week01Row = findRowByWeek(tbodyRows(html), 1);
+    expect(week01Row, "no row found for week 1").toBeDefined();
+    // week-01's session has exactly 2 spec items (confirmed in src/content/sessions/week-01.md).
+    const chips = [...(week01Row ?? "").matchAll(/<li class="course-topic">/g)];
+    expect(chips.length).toBe(2);
+  });
 });
 
 describe("treatment — shared surfaces and motion budget", () => {
