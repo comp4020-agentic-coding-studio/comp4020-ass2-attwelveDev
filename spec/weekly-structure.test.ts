@@ -183,4 +183,10 @@ describe("weekly structure — scheduling", () => {
       expect(date <= TEACHING_END, `${node.id} falls after teaching ends`).toBe(true);
     }
   });
+
+  it("closes the loop on both recurring datasets", () => {
+    const html = renderedPage("lectures/week-12");
+    expect(html).toMatch(/desk/i);
+    expect(html).toMatch(/sock/i);
+  });
 });
