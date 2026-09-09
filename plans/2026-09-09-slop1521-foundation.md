@@ -350,7 +350,7 @@ in `astro.config.ts` for the API.
 
 ## 5. Task breakdown
 
-### Task 1: Replace the course record and add `learningOutcomes` in `src/course-config.ts`
+### Task 1: Replace the course record and add `learningOutcomes` in `src/course-config.ts` ✅
 
 - **Description:** Swap the placeholder `courseMeta` for SLOP1521's real record,
   extend the strict schema with `learningOutcomes`, populate the nine outcomes,

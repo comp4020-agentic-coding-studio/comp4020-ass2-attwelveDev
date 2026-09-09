@@ -19,6 +19,7 @@ export const slopCourseMetaSchema = z
     endDate: z.iso.date(),
     description: z.string().trim().min(80).max(300),
     tags: z.array(z.string().trim().min(2).max(24)).min(1).max(3),
+    learningOutcomes: z.array(z.string().trim().min(1)).max(12).default([]),
   })
   .superRefine((course, ctx) => {
     const codeLevel = Number(course.code.at(4));
@@ -46,17 +47,28 @@ export const slopCourseMetaSchema = z
 // The code's last three digits were assigned to this repo when it was
 // provisioned, and no other course in the cohort has them. Change the first
 // digit to your course's level (and `level` to match); keep the other three.
-// STARTER_CONTENT: replace this course record, then remove this comment.
 export const courseMeta = slopCourseMetaSchema.parse({
   code: "SLOP1521",
-  title: "Course Title Goes Here",
+  title: "Introduction to Life: Personal Systems Maintenance",
   session: "Semester 1",
   year: 2027,
   level: 1,
   startDate: "2027-02-22",
-  endDate: "2027-05-28",
+  endDate: "2027-06-19",
   description:
-    "One concise paragraph explaining what this course is, who it is for, " +
-    "and why somebody would choose to spend a semester taking it.",
-  tags: ["replace me"],
+    "The maintenance of a human being, taught as systems engineering: " +
+    "scheduling, root-cause analysis and regression testing applied to " +
+    "sleep, hygiene, conversation and money. Assessed by practical examination.",
+  tags: ["life skills", "wellbeing", "self-management"],
+  learningOutcomes: [
+    "Schedule and maintain a personal hygiene subsystem without external prompting.",
+    "Select and justify a wardrobe against context, budget and garment longevity.",
+    "Diagnose and correct a sleep, health or exercise regression using your own telemetry.",
+    "Operate outside a screened environment for an extended, unscheduled period.",
+    "Recognise when a device is the root cause of a personal-systems fault and intervene manually.",
+    "Conduct real-time, unscripted conversation as a practical interpersonal protocol.",
+    "Maintain a friendship or working relationship across a full semester with no dropped commitments.",
+    "Initiate and manage a personal relationship's logistics without a written specification.",
+    "Integrate every subsystem above into a single functioning adult under examination conditions.",
+  ],
 }) satisfies CourseMetaInput;
