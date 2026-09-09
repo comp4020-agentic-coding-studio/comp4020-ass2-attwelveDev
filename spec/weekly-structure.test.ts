@@ -125,6 +125,18 @@ describe("weekly structure — Labs", () => {
   });
 });
 
+describe("weekly structure — coverage", () => {
+  it("covers weeks 1 to 12 with exactly one lecture each", () => {
+    const weeks = lectures.map((node) => Number(node.meta?.week)).sort((a, b) => a - b);
+    expect(weeks).toEqual(Array.from({ length: 12 }, (_, i) => i + 1));
+  });
+
+  it("covers weeks 1 to 12 with exactly one Lab each", () => {
+    const weeks = sessions.map((node) => Number(node.meta?.week)).sort((a, b) => a - b);
+    expect(weeks).toEqual(Array.from({ length: 12 }, (_, i) => i + 1));
+  });
+});
+
 describe("weekly structure — scheduling", () => {
   it("keeps every present week number unique and in range", () => {
     for (const [label, nodes] of [
