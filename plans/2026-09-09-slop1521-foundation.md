@@ -578,7 +578,7 @@ in `astro.config.ts` for the API.
 - **Depends on:** Task 5 (both edit `src/pages/index.astro`; sequencing avoids a
   conflict).
 
-### Task 7: Write the harness rules into `CLAUDE.md`
+### Task 7: Write the harness rules into `CLAUDE.md` ✅
 
 - **Description:** Add the course-specific rules the other two plans inherit,
   alongside the existing working-method rules.

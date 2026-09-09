@@ -1,3 +1,5 @@
+> **Competence is a skill like any other. CS culture just never taught you this one.**
+
 # Working method
 
 ## Before pushing
@@ -50,3 +52,36 @@ it happens — I'll pick the best 3-4 for `PROCESS.md` later. Format:
 **Landed in the harness as:** ...
 **Commit:** [`<sha>`](<url>) — add once committed.
 ```
+
+# Course rules
+
+Constraints on SLOP1521's own content, not background prose — each one is
+something an agent can check its own work against directly.
+
+## The weekly structure
+
+Every week (lecture + Lab) carries the same five slots, in this order, all
+filled: **Overview**, **Content**, **Case study**, **Reflection**,
+**Assessment tie-in** (which may read "None this week", explicitly).
+`spec/` enforces this, so a week cannot drift from the others.
+
+## Register
+
+Never break character in a lecture, Lab, assessment or exam station. The one
+exception is the policies page, which carries exactly one plain-register
+**Content and disclosure** section; everything else on it, and every other
+page on the site, stays in character.
+
+## `role` is an enum, not free text
+
+`src/content.config.ts` types `people.role` as a free string, but
+`src/components/PeopleGrid.astro` maps display labels by the literal keys
+`convenor`/`tutor`/`guest`/`other` — anything else sorts last and renders no
+label at all. Use `convenor` or `tutor`; put a person's specialism in
+`affiliation` instead.
+
+## All deadlines are 12:00 local
+
+`src/lib/dates.ts` formats dates in **UTC**, so a deadline earlier than
+roughly 10:00 local renders one calendar day early. Every assessment's `due`
+time must be `12:00` local — verified correct at both `+11:00` and `+10:00`.
