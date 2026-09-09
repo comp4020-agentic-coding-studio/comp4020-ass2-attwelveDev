@@ -18,7 +18,7 @@ export const courseApiCollections = [
 
 export const siteConfig = defineSiteConfig({
   ...slopBranding,
-  name: "Slop University",
+  name: courseMeta.code,
 
   links: [
     { text: "Lectures", href: "/lectures/" },
