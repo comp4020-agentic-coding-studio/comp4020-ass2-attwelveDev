@@ -152,6 +152,44 @@ describe("assignment 1 makeover", () => {
   });
 });
 
+describe("assignment 2 touch grass", () => {
+  const html = readFileSync(
+    resolve("dist/assessments/assignment-2-touch-grass/index.html"),
+    "utf8",
+  );
+
+  it("caps CS discussion at five minutes", () => {
+    expect(html).toMatch(/five minutes|5 minutes/i);
+  });
+
+  it("says compliance is self-reported", () => {
+    expect(html).toMatch(/self-reported/i);
+    expect(html).toMatch(/the report is the evidence/i);
+  });
+
+  it("offers all seven activities", () => {
+    for (const term of [
+      "park",
+      "caf",
+      "team sports",
+      "museum",
+      "social event",
+      "shopping",
+      "club",
+    ]) {
+      expect(html.toLowerCase(), `missing "${term}"`).toContain(term);
+    }
+  });
+
+  it("requires two non-CS people", () => {
+    expect(html).toMatch(/\btwo\b.*non-CS|non-CS.*\btwo\b|\b2\b.*non-CS|non-CS.*\b2\b/is);
+  });
+
+  it("sets the word count", () => {
+    expect(html).toMatch(/1000|1,000/);
+  });
+});
+
 describe("assignment 3 adulting", () => {
   const html = readFileSync(resolve("dist/assessments/assignment-3-adulting/index.html"), "utf8");
 
