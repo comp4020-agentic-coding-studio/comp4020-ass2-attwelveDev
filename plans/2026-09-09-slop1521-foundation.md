@@ -423,7 +423,7 @@ in `astro.config.ts` for the API.
   - `pnpm check` passes.
 - **Depends on:** None.
 
-### Task 3: Replace the cast with four School of Applied Competence entries
+### Task 3: Replace the cast with four School of Applied Competence entries ✅
 
 - **Description:** Add the four cast entries, delete both starter entries and
   their portraits, and repoint the four starter teaching nodes' `teachers:` refs

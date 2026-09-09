@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 const homepage = readFileSync(resolve("dist/index.html"), "utf8");
 const sessionsPage = readFileSync(resolve("dist/sessions/index.html"), "utf8");
+const peoplePage = readFileSync(resolve("dist/people/index.html"), "utf8");
 
 describe("navigation", () => {
   it("calls teaching sessions Labs in the nav", () => {
@@ -21,5 +22,10 @@ describe("navigation", () => {
 
   it("does not explain the template's own naming mechanism", () => {
     expect(sessionsPage).not.toContain("src/site-config.ts");
+  });
+
+  it("labels every person", () => {
+    expect(peoplePage).toContain("Convenor");
+    expect(peoplePage).toContain("Tutor");
   });
 });
