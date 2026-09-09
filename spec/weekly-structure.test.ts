@@ -1,0 +1,186 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { describe, expect, it } from "vitest";
+
+interface ApiNode {
+  id: string;
+  type: string;
+  meta?: Record<string, unknown>;
+  spec?: string[];
+}
+
+interface CourseApi {
+  nodes: ApiNode[];
+}
+
+const api = JSON.parse(readFileSync(resolve("dist/api/index.json"), "utf8")) as CourseApi;
+const lectures = api.nodes.filter((node) => node.type === "lectures");
+const sessions = api.nodes.filter((node) => node.type === "sessions");
+
+// From plan §3.2's verified calendar.
+const TEACHING_DATES: Record<number, { lecture: string; lab: string }> = {
+  1: { lecture: "2027-02-23", lab: "2027-02-25" },
+  2: { lecture: "2027-03-02", lab: "2027-03-04" },
+  3: { lecture: "2027-03-09", lab: "2027-03-11" },
+  4: { lecture: "2027-03-16", lab: "2027-03-18" },
+  5: { lecture: "2027-03-23", lab: "2027-03-25" },
+  6: { lecture: "2027-03-30", lab: "2027-04-01" },
+  7: { lecture: "2027-04-20", lab: "2027-04-22" },
+  8: { lecture: "2027-04-27", lab: "2027-04-29" },
+  9: { lecture: "2027-05-04", lab: "2027-05-06" },
+  10: { lecture: "2027-05-11", lab: "2027-05-13" },
+  11: { lecture: "2027-05-18", lab: "2027-05-20" },
+  12: { lecture: "2027-05-25", lab: "2027-05-27" },
+};
+
+const TEACHING_START = "2027-02-23";
+const TEACHING_END = "2027-05-27";
+
+function renderedPage(id: string): string {
+  return readFileSync(resolve(`dist/${id}/index.html`), "utf8");
+}
+
+interface HeadingSpan {
+  start: number;
+  end: number;
+}
+
+/**
+ * Locates a heading whose visible text starts with `text` — headings render
+ * with a trailing anchor-link element (`<h2 id="...">Text<a ...>#</a></h2>`),
+ * so this matches the opening tag through the start of `text` and then finds
+ * the corresponding closing tag, rather than requiring an exact `</hN>`
+ * immediately after the text.
+ */
+function findHeading(html: string, text: string): HeadingSpan {
+  const openMatch = html.match(new RegExp(`<h[1-6][^>]*>${text}<`));
+  if (!openMatch || openMatch.index === undefined) return { start: -1, end: -1 };
+  const start = openMatch.index;
+  const closeStart = html.indexOf("</h", start);
+  if (closeStart === -1) return { start, end: start };
+  const closeEnd = html.indexOf(">", closeStart) + 1;
+  return { start, end: closeEnd };
+}
+
+function nextHeadingIndex(html: string, fromIndex: number): number {
+  const rest = html.slice(fromIndex);
+  const match = rest.match(/<h[1-6][^>]*>/);
+  return match && match.index !== undefined ? fromIndex + match.index : html.length;
+}
+
+function assertHeadingsInOrder(html: string, headings: string[], label: string): void {
+  let previousIndex = -1;
+  for (const heading of headings) {
+    const { start } = findHeading(html, heading);
+    expect(start, `${label} is missing the "${heading}" heading`).toBeGreaterThan(-1);
+    expect(start, `${label}'s "${heading}" heading is out of order`).toBeGreaterThan(
+      previousIndex,
+    );
+    previousIndex = start;
+  }
+}
+
+describe("weekly structure — lectures", () => {
+  it("carries all five slots in order in every lecture", () => {
+    for (const lecture of lectures) {
+      const html = renderedPage(lecture.id);
+      assertHeadingsInOrder(
+        html,
+        ["Overview", "Content", "Case study", "Reflection", "Assessment tie-in"],
+        lecture.id,
+      );
+    }
+  });
+
+  it("gives every lecture a named case study", () => {
+    for (const lecture of lectures) {
+      const html = renderedPage(lecture.id);
+      const heading = findHeading(html, "Case study");
+      expect(heading.start, `${lecture.id} has no Case study heading`).toBeGreaterThan(-1);
+      const end = nextHeadingIndex(html, heading.end);
+      const text = html
+        .slice(heading.end, end)
+        .replace(/<[^>]+>/g, "")
+        .trim();
+      expect(
+        text.length,
+        `${lecture.id}'s Case study section is too short to name a real case study`,
+      ).toBeGreaterThanOrEqual(80);
+    }
+  });
+});
+
+describe("weekly structure — Labs", () => {
+  it("carries all three slots in order in every Lab", () => {
+    for (const session of sessions) {
+      const html = renderedPage(session.id);
+      assertHeadingsInOrder(html, ["Before the Lab", "In the Lab", "Afterwards"], session.id);
+    }
+  });
+
+  it("gives every Lab a spec list", () => {
+    for (const session of sessions) {
+      expect(session.spec?.length, `${session.id} has no spec list`).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe("weekly structure — scheduling", () => {
+  it("keeps every present week number unique and in range", () => {
+    for (const [label, nodes] of [
+      ["lectures", lectures],
+      ["Labs", sessions],
+    ] as const) {
+      const weeks = nodes.map((node) => Number(node.meta?.week));
+      const unique = new Set(weeks);
+      expect(unique.size, `${label} repeat a week number`).toBe(weeks.length);
+      for (const week of weeks) {
+        expect(week, `${label} has a week outside 1-12`).toBeGreaterThanOrEqual(1);
+        expect(week).toBeLessThanOrEqual(12);
+      }
+    }
+  });
+
+  it("dates every lecture on the Tuesday of its week", () => {
+    for (const lecture of lectures) {
+      const week = Number(lecture.meta?.week);
+      expect(String(lecture.meta?.date), `${lecture.id} is dated wrong`).toBe(
+        TEACHING_DATES[week].lecture,
+      );
+    }
+  });
+
+  it("dates every Lab on the Thursday of its week", () => {
+    for (const session of sessions) {
+      const week = Number(session.meta?.week);
+      expect(String(session.meta?.date), `${session.id} is dated wrong`).toBe(
+        TEACHING_DATES[week].lab,
+      );
+    }
+  });
+
+  it("advances the date with the week number", () => {
+    for (const [label, nodes] of [
+      ["lectures", lectures],
+      ["Labs", sessions],
+    ] as const) {
+      const sorted = [...nodes].sort(
+        (a, b) => Number(a.meta?.week) - Number(b.meta?.week),
+      );
+      for (let i = 1; i < sorted.length; i++) {
+        expect(
+          String(sorted[i - 1].meta?.date) < String(sorted[i].meta?.date),
+          `${label}: week ${sorted[i - 1].meta?.week}'s date doesn't precede week ${sorted[i].meta?.week}'s`,
+        ).toBe(true);
+      }
+    }
+  });
+
+  it("keeps every teaching date inside the teaching weeks", () => {
+    for (const node of [...lectures, ...sessions]) {
+      const date = String(node.meta?.date);
+      expect(date >= TEACHING_START, `${node.id} falls before teaching starts`).toBe(true);
+      expect(date <= TEACHING_END, `${node.id} falls after teaching ends`).toBe(true);
+    }
+  });
+});

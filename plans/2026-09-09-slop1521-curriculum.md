@@ -491,10 +491,41 @@ three weeks stop being reviewable in one sitting.
   `src/content/sessions/01-getting-started.md` and
   `src/content/sessions/02-first-review.md`; new
   `spec/weekly-structure.test.ts` (skeleton, completed in Task 11).
-- **Tests first (red):** create `spec/weekly-structure.test.ts` with the
-  assertions from Task 11 already written — they fail for the nine weeks that
-  do not yet exist, and this task turns three of them green. Written now, not in
-  Task 11, so blocks 2–4 are guarded as they land.
+- **Tests first (red):** create `spec/weekly-structure.test.ts`, reading
+  `dist/api/index.json` plus each rendered lecture and Lab page, scoped to
+  **whichever weeks currently exist** rather than hardcoded to all 12 — every
+  assertion below iterates over the `lectures`/`sessions` nodes actually
+  present, so it passes for weeks 1–3 now and keeps passing as later tasks add
+  more:
+  - `it("carries all five slots in order in every lecture")` — for each
+    present lecture page, headings **Overview**, **Content**, **Case study**,
+    **Reflection**, **Assessment tie-in** all appear, first-occurrence indices
+    strictly increasing. *(Spec check 4 — the `CLAUDE.md` rule, enforced.)*
+  - `it("carries all three slots in order in every Lab")` — same for
+    **Before the Lab**, **In the Lab**, **Afterwards**, over present Labs.
+  - `it("gives every lecture a named case study")` — each present lecture's
+    Case study section is non-empty: at least 80 characters of text between
+    that heading and the next.
+  - `it("gives every Lab a spec list")` — every present `sessions` node's
+    `spec` array is non-empty.
+  - `it("keeps every present week number unique and in range")` — no two
+    lectures (or two Labs) share a `week`, and every `week` is 1–12.
+  - `it("dates every lecture on the Tuesday of its week")` and
+    `it("dates every Lab on the Thursday of its week")` — each present node's
+    `meta.date` equals the value in §3.2's table for its `week`.
+  - `it("advances the date with the week number")` — among present nodes,
+    sorted by week, each date is strictly earlier than the next. *(Spec
+    check 5.)*
+  - `it("keeps every teaching date inside the teaching weeks")` — every
+    present lecture/Lab date is between `2027-02-23` and `2027-05-27`.
+
+  *(Resolved 2026-09-09, on execution: an earlier draft of this plan wrote all
+  of Task 11's final assertions here verbatim, including the "exactly weeks
+  1–12, no gaps" cardinality checks — which fail until all 12 weeks exist and
+  so would break `pnpm check` at the Task 7, 8 and 9 boundaries, contradicting
+  both the `pnpm check`-at-every-boundary NFR and this task's own acceptance
+  criteria. Scoping every assertion to the weeks present resolves that: only
+  the two cardinality checks need to wait, and they move to Task 11.)*
 - **Implementation (green):** for each of weeks 1–3, a lecture with frontmatter
   (`title`, `description`, `week`, `date` per §3.2, `teachers`, `related` to
   that week's Lab) and a body carrying the five slots in order; and a Lab with
@@ -522,7 +553,8 @@ three weeks stop being reviewable in one sitting.
 - **Files touched:** new `src/content/lectures/week-04.md` … `week-06.md`;
   new `src/content/sessions/week-04.md` … `week-06.md`.
 - **Tests first (red):** `spec/weekly-structure.test.ts` (from Task 7) already
-  asserts weeks 1–12; it currently fails for weeks 4–6.
+  runs its checks over whichever weeks are present; weeks 4–6 not existing yet
+  means those checks simply don't see them. No test file change needed here.
 - **Implementation (green):** weeks 4, 5 and 6 per the spec §4.2 — week 4's
   fridge-of-condiments case study, week 5's new 400-metre-radius case study,
   week 6's silent-group-chat case study. Week 4's Assessment tie-in points at
@@ -537,7 +569,8 @@ three weeks stop being reviewable in one sitting.
 - **Description:** Same shape, for weeks 7, 8 and 9.
 - **Files touched:** new `src/content/lectures/week-07.md` … `week-09.md`;
   new `src/content/sessions/week-07.md` … `week-09.md`.
-- **Tests first (red):** as Task 8, failing for weeks 7–9.
+- **Tests first (red):** as Task 8 — the existing checks extend their reach to
+  weeks 7–9 with no test file change.
 - **Implementation (green):** weeks 7, 8 and 9 per the spec §4.2 — week 7's new
   failed-handshake transcript, week 8's incident-report case study, week 9's new
   600-word opening message. Week 8's Assessment tie-in points at Assignment 2.
@@ -554,7 +587,9 @@ three weeks stop being reviewable in one sitting.
   must carry all five slots despite introducing no new content.
 - **Files touched:** new `src/content/lectures/week-10.md` … `week-12.md`;
   new `src/content/sessions/week-10.md` … `week-12.md`.
-- **Tests first (red):** as Task 8, failing for weeks 10–12. Plus, in
+- **Tests first (red):** as Task 8 — the existing checks extend to weeks
+  10–12, and now cover all twelve weeks (still not asserting the exact "12
+  of them, no gaps" cardinality — that's Task 11). Plus, add to
   `spec/weekly-structure.test.ts`:
   - `it("closes the loop on both recurring datasets")` — reading
     `dist/lectures/week-12/index.html`, matches `/desk/i` and `/sock/i`.
@@ -571,37 +606,27 @@ three weeks stop being reviewable in one sitting.
 
 ### Task 11: Complete the weekly-structure and coverage checks
 
-- **Description:** Finish `spec/weekly-structure.test.ts` as the full guard on
-  the spec's checks 3, 4 and 5, and confirm it holds across all 24 nodes.
+- **Description:** Add the two cardinality assertions that only make sense
+  once all 12 weeks exist, completing `spec/weekly-structure.test.ts` as the
+  full guard on the spec's checks 3, 4 and 5, and confirm the whole file holds
+  across all 24 nodes.
 - **Files touched:** `spec/weekly-structure.test.ts`.
-- **Tests first (red):** the file already exists from Task 7; this task adds the
-  assertions not yet written and confirms the whole suite. Final contents,
-  reading `dist/api/index.json` plus each rendered lecture and Lab page:
+- **Tests first (red):** the file already exists from Task 7 and has been
+  scoped to whichever weeks exist at each prior task boundary (§Task 7). This
+  task adds the two assertions that were deliberately deferred because they
+  require all 12 weeks to be meaningful — reading `dist/api/index.json`:
   - `it("covers weeks 1 to 12 with exactly one lecture each")` — the sorted
     `meta.week` values of `type === "lectures"` equal `[1..12]`, so no gaps and
     no duplicates. *(Spec check 3.)*
   - `it("covers weeks 1 to 12 with exactly one Lab each")` — same for
     `type === "sessions"`. *(Spec check 3.)*
-  - `it("dates every lecture on the Tuesday of its week")` and
-    `it("dates every Lab on the Thursday of its week")` — each `meta.date`
-    equals the value in §3.2's table.
-  - `it("advances the date with the week number")` — for both collections,
-    week *N*'s date is strictly earlier than week *N+1*'s. *(Spec check 5.)*
-  - `it("carries all five slots in order in every lecture")` — for each of the
-    twelve rendered lecture pages, the headings **Overview**, **Content**,
-    **Case study**, **Reflection**, **Assessment tie-in** all appear, and their
-    first-occurrence indices are strictly increasing. *(Spec check 4 — the
-    `CLAUDE.md` rule, enforced.)*
-  - `it("carries all three slots in order in every Lab")` — same for
-    **Before the Lab**, **In the Lab**, **Afterwards**.
-  - `it("gives every lecture a named case study")` — each lecture's Case study
-    section is non-empty: at least 80 characters of text between that heading
-    and the next.
-  - `it("gives every Lab a spec list")` — every `sessions` node's `spec` array
-    is non-empty.
-  - `it("keeps every teaching date inside the teaching weeks")` — every
-    lecture and Lab date is between `2027-02-23` and `2027-05-27`, i.e. inside
-    teaching rather than merely inside the course record's wider window.
+
+  Since Task 10 already landed week 12, both should pass immediately — this
+  task is confirmation, not a race against unwritten content. The rest of the
+  file (five/three-slot headings, case study and spec-list non-empty, date
+  table match, date ordering, teaching-week bounds) was already written in
+  Task 7 and has applied to all twelve weeks since Task 10 landed; re-running
+  it now over all 24 nodes is this task's verification, not new authoring.
 - **Implementation (green):** none — the content from Tasks 7–10 should already
   satisfy every assertion. Any failure here is a content bug to fix in the
   offending week, not a test to relax.
