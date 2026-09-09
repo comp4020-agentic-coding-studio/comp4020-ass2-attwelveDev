@@ -676,26 +676,26 @@ three weeks stop being reviewable in one sitting.
 
 ## 6. Feature-level Definition of Done
 
-- [ ] Every task in §5 complete and its tests passing
-- [ ] `pnpm test` passes (runs `pnpm build` then `vitest run spec`)
-- [ ] `pnpm check` passes (typecheck + the above)
-- [ ] `pnpm check:evidence` reports no `STARTER_CONTENT` anywhere in `src/`
+- [x] Every task in §5 complete and its tests passing
+- [x] `pnpm test` passes (runs `pnpm build` then `vitest run spec`)
+- [x] `pnpm check` passes (typecheck + the above)
+- [x] `pnpm check:evidence` reports no `STARTER_CONTENT` anywhere in `src/`
       (this plan removes the last of the fourteen; it will still fail on
       `PROCESS.md` until the user writes it — expected)
-- [ ] `/api/index.json` carries 29 dated nodes: 12 lectures, 12 sessions,
+- [x] `/api/index.json` carries 29 dated nodes: 12 lectures, 12 sessions,
       5 assessments, and `spec/data-integrity.test.ts` is green
-- [ ] Assessment weights sum to exactly 100, and every marking model's criteria
+- [x] Assessment weights sum to exactly 100, and every marking model's criteria
       sum to 100
-- [ ] Manually verified with `agent-browser` against `pnpm dev` at
+- [x] Manually verified with `agent-browser` against `pnpm dev` at
       `http://localhost:4321/comp4020-ass2-attwelveDev/`, at both
       `set viewport 1920 1080` and `set viewport 390 844`: three
       **non-adjacent** weeks (the brief says markers read a few), one
       assessment page with its rubric table, the deck slide by slide, and the
       `/lectures/` and `/sessions/` listings
-- [ ] Read end to end once for register: no page breaks character, and no page
+- [x] Read end to end once for register: no page breaks character, and no page
       aims the joke at the student rather than the institution
-- [ ] Every requirement in §2 is covered — see §7
-- [ ] No item remains in §8
+- [x] Every requirement in §2 is covered — see §7
+- [x] No item remains in §8
 
 ## 7. Requirements coverage check
 
