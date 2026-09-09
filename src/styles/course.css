@@ -28,6 +28,17 @@ h6 {
   box-shadow: var(--at-shadow-sm);
 }
 
+/* The nav row (.at-nav-inner) shares the body's `content` grid track, so
+   narrowing --at-content-width for the reading measure also narrows the
+   header — starving .at-nav-links's auto margin of the room it needs and
+   wrapping the search button onto its own line. Give the nav row its own
+   width, independent of the reading measure. */
+.at-nav-inner {
+  grid-column: full;
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
 .course-schedule th,
 .course-schedule td {
   padding: var(--at-spacing-md) var(--at-spacing-lg);
