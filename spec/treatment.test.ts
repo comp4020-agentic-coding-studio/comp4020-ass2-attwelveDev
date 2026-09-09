@@ -257,6 +257,17 @@ describe("treatment — lecture titles", () => {
   });
 });
 
+describe("treatment — slides link", () => {
+  it("gives the slides link an icon, button styling, and a new tab", () => {
+    const html = readFileSync(resolve("dist/lectures/week-01/index.html"), "utf8");
+    expect(html).toMatch(/class="at-button at-button--outline"/);
+    expect(html).toMatch(/target="_blank"/);
+    expect(html).toMatch(/rel="noopener noreferrer"/);
+    expect(html).toMatch(/data-icon="iconoir:presentation"/);
+    expect(html).toMatch(/Open the slides/);
+  });
+});
+
 describe("treatment — shared surfaces and motion budget", () => {
   it("runs no entrance animation", () => {
     expect(courseCssSource).toMatch(/\.at-hero-title(?:::after)?\s*\{[^}]*animation:\s*none/);
