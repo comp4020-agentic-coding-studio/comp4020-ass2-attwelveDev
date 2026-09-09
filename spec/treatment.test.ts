@@ -150,7 +150,27 @@ describe("treatment — schedule tables", () => {
   });
 
   it("wraps wide tables in a scroll container", () => {
-    expect(bundledCss()).toMatch(/\.course-schedule\s*\{\s*overflow-x:\s*auto/);
+    // Property order inside the rule isn't guaranteed once other
+    // declarations join overflow-x (the build's CSS minifier reorders them).
+    expect(bundledCss()).toMatch(/\.course-schedule\s*\{[^}]*overflow-x:\s*auto/);
+  });
+
+  it("wraps the schedule table in a panel", () => {
+    expect(bundledCss()).toMatch(
+      /\.course-schedule\s*\{[^}]*border-radius:\s*var\(--at-border-radius\)[^}]*box-shadow:\s*var\(--at-shadow-sm\)/,
+    );
+  });
+
+  it("highlights a hovered schedule row", () => {
+    expect(bundledCss()).toMatch(
+      /\.course-schedule tbody tr:hover\s*\{\s*background:\s*var\(--at-accent-soft\)/,
+    );
+  });
+
+  it("gives schedule cells roomier padding", () => {
+    expect(bundledCss()).toMatch(
+      /\.course-schedule (th|td),\s*\.course-schedule (td|th)\s*\{[^}]*padding:\s*var\(--at-spacing-md\) var\(--at-spacing-lg\)/,
+    );
   });
 });
 

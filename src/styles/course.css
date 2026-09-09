@@ -23,6 +23,18 @@ h6 {
 
 .course-schedule {
   overflow-x: auto;
+  border: 1px solid var(--at-divider);
+  border-radius: var(--at-border-radius);
+  box-shadow: var(--at-shadow-sm);
+}
+
+.course-schedule th,
+.course-schedule td {
+  padding: var(--at-spacing-md) var(--at-spacing-lg);
+}
+
+.course-schedule tbody tr:hover {
+  background: var(--at-accent-soft);
 }
 
 .course-tags {
