@@ -1,10 +1,27 @@
 ---
-import Card from "astro-theme-university/components/Card.astro";
-import CardGrid from "astro-theme-university/components/CardGrid.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import { withBase } from "astro-theme-university/url";
 import heroImage from "../assets/images/hero-home.avif";
 import { courseMeta } from "../course-config";
 import { sessionLabels, siteConfig } from "../site-config";
+
+const destinations = [
+  {
+    title: sessionLabels.plural,
+    href: "/sessions/",
+    description: "The weekly schedule and what happens in each teaching session.",
+  },
+  {
+    title: "Assessment",
+    href: "/assessments/",
+    description: "What is marked, what it is worth, and when it is due.",
+  },
+  {
+    title: "People",
+    href: "/people/",
+    description: "Who teaches the course and how to reach them.",
+  },
+];
 ---
 
 <ContentLayout
@@ -51,34 +68,16 @@ import { sessionLabels, siteConfig } from "../site-config";
   </ul>
 
   <h2>Where to go next</h2>
-  <CardGrid columns={2}>
-    <Card title={sessionLabels.plural} href="/sessions/">
-      <p>The weekly schedule and what happens in each teaching session.</p>
-    </Card>
-    <Card title="Assessment" href="/assessments/">
-      <p>What is marked, what it is worth, and when it is due.</p>
-    </Card>
-    <Card title="People" href="/people/">
-      <p>Who teaches the course and how to reach them.</p>
-    </Card>
-  </CardGrid>
+  <ul class="course-list">
+    {
+      destinations.map((destination) => (
+        <li>
+          <h3>
+            <a href={withBase(destination.href)}>{destination.title}</a>
+          </h3>
+          <p>{destination.description}</p>
+        </li>
+      ))
+    }
+  </ul>
 </ContentLayout>
-
-<style>
-  .course-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-block: 0 2rem;
-    padding: 0;
-    list-style: none;
-  }
-
-  .course-tags li {
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    color: var(--at-text-secondary);
-    background: var(--at-bg-alt);
-    font-size: 0.9rem;
-  }
-</style>

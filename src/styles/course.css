@@ -28,3 +28,40 @@ h6 {
 .course-schedule {
   overflow-x: auto;
 }
+
+.course-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--at-spacing-sm);
+  margin-block: 0 var(--at-spacing-xl);
+  padding: 0;
+  list-style: none;
+}
+
+.course-tags li {
+  padding: 0.25rem 0.65rem;
+  border-radius: 0;
+  color: var(--at-text-secondary);
+  background: var(--at-bg-alt);
+  font-size: 0.9rem;
+}
+
+.course-list {
+  padding: 0;
+  margin-block: 0 var(--at-spacing-xl);
+  list-style: none;
+}
+
+.course-list li {
+  padding-block: var(--at-spacing-md);
+  border-block-end: 1px solid var(--at-divider);
+}
+
+.course-list li:first-child {
+  border-block-start: 1px solid var(--at-divider);
+}
+
+.course-list h2,
+.course-list h3 {
+  margin-block: 0 var(--at-spacing-xs);
+}

@@ -1,7 +1,6 @@
 ---
 import { getPublishedCollection } from "astro-course-university/content";
-import Card from "astro-theme-university/components/Card.astro";
-import CardGrid from "astro-theme-university/components/CardGrid.astro";
+import { withBase } from "astro-theme-university/url";
 
 const people = await getPublishedCollection("people");
 
@@ -22,7 +21,9 @@ const roleLabels: Record<string, string> = {
 };
 
 // photoAlt rides the schema's passthrough (definePeopleCollection has no
-// extension point), so it needs a cast out of the generated types.
+// extension point), so it needs a cast out of the generated types. Kept even
+// though the ruled list renders no image (ships without photos per Plan 1
+// §2.4.1) so a later portrait needs no code change here.
 function photoAlt(data: unknown): string | undefined {
   const alt = (data as { photoAlt?: unknown }).photoAlt;
   return typeof alt === "string" ? alt : undefined;
@@ -36,23 +37,20 @@ const visible = people.sort((a, b) => {
 });
 ---
 
-<CardGrid columns={2}>
+<ul class="course-list">
   {
     visible.map((person) => (
-      <Card
-        headingLevel="h2"
-        title={person.data.title}
-        href={`/people/${person.id}/`}
-        image={person.data.photo ?? undefined}
-        imageAlt={photoAlt(person.data)}
-      >
+      <li>
+        <h2>
+          <a href={withBase(`/people/${person.id}/`)}>{person.data.title}</a>
+        </h2>
         {person.data.role && roleLabels[person.data.role] && (
           <p>
             <small>{roleLabels[person.data.role]}</small>
           </p>
         )}
         <p>{person.data.description}</p>
-      </Card>
+      </li>
     ))
   }
-</CardGrid>
+</ul>

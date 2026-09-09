@@ -575,6 +575,13 @@ long column, which is worse than a scrollable table.
 - **Refactor:** move the whole `.course-tags` block out of `index.astro`'s
   scoped `<style>` into `src/styles/course.css`, so F3.1 holds and no treatment
   rule is left in a page.
+- **Execution-time addition:** the Implementation prose above only names the
+  `.course-tags` pills, but F3.9 and this task's own title also cover "the
+  homepage destination cards" — the `CardGrid`/`Card` pair under "Where to go
+  next". Converted it to the same `.course-list` pattern, kept at `h3` (not
+  `h2`) since those three items sit under the page's own "Where to go next"
+  `h2`, unlike the assessment/people listings where the list items are a
+  page's primary content.
 - **Acceptance criteria:**
   - All four assertions pass; `pnpm check` green.
   - `/assessments/`, `/people/` and the homepage read as ruled lists with no

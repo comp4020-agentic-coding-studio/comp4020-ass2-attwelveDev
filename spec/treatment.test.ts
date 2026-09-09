@@ -150,3 +150,37 @@ describe("treatment — schedule tables", () => {
     expect(bundledCss()).toMatch(/\.course-schedule\s*\{\s*overflow-x:\s*auto/);
   });
 });
+
+/** Items inside a `<ul class="course-list">` — ignores unrelated `<li>` elsewhere (nav, footer). */
+function courseListItems(html: string): string[] {
+  const list = html.match(/<ul class="course-list"[^>]*>([\s\S]*?)<\/ul>/);
+  expect(list, 'no <ul class="course-list"> found').not.toBeNull();
+  return [...(list?.[1] ?? "").matchAll(/<li(?=[\s>])[^>]*>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+}
+
+describe("treatment — ruled lists", () => {
+  it("lists assessments as rows, not cards", () => {
+    const html = readFileSync(resolve("dist/assessments/index.html"), "utf8");
+    const items = courseListItems(html);
+    const withMeta = items.filter((item) => /Weight:/.test(item) && /Due /.test(item));
+    expect(withMeta.length).toBe(5);
+    expect(html).not.toMatch(/at-card-grid/);
+  });
+
+  it("lists people as rows, not cards", () => {
+    const html = readFileSync(resolve("dist/people/index.html"), "utf8");
+    expect(courseListItems(html).length).toBe(4);
+    expect(html).not.toMatch(/at-card-grid/);
+  });
+
+  it("squares the homepage tag pills", () => {
+    const source = readFileSync(resolve("src/pages/index.astro"), "utf8");
+    expect(source).not.toMatch(/999px/);
+  });
+
+  it("keeps every role label", () => {
+    const html = readFileSync(resolve("dist/people/index.html"), "utf8");
+    expect(html).toMatch(/Convenor/);
+    expect(html).toMatch(/Tutor/);
+  });
+});
