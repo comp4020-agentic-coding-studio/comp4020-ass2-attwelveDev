@@ -531,6 +531,11 @@ long column, which is worse than a scrollable table.
   files rather than extracting a shared component: they read from different
   collections with different sorts, the duplication is ten lines, and the
   template's convention is one grid component per collection.
+- **Execution-time note:** the plan's sample markup omits `withBase` on the
+  row link; added it (`astro-theme-university/url`), matching this task's
+  own acceptance criterion that links resolve under the base path — `Card`
+  applied this automatically before, and a bare `href` would silently break
+  it under GitHub Pages' base path.
 - **Acceptance criteria:**
   - All five assertions pass; `pnpm check` green including axe (tables need
     `scope` on header cells, which the markup above supplies).

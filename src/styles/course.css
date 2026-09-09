@@ -24,3 +24,7 @@ h5,
 h6 {
   font-family: var(--course-font-heading);
 }
+
+.course-schedule {
+  overflow-x: auto;
+}

@@ -101,3 +101,52 @@ describe("treatment — heading register", () => {
     );
   });
 });
+
+function tbodyRows(html: string): string[] {
+  const tbody = html.match(/<tbody[^>]*>([\s\S]*?)<\/tbody>/);
+  expect(tbody, "no <tbody> found").not.toBeNull();
+  return [...(tbody?.[1] ?? "").matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((m) => m[1]);
+}
+
+describe("treatment — schedule tables", () => {
+  it("renders the lecture listing as a table", () => {
+    const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
+    expect(html).toMatch(/<table/);
+    expect(tbodyRows(html).length).toBe(12);
+  });
+
+  it("renders the Lab listing as a table", () => {
+    const html = readFileSync(resolve("dist/sessions/index.html"), "utf8");
+    expect(html).toMatch(/<table/);
+    expect(tbodyRows(html).length).toBe(12);
+  });
+
+  it("heads both schedule tables with week, date and title", () => {
+    for (const page of ["dist/lectures/index.html", "dist/sessions/index.html"]) {
+      const html = readFileSync(resolve(page), "utf8");
+      const thead = html.match(/<thead[^>]*>([\s\S]*?)<\/thead>/);
+      expect(thead, `${page} has no <thead>`).not.toBeNull();
+      for (const column of ["Week", "Date", "Title"]) {
+        expect(thead?.[1], `${page}'s <thead> is missing "${column}"`).toContain(column);
+      }
+    }
+  });
+
+  it("keeps both tables in order", () => {
+    for (const page of ["dist/lectures/index.html", "dist/sessions/index.html"]) {
+      const html = readFileSync(resolve(page), "utf8");
+      const weeks = tbodyRows(html).map((row) => {
+        const cell = row.match(/<td[^>]*>\s*(\d+)\s*<\/td>/);
+        expect(cell, `${page} has a row with no numeric week cell`).not.toBeNull();
+        return Number(cell?.[1]);
+      });
+      expect(weeks, `${page}'s weeks are not 1..12 in order`).toEqual(
+        Array.from({ length: 12 }, (_, i) => i + 1),
+      );
+    }
+  });
+
+  it("wraps wide tables in a scroll container", () => {
+    expect(bundledCss()).toMatch(/\.course-schedule\s*\{\s*overflow-x:\s*auto/);
+  });
+});
