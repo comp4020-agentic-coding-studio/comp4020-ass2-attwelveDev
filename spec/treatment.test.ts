@@ -246,6 +246,17 @@ describe("treatment — spec-sheet metadata block", () => {
   });
 });
 
+describe("treatment — lecture titles", () => {
+  it("names lectures as lectures", () => {
+    for (const nn of WEEK_NUMBERS) {
+      const html = readFileSync(resolve(`dist/lectures/week-${nn}/index.html`), "utf8");
+      expect(html, `lectures/week-${nn} is missing "Lecture" in its title`).toMatch(
+        new RegExp(`Week ${Number(nn)} Lecture:`),
+      );
+    }
+  });
+});
+
 describe("treatment — shared surfaces and motion budget", () => {
   it("runs no entrance animation", () => {
     expect(courseCssSource).toMatch(/\.at-hero-title(?:::after)?\s*\{[^}]*animation:\s*none/);

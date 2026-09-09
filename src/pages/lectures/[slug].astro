@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 const { lecture } = Astro.props;
 const { Content } = await render(lecture);
-const title = `Week ${lecture.data.week}: ${lecture.data.title}`;
+const title = `Week ${lecture.data.week} Lecture: ${lecture.data.title}`;
 ---
 
 <ContentLayout title={title} description={lecture.data.description} {...siteConfig}>
