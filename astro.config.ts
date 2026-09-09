@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import courseGraph from "astro-course-university";
 import universityTheme from "astro-theme-university";
@@ -22,7 +23,15 @@ export default defineConfig({
       defaultLayout: "src/layouts/PageLayout.astro",
       // The whole brand choice: three colour tokens and a set of lockups. Keep
       // institutional brand packages and assets out of this fictional site.
-      brandCss: "astro-theme-slop/slop.css",
+      // course.css rides the same injectScript mechanism so the handbook
+      // treatment reaches every page regardless of which layout it renders
+      // through — see plans/2026-09-09-slop1521-visual-treatment.md Task 1.
+      // An absolute path, since the injected import resolves relative to a
+      // virtual module, not the project root.
+      brandCss: [
+        "astro-theme-slop/slop.css",
+        fileURLToPath(new URL("./src/styles/course.css", import.meta.url)),
+      ],
       imageFormat: "avif",
       llmsTxt: true,
       // The theme owns the markdown plugin chain, so astromotion's slide

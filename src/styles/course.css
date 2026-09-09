@@ -1,0 +1,12 @@
+/* SLOP1521 handbook treatment. Unlayered, so it beats every theme rule
+   (@layer at.tokens, at.base, at.components) without !important — see
+   plans/2026-09-09-slop1521-visual-treatment.md §3.3. */
+
+:root {
+  --at-heading: var(--at-text);
+  --at-content-width: 38rem;
+  --at-border-radius: 0;
+  --at-shadow-sm: none;
+  --at-shadow-md: none;
+  --at-shadow-lg: none;
+}

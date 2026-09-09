@@ -72,7 +72,9 @@ pure upside and can be stopped at any task boundary without breaking anything.
   rendered page.
 - Verified with `agent-browser` at `1920 1080` **and** `390 844`. The phone
   viewport is the binding constraint for tables and the tightened type scale.
-- No new webfont is loaded (see §2.4.1), so no change to `astro.config.ts`.
+- No new webfont is loaded (see §2.4.1). `astro.config.ts` changes only to
+  register `course.css` in `brandCss` (Task 1 execution-time finding) — its
+  font/integration configuration is otherwise untouched.
 - `prefers-reduced-motion` must keep working — the theme already handles it
   globally and this plan must not defeat it.
 
@@ -325,7 +327,23 @@ long column, which is worse than a scrollable table.
   layout, and set the four token groups that carry the register: heading ink,
   measure, radius, shadows.
 - **Files touched:** new `src/styles/course.css`; `src/layouts/PageLayout.astro`
-  (existing); new `spec/treatment.test.ts`.
+  (existing); `astro.config.ts` (existing); new `spec/treatment.test.ts`.
+- **Execution-time finding (resolved with the user before implementing):**
+  `PageLayout.astro` is only reached by the theme's `defaultLayout` option,
+  whose own docstring names it "Default layout for MDX pages without an
+  explicit layout in frontmatter" — confirmed by rendering: only the four
+  `.mdx` index pages and `404.html` got `course.css` inlined into `<head>`,
+  while the homepage and every `[slug].astro` detail page (lectures,
+  sessions, assessments) and `sessions/index.astro` call the theme's
+  `ContentLayout` directly and never touch `PageLayout.astro`, so `pnpm
+  build`'s compiled output never carried the override on those pages. Fixed
+  by adding `./src/styles/course.css` to `universityTheme`'s `brandCss`
+  array in `astro.config.ts`, alongside `astro-theme-slop/slop.css` — the
+  same `injectScript("page-ssr", …)` mechanism that already gets the brand
+  tokens onto every page regardless of layout. The `PageLayout.astro` import
+  stays too, since F3.1 names it explicitly; the resulting duplicate
+  `:root` declaration on the five pages already reached that way is
+  harmless (last value wins, same value both times).
 - **Tests first (red):** `spec/treatment.test.ts`. Read every file in
   `dist/_astro/` ending `.css` and concatenate them into one string, since Astro
   chooses the bundle name:
@@ -414,7 +432,19 @@ long column, which is worse than a scrollable table.
 - **Files touched:** `src/styles/course.css`; every content file under
   `src/content/lectures/`, `src/content/sessions/`,
   `src/content/assessments/` and `src/pages/policies/index.mdx` that uses a
-  glossary term; new `spec/glossary.test.ts`.
+  glossary term; `src/course-config.ts`; new `spec/glossary.test.ts`.
+- **Execution-time finding (resolved with the user before implementing):**
+  four locations render a frontmatter/config string as plain interpolated
+  text rather than through the markdown chain, so a backtick there produces
+  a literal character, not a `<code>` element — `description:` on lectures
+  week-01/02/04/05/12 and session week-01 (`ContentLayout`'s `<meta
+  description>` and `<p class="lead">`), the `spec:` line on session
+  week-08 (`SpecList.astro`'s `<li>`), the `marking.criteria[].name` in
+  `assignment-3-adulting.md` (`MarkingModel.astro`'s `<td>`), and
+  `courseMeta.description` in `src/course-config.ts` (the homepage). Resolved
+  the same way as a glossary term in a heading below: reword each to drop the
+  bare term rather than mark it as code, noted in this task's commit
+  message.
 - **Tests first (red):** `spec/glossary.test.ts`. Define
   `const GLOSSARY = ["subsystem", "root cause", "unscheduled downtime",
   "regression testing", "telemetry", "manual override"]`. Walk every
