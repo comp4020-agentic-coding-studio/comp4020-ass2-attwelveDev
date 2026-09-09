@@ -390,7 +390,7 @@ in `astro.config.ts` for the API.
     Systems Maintenance`.
 - **Depends on:** None.
 
-### Task 2: Rename teaching sessions to Labs in `src/site-config.ts`
+### Task 2: Rename teaching sessions to Labs in `src/site-config.ts` ✅
 
 - **Description:** Set `sessionLabels` to Lab/Labs, and rewrite the placeholder
   prose on the sessions listing page that explains the template's own naming
