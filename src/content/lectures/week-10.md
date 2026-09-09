@@ -23,7 +23,7 @@ willpower one.
 ## Content
 
 - reorder points: ordering before you run out, not after
-- reading a receipt as telemetry on what your household actually consumes
+- reading a receipt as `telemetry` on what your household actually consumes
 - household tasks as a supply chain: groceries, laundry, cleaning supplies
 - combining this week's logistics with weeks 2 and 4's hygiene and
   meal-planning schedules

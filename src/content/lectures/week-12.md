@@ -1,7 +1,7 @@
 ---
 title: Integration
 description:
-  All twelve weeks' subsystems run as one integrated system, examined by
+  All twelve weeks' routines run as one integrated system, examined by
   revisiting week 1's desk and week 2's sock pile
 week: 12
 date: 2027-05-25
@@ -15,16 +15,16 @@ related:
 
 ## Overview
 
-Twelve weeks of separate subsystems converge into one integrated system
+Twelve weeks of separate `subsystems` converge into one integrated system
 this week: the same person, running all of them at once, for real. No new
-subsystem is introduced — the work from here is integration, not
+`subsystem` is introduced — the work from here is integration, not
 addition.
 
 ## Content
 
-- reviewing all five recurring subsystems as one schedule competing for
+- reviewing all five recurring `subsystems` as one schedule competing for
   the same hours, rather than five separate ones
-- what changed, subsystem by subsystem, since week 1's baseline diagnostic
+- what changed, `subsystem` by `subsystem`, since week 1's baseline diagnostic
 - consolidating everything into the week-long plan Assignment 3 asks for
 - what the Final Exam's five stations examine, station by station
 
@@ -47,5 +47,5 @@ Assignment 3's daily-routine component instead.
 ## Assessment tie-in
 
 Assignment 3 (Time to be an Adult) is due this Friday at 12:00, and the
-Final Exam follows on Wednesday 9 June. Between them, every subsystem this
+Final Exam follows on Wednesday 9 June. Between them, every `subsystem` this
 course has covered is assessed once more, together.

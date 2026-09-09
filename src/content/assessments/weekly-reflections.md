@@ -29,7 +29,7 @@ without a separate extension process.
 
 ## The prompts
 
-Each prompt names the week whose subsystem it reflects on:
+Each prompt names the week whose `subsystem` it reflects on:
 
 - Week 1 — what is already running, unmonitored, before any instruction is given
 - Week 2 — a hygiene routine's actual failure mode, not its intended one
@@ -40,7 +40,7 @@ Each prompt names the week whose subsystem it reflects on:
 - Week 7 — a conversation that stalled, examined rather than excused
 - Week 8 — a group chat's actual load-bearing member
 - Week 9 — an opening message sent, and what it cost to send
-- Week 10 — a delivery, a routine, or a receipt, read as telemetry
+- Week 10 — a delivery, a routine, or a receipt, read as `telemetry`
 - Week 11 — a piece of workplace conduct observed rather than performed
 
 Week 12 sets a twelfth prompt on the same schedule, but it is not graded: no

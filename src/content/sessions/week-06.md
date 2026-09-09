@@ -22,7 +22,7 @@ estimate of when you are actually online.
 
 Design one mechanism — physical, not a rule you tell yourself — that
 enforces a device-free window: where the laptop physically goes, what
-happens if it doesn't go there, and the one manual override permitted for
+happens if it doesn't go there, and the one `manual override` permitted for
 a genuine deadline.
 
 ## Afterwards

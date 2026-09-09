@@ -15,7 +15,7 @@ related:
 
 ## Before the Lab
 
-Bring your nominated subsystem from week 1's baseline, if it was hygiene;
+Bring your nominated `subsystem` from week 1's baseline, if it was hygiene;
 otherwise bring an honest account of your current hygiene routine as it
 actually runs.
 

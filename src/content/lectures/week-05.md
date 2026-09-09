@@ -1,7 +1,7 @@
 ---
 title: "Touching Grass 101"
 description:
-  Leaving the building as a subsystem with its own telemetry, examined
+  Leaving the building as a system with its own usage data, examined
   through a semester mapped by the radius it never left
 week: 5
 date: 2027-03-23
@@ -19,7 +19,7 @@ and how would you know without checking.
 
 ## Content
 
-- physical location as telemetry you already generate, rarely inspected
+- physical location as `telemetry` you already generate, rarely inspected
 - the difference between a plan to go somewhere and a plan that specifies
   when
 - designing an outing with a real activity, not "get out more"

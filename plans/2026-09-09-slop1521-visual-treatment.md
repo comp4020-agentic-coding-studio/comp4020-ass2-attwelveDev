@@ -432,7 +432,8 @@ long column, which is worse than a scrollable table.
 - **Files touched:** `src/styles/course.css`; every content file under
   `src/content/lectures/`, `src/content/sessions/`,
   `src/content/assessments/` and `src/pages/policies/index.mdx` that uses a
-  glossary term; `src/course-config.ts`; new `spec/glossary.test.ts`.
+  glossary term; `src/course-config.ts`; `src/pages/index.astro`; new
+  `spec/glossary.test.ts`.
 - **Execution-time finding (resolved with the user before implementing):**
   four locations render a frontmatter/config string as plain interpolated
   text rather than through the markdown chain, so a backtick there produces
@@ -444,7 +445,11 @@ long column, which is worse than a scrollable table.
   `courseMeta.description` in `src/course-config.ts` (the homepage). Resolved
   the same way as a glossary term in a heading below: reword each to drop the
   bare term rather than mark it as code, noted in this task's commit
-  message.
+  message. `src/pages/index.astro` is a distinct fifth case worth
+  separating out: its body paragraphs use three of the terms in raw JSX
+  markup (not a content-collection markdown file), so — unlike the
+  frontmatter/config cases — the fix there is a literal `<code>` element in
+  the template, not a reword.
 - **Tests first (red):** `spec/glossary.test.ts`. Define
   `const GLOSSARY = ["subsystem", "root cause", "unscheduled downtime",
   "regression testing", "telemetry", "manual override"]`. Walk every
@@ -461,10 +466,12 @@ long column, which is worse than a scrollable table.
     `dist/_astro/*.css` contains a `code` rule referencing
     `var(--at-font-mono)`.
 - **Implementation (green):** wrap each glossary occurrence in backticks in the
-  content files. Add to `src/styles/course.css` a `code` rule setting
-  `font-family: var(--at-font-mono)`, a slightly reduced `font-size`, and — since
-  Task 1 squared every corner — no pill treatment; the theme already supplies
-  `--at-code-bg`.
+  content files. No new `code` rule added to `src/styles/course.css`: the
+  theme's own `base.css` already sets `code { font-family: var(--at-font-mono);
+  font-size: var(--at-font-sm); background: var(--at-code-bg); border-radius:
+  var(--at-border-radius); … }`, and Task 1 already took `--at-border-radius`
+  to `0`, so the pill is already gone — a rule restating the same values would
+  be dead duplication.
 - **Refactor:** where a term appears in a heading, prefer rephrasing the heading
   over marking a heading word as code, since serif headings with inline mono read
   as a mistake. Note any such rephrasing in the task's commit message.

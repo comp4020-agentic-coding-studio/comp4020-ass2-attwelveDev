@@ -57,7 +57,7 @@ export const courseMeta = slopCourseMetaSchema.parse({
   endDate: "2027-06-19",
   description:
     "The maintenance of a human being, taught as systems engineering: " +
-    "scheduling, root-cause analysis and regression testing applied to " +
+    "scheduling, root-cause analysis and regression checks applied to " +
     "sleep, hygiene, conversation and money. Assessed by practical examination.",
   tags: ["life skills", "wellbeing", "self-management"],
   learningOutcomes: [

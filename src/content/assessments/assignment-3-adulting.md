@@ -9,7 +9,7 @@ weight: 20
 marking:
   mode: weighted
   criteria:
-    - name: "Hygiene subsystem: scheduling and adherence"
+    - name: "Hygiene routine: scheduling and adherence"
       weight: 14
     - name: "Meal plan: nutritional coverage and repetition"
       weight: 14
@@ -41,7 +41,7 @@ spec:
 
 ## The plan
 
-Submit a single week-long plan covering seven subsystems:
+Submit a single week-long plan covering seven `subsystems`:
 
 - **Daily routine** — an hour-by-hour schedule for the week, covering wake,
   sleep and meals.
@@ -67,10 +67,10 @@ slot is treated as incomplete.
 The bands describe the state of the submitted plan, not the person who
 wrote it:
 
-- **HD** — every subsystem is present, internally consistent, and would
-  survive a week of actual use without a manual override.
-- **D** — every subsystem is present and mostly consistent; one or two
-  would need a manual override mid-week.
+- **HD** — every `subsystem` is present, internally consistent, and would
+  survive a week of actual use without a `manual override`.
+- **D** — every `subsystem` is present and mostly consistent; one or two
+  would need a `manual override` mid-week.
 - **C** — all seven components are present, but several show scheduling
   conflicts a real week would surface immediately.
 - **P** — most components are present, but coverage is thin enough that

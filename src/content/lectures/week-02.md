@@ -1,7 +1,7 @@
 ---
 title: "Personal Hygiene and Maintenance"
 description:
-  Hygiene as a scheduled subsystem with failure modes, not a matter of
+  Hygiene as a scheduled system with failure modes, not a matter of
   willpower
 week: 2
 date: 2027-03-02

@@ -1,15 +1,15 @@
 ---
 title: "Orientation: Welcome to Life"
 description:
-  The first Lab — a baseline diagnostic across all five subsystems, run
+  The first Lab — a baseline diagnostic across all five systems, run
   before any instruction changes anything
 week: 1
 date: 2027-02-25
 teachers:
   - cosima-adjei
 spec:
-  - the baseline diagnostic is completed for all five subsystems
-  - one subsystem is nominated as this semester's first priority
+  - the baseline diagnostic is completed for all five systems
+  - one system is nominated as this semester's first priority
 related:
   - lectures/week-01
 ---
@@ -24,10 +24,10 @@ in the lecture defeats it.
 
 Run the baseline diagnostic: a short, private self-assessment across
 hygiene, dress, sleep, conversation and money, scored against no rubric
-but your own honest observation. Nominate the subsystem you will
+but your own honest observation. Nominate the `subsystem` you will
 prioritise first.
 
 ## Afterwards
 
 Nothing is submitted from this Lab. The diagnostic is yours to keep; the
-subsystem you nominated is the one the first few weeks of Labs lean on.
+`subsystem` you nominated is the one the first few weeks of Labs lean on.

@@ -8,7 +8,7 @@ teachers:
   - noor-kalantari
 spec:
   - an incident report names a specific cancelled or diminished plan
-  - the report identifies a root cause rather than assigning blame to a person
+  - the report identifies an underlying cause rather than assigning blame to a person
 related:
   - lectures/week-08
 ---
@@ -21,7 +21,7 @@ intended.
 ## In the Lab
 
 Write it up as an incident report: what was agreed, what actually
-happened, and a root cause traced to the coordination mechanism — which
+happened, and a `root cause` traced to the coordination mechanism — which
 chat, which person routed messages, which step had no one responsible for
 it — rather than to any one person's character.
 

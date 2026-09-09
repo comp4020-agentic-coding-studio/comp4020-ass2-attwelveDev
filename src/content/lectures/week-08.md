@@ -35,7 +35,7 @@ An incident report, filed the way a production outage would be: *"At
 19:40, a dinner plan for six was confirmed by three replies and assumed
 final by the organiser. At 20:15, two attendees had independently
 messaged a fourth channel neither the organiser nor the other three could
-see. Root cause: the group runs on two group chats, and no message
+see. `Root cause`: the group runs on two group chats, and no message
 crosses between them."* The friendship was never in question; the
 messaging topology was the actual point of failure.
 

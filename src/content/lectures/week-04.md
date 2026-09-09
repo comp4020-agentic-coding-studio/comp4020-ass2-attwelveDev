@@ -1,7 +1,7 @@
 ---
 title: "Sleep, Health, and Exercise"
 description:
-  Sleep and exercise as scheduled subsystems with their own maintenance
+  Sleep and exercise as scheduled systems with their own maintenance
   windows, examined through a fridge that has stopped holding food
 week: 4
 date: 2027-03-16
@@ -20,9 +20,9 @@ window rarely fails immediately — it fails later, somewhere else.
 
 ## Content
 
-- sleep as a scheduled subsystem, not a debt to pay off at the weekend
+- sleep as a scheduled `subsystem`, not a debt to pay off at the weekend
 - exercise frequency and specificity: "more" is not a plan
-- reading tiredness and soreness as telemetry, not as character flaws
+- reading tiredness and soreness as `telemetry`, not as character flaws
 - a maintenance window that survives a bad week, following week 2's model
 
 ## Case study
@@ -30,7 +30,7 @@ window rarely fails immediately — it fails later, somewhere else.
 A fridge shelf, photographed monthly for a semester, holding eleven jars of
 condiments and nothing that constitutes a meal. Every jar was a plan to
 cook something at some point; none of them were followed by a grocery trip
-for the thing they were meant to accompany. The subsystem that failed was
+for the thing they were meant to accompany. The `subsystem` that failed was
 not appetite — it was scheduling a grocery run before the fridge went
 empty of everything except condiments.
 
