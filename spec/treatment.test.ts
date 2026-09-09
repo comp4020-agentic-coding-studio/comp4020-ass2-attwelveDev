@@ -311,6 +311,23 @@ describe("treatment — topics", () => {
     const chips = [...(week01Row ?? "").matchAll(/<li class="course-topic">/g)];
     expect(chips.length).toBe(2);
   });
+
+  it("gives the lectures table a Slides column, only where a deck exists", () => {
+    const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
+    const thead = html.match(/<thead[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? "";
+    expect(thead).toContain("Slides");
+    const rows = tbodyRows(html);
+    const week01Row = findRowByWeek(rows, 1);
+    expect(week01Row, "no row found for week 1").toBeDefined();
+    expect(week01Row).toMatch(/class="at-icon-button"/);
+    expect(week01Row).toMatch(/target="_blank"/);
+    expect(week01Row).toMatch(/rel="noopener noreferrer"/);
+    expect(week01Row).toMatch(/aria-label="Open slides for Week 1"/);
+    expect(week01Row).toMatch(/data-icon="iconoir:presentation"/);
+    const week02Row = findRowByWeek(rows, 2);
+    expect(week02Row, "no row found for week 2").toBeDefined();
+    expect(week02Row).not.toMatch(/at-icon-button/);
+  });
 });
 
 describe("treatment — shared surfaces and motion budget", () => {

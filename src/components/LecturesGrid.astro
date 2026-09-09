@@ -1,5 +1,6 @@
 ---
 import { getPublishedCollection } from "astro-course-university/content";
+import Icon from "astro-theme-university/components/Icon.astro";
 import { withBase } from "astro-theme-university/url";
 import TopicChips from "./TopicChips.astro";
 import { formatCourseDate } from "../lib/dates";
@@ -17,6 +18,7 @@ const visible = lectures.sort((a, b) => a.data.date.getTime() - b.data.date.getT
         <th scope="col">Date</th>
         <th scope="col">Title</th>
         <th scope="col">Topics</th>
+        <th scope="col">Slides</th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +32,19 @@ const visible = lectures.sort((a, b) => a.data.date.getTime() - b.data.date.getT
             </td>
             <td>
               <TopicChips topics={extractContentTopics(lecture.body ?? "")} />
+            </td>
+            <td>
+              {lecture.data.slides && (
+                <a
+                  class="at-icon-button"
+                  href={withBase(lecture.data.slides)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open slides for Week ${lecture.data.week}`}
+                >
+                  <Icon name="presentation" />
+                </a>
+              )}
             </td>
           </tr>
         ))
