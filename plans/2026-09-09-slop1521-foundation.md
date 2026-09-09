@@ -615,20 +615,20 @@ in `astro.config.ts` for the API.
 
 ## 6. Feature-level Definition of Done
 
-- [ ] Every task in §5 complete and its tests passing
-- [ ] `pnpm test` passes (runs `pnpm build` then `vitest run spec`)
-- [ ] `pnpm check` passes (typecheck + the above)
-- [ ] `pnpm check:evidence` reports no `STARTER_CONTENT` in any file this plan
+- [x] Every task in §5 complete and its tests passing
+- [x] `pnpm test` passes (runs `pnpm build` then `vitest run spec`)
+- [x] `pnpm check` passes (typecheck + the above)
+- [x] `pnpm check:evidence` reports no `STARTER_CONTENT` in any file this plan
       touched, and neither `hero-home.avif` nor `card.png`
       (it will still fail on Plan 2's content files and on `PROCESS.md` — expected)
-- [ ] Manually verified with `agent-browser` against `pnpm dev` at
+- [x] Manually verified with `agent-browser` against `pnpm dev` at
       `http://localhost:4321/comp4020-ass2-attwelveDev/`, at both
       `set viewport 1920 1080` and `set viewport 390 844`: the homepage (thesis
       visible, outcomes list, hero), `/people/` (four entries, convenor first,
       role labels), `/policies/` (the plain-register section separable from the
       in-character policy), and the nav reading Labs on every one
-- [ ] Every requirement in §2 is covered — see §7
-- [ ] No item remains in §8
+- [x] Every requirement in §2 is covered — see §7
+- [x] No item remains in §8
 
 ## 7. Requirements coverage check
 
