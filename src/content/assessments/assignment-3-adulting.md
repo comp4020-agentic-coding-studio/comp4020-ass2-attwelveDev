@@ -39,4 +39,41 @@ spec:
   - the plan stands on its own without you there to narrate it
 ---
 
-Placeholder body — filled in by Task 5.
+## The plan
+
+Submit a single week-long plan covering seven subsystems:
+
+- **Daily routine** — an hour-by-hour schedule for the week, covering wake,
+  sleep and meals.
+- **Laundry** — a wash schedule stating a frequency and colour separation,
+  not "as needed."
+- **Meal plan** — every meal for the week, with nutritional coverage stated
+  and repetition kept within reason.
+- **Budget** — every planned expense for the week against a stated income,
+  itemised by category.
+- **The date** — an activity booked, at a stated time, with attire decided
+  in advance.
+- **The hangout** — time negotiated with close friends outside the course,
+  with the rest of the week's workload cleared around it.
+- **The interview** — correspondence confirming a time, a plan for attire
+  and transit, and the interview itself, held Wednesday afternoon.
+
+The Wednesday interview time has not been specified: email the Convenor to
+confirm a slot before the deadline. A plan submitted without a confirmed
+slot is treated as incomplete.
+
+## How each band reads
+
+The bands describe the state of the submitted plan, not the person who
+wrote it:
+
+- **HD** — every subsystem is present, internally consistent, and would
+  survive a week of actual use without a manual override.
+- **D** — every subsystem is present and mostly consistent; one or two
+  would need a manual override mid-week.
+- **C** — all seven components are present, but several show scheduling
+  conflicts a real week would surface immediately.
+- **P** — most components are present, but coverage is thin enough that
+  the plan reads as an outline rather than something runnable.
+- **N** — one or more components are missing, or the plan does not
+  address the brief.

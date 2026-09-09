@@ -133,3 +133,37 @@ describe("weekly reflections", () => {
     expect(html).toMatch(/lowest/i);
   });
 });
+
+describe("assignment 3 adulting", () => {
+  const html = readFileSync(resolve("dist/assessments/assignment-3-adulting/index.html"), "utf8");
+
+  it("requires all seven plan components", () => {
+    for (const term of [
+      /daily routine/i,
+      /laundry/i,
+      /meal plan/i,
+      /budget/i,
+      /date/i,
+      /hangout|close friends/i,
+      /interview/i,
+    ]) {
+      expect(html, `missing ${term}`).toMatch(term);
+    }
+  });
+
+  it("publishes five band descriptors", () => {
+    for (const band of ["HD", "D", "C", "P", "N"]) {
+      expect(html, `missing band ${band}`).toMatch(new RegExp(`\\b${band}\\b`));
+    }
+  });
+
+  it("describes the plan, not the student", () => {
+    expect(html.toLowerCase()).not.toContain("you are");
+    expect(html.toLowerCase()).not.toContain("you can't");
+  });
+
+  it("puts the Wednesday interview time in the student's hands", () => {
+    expect(html).toMatch(/Wednesday/);
+    expect(html).toMatch(/not been specified|unspecified|confirm/i);
+  });
+});
