@@ -56,3 +56,48 @@ describe("treatment — structural tokens", () => {
     }
   });
 });
+
+describe("treatment — heading register", () => {
+  it("declares a serif heading family", () => {
+    const css = bundledCss();
+    expect(css).toMatch(/--course-font-heading:/);
+    const match = css.match(/--course-font-heading:\s*([^;}]+)[;}]/);
+    expect(match, "no --course-font-heading declaration found").not.toBeNull();
+    expect(match?.[1]).toMatch(/serif/);
+  });
+
+  it("applies the heading family to every heading level", () => {
+    const css = bundledCss();
+    const match = css.match(/([^{}]*\bh[1-6]\b[^{}]*)\{([^}]*)\}/g);
+    const covering = (match ?? []).find((rule) => {
+      const levels = new Set(
+        [...rule.matchAll(/h([1-6])(?:[,:{]|$)/g)].map((m) => m[1]),
+      );
+      return (
+        ["1", "2", "3", "4", "5", "6"].every((level) => levels.has(level)) &&
+        rule.includes("font-family:var(--course-font-heading)")
+      );
+    });
+    expect(covering, "no selector sets all six heading levels to the serif family").toBeDefined();
+  });
+
+  it("tightens the display steps", () => {
+    const css = bundledCss();
+    const h1Values = [...css.matchAll(/--at-font-size-h1:\s*([\d.]+)rem/g)].map((m) =>
+      Number(m[1]),
+    );
+    const h2Values = [...css.matchAll(/--at-font-size-h2:\s*([\d.]+)rem/g)].map((m) =>
+      Number(m[1]),
+    );
+    expect(h1Values.length, "no --at-font-size-h1 declaration found").toBeGreaterThan(0);
+    expect(h2Values.length, "no --at-font-size-h2 declaration found").toBeGreaterThan(0);
+    expect(h1Values.some((value) => value < 2.5)).toBe(true);
+    expect(h2Values.some((value) => value < 1.875)).toBe(true);
+  });
+
+  it("leaves body copy on Public Sans", () => {
+    expect(courseCssSource, "course.css must not declare --at-font-body").not.toMatch(
+      /--at-font-body\s*:/,
+    );
+  });
+});

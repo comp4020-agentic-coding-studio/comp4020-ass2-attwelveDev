@@ -9,4 +9,18 @@
   --at-shadow-sm: none;
   --at-shadow-md: none;
   --at-shadow-lg: none;
+
+  --course-font-heading: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  --at-font-size-h1: 2rem;
+  --at-font-size-h2: 1.5rem;
+  --at-font-size-h3: 1.25rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--course-font-heading);
 }
