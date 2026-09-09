@@ -193,12 +193,15 @@ src/content/assessments/final-project.md   week 12, due 2027-05-28T12:00:00+10:0
 src/decks/week-01.deck.mdx                 the starter deck
 ```
 
-**Ref hazard:** `sessions/02-first-review.md` declares
-`related: [assessments/assignment-1]` and `assessments/assignment-1.md`
-declares `related: [final-project]`. The build fails on a dangling ref, so
-deleting the starter assessments requires the referring side to be fixed in the
-same task (Task 1). Plan 1 Task 3 already repointed all four `teachers:` refs to
-the new convenor.
+**Ref hazard:** `sessions/02-first-review.md` and `lectures/week-02.md` both
+declare `related: [..., assessments/assignment-1]`, and `assessments/
+assignment-1.md` declares `related: [final-project]`. The build fails on a
+dangling ref, so deleting the starter assessments requires **both** referring
+files to be fixed in the same task (Task 1) — `lectures/week-02.md` isn't
+rewritten until Task 7, so leaving its ref unfixed would break `pnpm check` at
+any task boundary between Task 1 and Task 7 (Tasks 2, 5 and 12 can all land in
+that window per their declared dependencies). Plan 1 Task 3 already repointed
+all four `teachers:` refs to the new convenor.
 
 ### 3.4 How pages render, so bodies are written to fit
 
@@ -306,8 +309,11 @@ three weeks stop being reviewable in one sitting.
   `assignment-3-adulting.md`, `final-exam.md`; delete
   `src/content/assessments/assignment-1.md`,
   `src/content/assessments/final-project.md`; edit
-  `src/content/sessions/02-first-review.md` (drop its
-  `related: [assessments/assignment-1]`); new `spec/assessment-scheme.test.ts`.
+  `src/content/sessions/02-first-review.md` and
+  `src/content/lectures/week-02.md` (drop each's
+  `related: [assessments/assignment-1]` entry — both are rewritten again in
+  full by Task 7, so this is a one-line stopgap to keep the build green in the
+  meantime); new `spec/assessment-scheme.test.ts`.
 - **Tests first (red):** `spec/assessment-scheme.test.ts`, reading
   `dist/api/index.json` and filtering `nodes` to `type === "assessments"`:
   - `it("is a scheme of exactly five items")` — 5 nodes.
@@ -340,7 +346,7 @@ three weeks stop being reviewable in one sitting.
   touch-grass `Observation 40 / Reflection 35 / Compliance with restrictions 25`;
   adulting the twelve criteria (14/14/12/10/8/8/8/6/6/5/5/4); final-exam the
   five stations (15/15/20/20/30). Bodies are a single placeholder line each,
-  filled by Tasks 2–6. Remove the two starter files and the stale ref.
+  filled by Tasks 2–6. Remove the two starter files and both stale refs.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
   - All nine assertions pass; `pnpm check` green with no dangling-ref error.

@@ -10,8 +10,6 @@ teachers:
 spec:
   - work from week 1 is running and can be shown in under two minutes
   - you can name the one decision you are least sure about
-related:
-  - assessments/assignment-1
 ---
 
 <!-- STARTER_CONTENT: replace this session, then remove this comment. -->
