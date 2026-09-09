@@ -65,3 +65,32 @@ h6 {
 .course-list h3 {
   margin-block: 0 var(--at-spacing-xs);
 }
+
+.course-specsheet dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--at-spacing-xs) var(--at-spacing-lg);
+  margin: 0 0 var(--at-spacing-xl);
+  padding-block: var(--at-spacing-md);
+  border-block: 1px solid var(--at-divider);
+}
+
+.course-specsheet dt {
+  color: var(--at-text-secondary);
+  font-weight: 600;
+}
+
+.course-specsheet dd {
+  margin: 0;
+}
+
+@media (width < 640px) {
+  .course-specsheet dl {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .course-specsheet dd {
+    margin-block-end: var(--at-spacing-sm);
+  }
+}

@@ -5,7 +5,7 @@ import RelatedContent from "astro-course-university/components/RelatedContent.as
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
 import { withBase } from "astro-theme-university/url";
 import TeachingTeam from "../../components/TeachingTeam.astro";
-import { formatCourseDate } from "../../lib/dates";
+import WeekMeta from "../../components/WeekMeta.astro";
 import { graphCollections, siteConfig } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -19,7 +19,7 @@ const title = `Week ${lecture.data.week}: ${lecture.data.title}`;
 ---
 
 <ContentLayout title={title} description={lecture.data.description} {...siteConfig}>
-  <p><strong>{formatCourseDate(lecture.data.date)}</strong></p>
+  <WeekMeta week={lecture.data.week} date={lecture.data.date} kind="lecture" />
   {lecture.data.slides && <p><a href={withBase(lecture.data.slides)}>Open the slides</a></p>}
   <Content />
   <TeachingTeam teachers={lecture.data.teachers} />

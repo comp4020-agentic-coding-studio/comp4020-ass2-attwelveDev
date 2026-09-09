@@ -184,3 +184,41 @@ describe("treatment — ruled lists", () => {
     expect(html).toMatch(/Tutor/);
   });
 });
+
+const WEEK_NUMBERS = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
+
+describe("treatment — spec-sheet metadata block", () => {
+  it("gives every lecture a spec-sheet block", () => {
+    for (const nn of WEEK_NUMBERS) {
+      const html = readFileSync(resolve(`dist/lectures/week-${nn}/index.html`), "utf8");
+      for (const label of ["Week", "Date", "Lab", "Reflection due"]) {
+        expect(html, `lectures/week-${nn} is missing the "${label}" row label`).toMatch(
+          new RegExp(`<dt>${label}</dt>`),
+        );
+      }
+    }
+  });
+
+  it("gives every Lab a spec-sheet block", () => {
+    for (const nn of WEEK_NUMBERS) {
+      const html = readFileSync(resolve(`dist/sessions/week-${nn}/index.html`), "utf8");
+      for (const label of ["Week", "Date", "Lecture", "Reflection due"]) {
+        expect(html, `sessions/week-${nn} is missing the "${label}" row label`).toMatch(
+          new RegExp(`<dt>${label}</dt>`),
+        );
+      }
+    }
+  });
+
+  it("links each week to its counterpart", () => {
+    const lecture = readFileSync(resolve("dist/lectures/week-05/index.html"), "utf8");
+    expect(lecture).toMatch(/href="[^"]*\/sessions\/week-05\/"/);
+    const lab = readFileSync(resolve("dist/sessions/week-05/index.html"), "utf8");
+    expect(lab).toMatch(/href="[^"]*\/lectures\/week-05\/"/);
+  });
+
+  it("drops the bare date paragraph", () => {
+    const html = readFileSync(resolve("dist/lectures/week-05/index.html"), "utf8");
+    expect(html).not.toMatch(/<p><strong>\d{1,2} \w+ \d{4}<\/strong><\/p>/);
+  });
+});

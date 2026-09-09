@@ -1,0 +1,54 @@
+---
+import { getPublishedCollection } from "astro-course-university/content";
+import { withBase } from "astro-theme-university/url";
+import { formatCourseDate } from "../lib/dates";
+import { sessionLabels } from "../site-config";
+
+interface Props {
+  week: number;
+  date: Date;
+  kind: "lecture" | "lab";
+}
+
+const { week, date, kind } = Astro.props;
+
+const lectures = await getPublishedCollection("lectures");
+const sessions = await getPublishedCollection("sessions");
+
+const counterpartLabel = kind === "lecture" ? sessionLabels.singular : "Lecture";
+const counterpartPath = kind === "lecture" ? "sessions" : "lectures";
+const counterpart = (kind === "lecture" ? sessions : lectures).find((e) => e.data.week === week);
+
+// Reflections are pinned to the Tuesday lecture schedule, not the Thursday
+// Lab schedule, so the reflection-due calculation always anchors on the
+// week's lecture date regardless of which page this is rendered on.
+const lectureDate = kind === "lecture" ? date : lectures.find((e) => e.data.week === week)?.data.date;
+const reflectionDue = lectureDate
+  ? new Date(lectureDate.getTime() + 7 * 24 * 60 * 60 * 1000)
+  : undefined;
+// The prompt set in week 11 is the last graded reflection (Weekly
+// Reflections covers weeks 1-11); week 12 sets a twelfth prompt on the same
+// schedule, but it is not graded on its own — see weekly-reflections.md.
+const reflectionNote = week === 11 ? " (last graded)" : week === 12 ? " (ungraded)" : "";
+---
+
+<section class="course-specsheet" aria-label="Week details">
+  <dl>
+    <dt>Week</dt>
+    <dd>{week}</dd>
+    <dt>Date</dt>
+    <dd>{formatCourseDate(date)}</dd>
+    <dt>{counterpartLabel}</dt>
+    <dd>
+      {
+        counterpart ? (
+          <a href={withBase(`/${counterpartPath}/${counterpart.id}/`)}>{counterpart.data.title}</a>
+        ) : (
+          "—"
+        )
+      }
+    </dd>
+    <dt>Reflection due</dt>
+    <dd>{reflectionDue ? `${formatCourseDate(reflectionDue)}${reflectionNote}` : "—"}</dd>
+  </dl>
+</section>
