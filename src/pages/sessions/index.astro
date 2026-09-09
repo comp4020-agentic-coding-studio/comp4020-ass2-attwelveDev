@@ -1,18 +1,22 @@
 ---
-import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import BaseLayout from "astro-theme-university/layouts/BaseLayout.astro";
 import SessionsGrid from "../../components/SessionsGrid.astro";
 import { sessionLabels, siteConfig } from "../../site-config";
+
+const description = `The twelve-week teaching schedule: what happens in each ${sessionLabels.singular.toLowerCase()}, what to prepare, and what leaves the room.`;
 ---
 
-<ContentLayout
+<BaseLayout
   title={`${sessionLabels.plural} — ${siteConfig.name}`}
-  description={`The twelve-week teaching schedule: what happens in each ${sessionLabels.singular.toLowerCase()}, what to prepare, and what leaves the room.`}
+  description={description}
   {...siteConfig}
 >
+  <h1>{sessionLabels.plural}</h1>
+  <p class="lead">{description}</p>
   <p>
     A Lab is where the week's material gets applied under supervision — bring
     the case study, expect a demonstration, leave with feedback on the one
     decision you were least sure about.
   </p>
   <SessionsGrid />
-</ContentLayout>
+</BaseLayout>
