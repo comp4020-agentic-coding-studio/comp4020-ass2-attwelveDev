@@ -134,6 +134,24 @@ describe("weekly reflections", () => {
   });
 });
 
+describe("assignment 1 makeover", () => {
+  const html = readFileSync(
+    resolve("dist/assessments/assignment-1-makeover/index.html"),
+    "utf8",
+  );
+
+  it("names all three occasions", () => {
+    expect(html).toMatch(/lecture/i);
+    expect(html).toMatch(/birthday party/i);
+    expect(html).toMatch(/gym/i);
+  });
+
+  it("requires evidence and justification", () => {
+    expect(html).toMatch(/screenshot|picture|image/i);
+    expect(html).toMatch(/justif/i);
+  });
+});
+
 describe("assignment 3 adulting", () => {
   const html = readFileSync(resolve("dist/assessments/assignment-3-adulting/index.html"), "utf8");
 

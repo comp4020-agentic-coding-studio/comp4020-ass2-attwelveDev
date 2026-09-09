@@ -19,6 +19,25 @@ spec:
   - a hygiene product selection is submitted with a stated rationale
   - three outfits are each attached as an image
   - each outfit is justified against the occasion it is for
+related:
+  - lectures/week-03
 ---
 
-Placeholder body — filled in by Task 3.
+## The brief
+
+> Select hygiene products for the semester and assemble three outfits: one
+> for a lecture, one for a friend's birthday party, one for the gym.
+
+Choose a product for each routine task in your week 2 hygiene schedule and
+state why you chose it over the alternatives on the shelf. Then assemble
+three outfits from your own wardrobe, one per occasion, and take a picture
+of each — the outfit as worn, not a description of it.
+
+## What you submit
+
+- the hygiene product selection, with a one-line rationale per product
+- three outfit pictures, one per occasion: lecture, birthday party, gym
+- a written justification for each outfit against its occasion
+
+An outfit without its picture is not evidence; a picture without its
+justification is not an argument.
