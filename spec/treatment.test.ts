@@ -27,7 +27,7 @@ const courseCssSource = readFileSync(resolve("src/styles/course.css"), "utf8");
 
 describe("treatment — structural tokens", () => {
   it("ships the course stylesheet", () => {
-    expect(bundledCss()).toMatch(/--at-content-width:\s*38rem/);
+    expect(bundledCss()).toMatch(/--at-content-width:\s*44rem/);
   });
 
   it("takes headings off the brand gold", () => {
@@ -37,14 +37,17 @@ describe("treatment — structural tokens", () => {
     expect(matches.some((match) => match[1].trim() !== "var(--at-primary)")).toBe(true);
   });
 
-  it("squares every corner", () => {
-    expect(bundledCss()).toMatch(/--at-border-radius:\s*0(?:px|rem)?\s*[;}]/);
+  it("no longer forces square corners", () => {
+    expect(courseCssSource, "course.css must not declare --at-border-radius").not.toMatch(
+      /--at-border-radius\s*:/,
+    );
   });
 
-  it("removes elevation", () => {
-    const css = bundledCss();
+  it("no longer forces flat elevation", () => {
     for (const token of ["--at-shadow-sm", "--at-shadow-md", "--at-shadow-lg"]) {
-      expect(css).toMatch(new RegExp(`${token}:\\s*none\\s*[;}]`));
+      expect(courseCssSource, `course.css must not declare ${token}`).not.toMatch(
+        new RegExp(`${token}\\s*:`),
+      );
     }
   });
 

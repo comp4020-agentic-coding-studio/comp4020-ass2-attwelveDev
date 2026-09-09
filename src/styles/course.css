@@ -4,11 +4,7 @@
 
 :root {
   --at-heading: var(--at-text);
-  --at-content-width: 38rem;
-  --at-border-radius: 0;
-  --at-shadow-sm: none;
-  --at-shadow-md: none;
-  --at-shadow-lg: none;
+  --at-content-width: 44rem;
 
   --course-font-heading: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
   --at-font-size-h1: 2rem;
