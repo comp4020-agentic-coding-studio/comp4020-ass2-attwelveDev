@@ -549,7 +549,7 @@ in `astro.config.ts` for the API.
   - Homepage reads correctly at both viewports with no axe violations.
 - **Depends on:** Task 1 (needs `courseMeta.learningOutcomes` to exist).
 
-### Task 6: Replace the hero and link-preview artwork
+### Task 6: Replace the hero and link-preview artwork ✅
 
 - **Description:** Replace both starter images with course-specific artwork and
   update the hero alt text.

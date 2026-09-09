@@ -38,4 +38,8 @@ describe("homepage", () => {
     expect(html).not.toContain("Who it is for");
     expect(html).not.toContain("Say what a student spends");
   });
+
+  it("describes its own hero artwork", () => {
+    expect(html).not.toContain("A lecture theatre reduced to flat gold and black shapes");
+  });
 });
