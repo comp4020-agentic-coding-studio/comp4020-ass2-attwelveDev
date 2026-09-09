@@ -2,8 +2,13 @@
 import MdxPageLayout from "astro-theme-university/layouts/MdxPageLayout.astro";
 import { siteConfig } from "../site-config";
 import "../styles/course.css";
+
+// Lets a page opt out of MdxPageLayout's auto-rendered lead paragraph (via
+// frontmatter `lead: false`) so it can put its own <h1> above the subtitle
+// instead of below it.
+const lead = (Astro.props as { frontmatter?: { lead?: boolean } }).frontmatter?.lead ?? true;
 ---
 
-<MdxPageLayout siteConfig={siteConfig} {...Astro.props}>
+<MdxPageLayout siteConfig={siteConfig} {...Astro.props} lead={lead}>
   <slot />
 </MdxPageLayout>
