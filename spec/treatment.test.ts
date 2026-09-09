@@ -222,3 +222,46 @@ describe("treatment — spec-sheet metadata block", () => {
     expect(html).not.toMatch(/<p><strong>\d{1,2} \w+ \d{4}<\/strong><\/p>/);
   });
 });
+
+describe("treatment — shared surfaces and motion budget", () => {
+  it("runs no entrance animation", () => {
+    expect(courseCssSource).toMatch(/\.at-hero-title(?:::after)?\s*\{[^}]*animation:\s*none/);
+    // Both hero selectors need the override, not just one.
+    const overrides = [...courseCssSource.matchAll(/([^{}]*)\{[^}]*animation:\s*none[^}]*\}/g)];
+    const covered = new Set(
+      overrides.flatMap((m) => (m[1].includes("::after") ? ["title", "after"] : ["title"])),
+    );
+    expect(covered.has("title"), "no animation:none override for .at-hero-title").toBe(true);
+    expect(
+      overrides.some((m) => m[1].includes("::after")),
+      "no animation:none override for .at-hero-title::after",
+    ).toBe(true);
+  });
+
+  it("keeps every transition inside the budget", () => {
+    const durations = [
+      ...courseCssSource.matchAll(/transition(?:-duration)?:\s*[^;]*?(\d+)ms/g),
+    ].map((m) => Number(m[1]));
+    expect(durations.length, "no transition durations found in course.css").toBeGreaterThan(0);
+    for (const ms of durations) {
+      expect(ms, `${ms}ms is outside the 120-180ms budget`).toBeGreaterThanOrEqual(120);
+      expect(ms, `${ms}ms is outside the 120-180ms budget`).toBeLessThanOrEqual(180);
+    }
+  });
+
+  it("does not defeat reduced motion", () => {
+    const flagged = [
+      ...courseCssSource.matchAll(/(transition-duration|animation-duration)[^;]*!important/g),
+    ];
+    expect(flagged.length, "course.css marks a duration !important").toBe(0);
+  });
+
+  it("styles the marking table as a ruled table", () => {
+    const html = readFileSync(
+      resolve("dist/assessments/assignment-3-adulting/index.html"),
+      "utf8",
+    );
+    expect(html).toMatch(/<table/);
+    expect(tbodyRows(html).length).toBe(12);
+  });
+});

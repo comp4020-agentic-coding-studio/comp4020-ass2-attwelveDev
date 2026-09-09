@@ -94,3 +94,20 @@ h6 {
     margin-block-end: var(--at-spacing-sm);
   }
 }
+
+/* No entrance animation runs on any page (F3.11) — components.css:683,694.
+   The theme's own keyframes stay in the bundle; only the two selectors that
+   apply them are neutralised here. */
+.at-hero-title,
+.at-hero-title::after {
+  animation: none;
+}
+
+/* Bring the theme's two 0.3s transitions inside the 120-180ms budget
+   (F3.12) — components.css:187,586. No !important: the theme's global
+   prefers-reduced-motion block (base.css:476-486) already outranks these
+   with one, and must keep doing so. */
+.at-nav-links-wrapper,
+.at-card-image {
+  transition-duration: 150ms;
+}
