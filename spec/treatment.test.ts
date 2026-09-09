@@ -111,6 +111,13 @@ function tbodyRows(html: string): string[] {
   return [...(tbody?.[1] ?? "").matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((m) => m[1]);
 }
 
+function findRowByWeek(rows: string[], week: number): string | undefined {
+  return rows.find((row) => {
+    const cell = row.match(/<td[^>]*>\s*(\d+)\s*<\/td>/);
+    return cell !== null && Number(cell[1]) === week;
+  });
+}
+
 describe("treatment — schedule tables", () => {
   it("renders the lecture listing as a table", () => {
     const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
@@ -265,6 +272,29 @@ describe("treatment — slides link", () => {
     expect(html).toMatch(/rel="noopener noreferrer"/);
     expect(html).toMatch(/data-icon="iconoir:presentation"/);
     expect(html).toMatch(/Open the slides/);
+  });
+});
+
+describe("treatment — topics", () => {
+  it("gives the lectures table a Topics column", () => {
+    const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
+    const thead = html.match(/<thead[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? "";
+    expect(thead).toContain("Topics");
+  });
+
+  it("shows one topic chip per Content bullet", () => {
+    const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
+    const week04Row = findRowByWeek(tbodyRows(html), 4);
+    expect(week04Row, "no row found for week 4").toBeDefined();
+    const chips = [...(week04Row ?? "").matchAll(/<li class="course-topic">/g)];
+    expect(chips.length, "week 4 has 4 Content bullets").toBe(4);
+  });
+
+  it("preserves a glossary term's <code> wrapping through truncation", () => {
+    const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
+    const week06Row = findRowByWeek(tbodyRows(html), 6);
+    expect(week06Row, "no row found for week 6").toBeDefined();
+    expect(week06Row).toMatch(/<code>manual override<\/code>/);
   });
 });
 

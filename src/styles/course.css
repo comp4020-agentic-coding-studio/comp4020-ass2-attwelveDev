@@ -37,6 +37,23 @@ h6 {
   background: var(--at-accent-soft);
 }
 
+.course-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--at-spacing-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.course-topic {
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--at-border-radius);
+  background: var(--at-bg-alt);
+  color: var(--at-text-secondary);
+  font-size: var(--at-font-size-xs);
+}
+
 .course-tags {
   display: flex;
   flex-wrap: wrap;
