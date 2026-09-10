@@ -1,7 +1,7 @@
 ---
 title: "Friendship and Group Communication"
 description:
-  A Lab writing a root-cause incident report on a plan that fell through
+  A Lab writing an incident report on a plan that fell through
 week: 8
 date: 2027-04-29
 teachers:
@@ -21,9 +21,9 @@ intended.
 ## In the Lab
 
 Write it up as an incident report: what was agreed, what actually
-happened, and a `root cause` traced to the coordination mechanism — which
-chat, which person routed messages, which step had no one responsible for
-it — rather than to any one person's character.
+happened, and the actual reason traced to which chat, which person routed
+messages, which step had no one responsible for it — rather than to any
+one person's character.
 
 ## Afterwards
 

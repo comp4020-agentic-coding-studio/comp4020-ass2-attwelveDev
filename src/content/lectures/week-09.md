@@ -1,8 +1,8 @@
 ---
 title: "Dating without documentation"
 description:
-  Dating as a matching problem with almost no labelled feedback, examined
-  through a six-hundred-word opening message that received no reply
+  Dating as a matching problem with almost no feedback, examined through
+  a six-hundred-word opening message that received no reply
 week: 9
 date: 2027-05-04
 teachers:
@@ -13,20 +13,20 @@ related:
 
 ## Overview
 
-Dating is a matching problem with an unusually poor feedback loop: most
-attempts go unlabelled, most failures are never explained, and the sample
-size any one person collects in a lifetime is small. This week treats an
-opening message as the interface where the whole system either starts or
+Dating is a matching problem with almost no feedback: most attempts go
+nowhere, most failures are never explained, and the number of tries any
+one person gets in a lifetime is small. This week treats an opening
+message as the one moment where the whole thing either starts or
 doesn't.
 
 ## Content
 
-- an opening message as an interface call: what it asks for, what it
-  commits to
-- reading a lack of reply as missing data, not as a verdict
-- calibrating message length against what an opening actually needs to
-  convey
-- why documentation, the thing this course runs on, is the wrong tool here
+- an opening message as a request: what it asks for, what it offers in
+  return
+- reading a lack of reply as one unlucky attempt, not as a verdict
+- matching message length to what an opening actually needs to say
+- why careful preparation, useful almost everywhere else in this course,
+  does not help much here
 
 ## Case study
 

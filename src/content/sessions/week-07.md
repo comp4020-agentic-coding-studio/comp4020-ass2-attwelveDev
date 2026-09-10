@@ -1,5 +1,5 @@
 ---
-title: "HCI Without The Computer"
+title: "Small Talk and Silence"
 description:
   A Lab drilling follow-up questions so a stalled conversation has
   somewhere to go

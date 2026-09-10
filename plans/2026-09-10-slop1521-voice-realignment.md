@@ -652,17 +652,22 @@ task that touches that file.
   not just an absence of "girlfriend"/"boyfriend").
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3 cases for all four required pages pass.
-  - [ ] `spec/voice.test.ts`'s F5 case for week 9 passes.
-  - [ ] `spec/weekly-structure.test.ts`'s per-week structural tests still
+  - [x] `spec/voice.test.ts`'s F2/F3 cases for all four required pages pass.
+  - [x] `spec/voice.test.ts`'s F5 case for week 9 passes.
+  - [x] `spec/weekly-structure.test.ts`'s per-week structural tests still
     pass for weeks 7–9, including the Lab spec-list checks.
-- **Human review:** Read week 9's rewritten lecture and Lab in full and
-  confirm the dating content reads as genuinely gender-neutral in substance
-  ("someone you're interested in" phrasing used throughout), not just
-  absent the four literally-banned nouns (F5) — the automated check can
-  only prove a negative. Also read weeks 7–8's rewrites and confirm the
-  handshake/root-cause hooks were re-derived into a mundane equivalent
-  rather than just deleted, leaving flat prose.
+- **Human review:** ACCEPTED 2026-09-10. Week 7's title itself
+  ("HCI Without The Computer") turned out to be the sustained metaphor's
+  banner, not a one-off pun — the whole Overview/Content/Case study enacted
+  it (handshake, packets, channel, latency, retry logic) — so it's renamed
+  to "Small Talk and Silence" (lecture and paired Lab both). Week 8 keeps
+  the incident-report shape and the "traced to [x], not to any person's
+  character" sentence exactly, dropping "distributed system"/"coordinator
+  node"/"messaging topology" around it. Week 9 drops "interface call",
+  "feedback loop", "unlabelled" and "documentation" (ML/systems-flavoured
+  phrasing beyond the literal banned list) while keeping gender-neutral
+  language throughout (already clean per F5). User accepted the rendered
+  weeks 7–9 lectures.
 - **Depends on:** Task 2.
 
 ### Task 9: Lectures + sessions, weeks 10–12 (F1, F2, F3, F8)
