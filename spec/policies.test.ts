@@ -28,4 +28,31 @@ describe("policies", () => {
   it("is not the starter page", () => {
     expect(html).not.toContain("Replace this page");
   });
+
+  it("states the paper submission policy", () => {
+    expect(html).toMatch(/<h[1-6][^>]*>(?:(?!<\/h[1-6]>)[\s\S])*Submission(?:(?!<\/h[1-6]>)[\s\S])*<\/h[1-6]>/i);
+  });
+
+  it("names both submission drop points", () => {
+    expect(html).toMatch(/Convenor/);
+    expect(html).toMatch(/tutor/i);
+  });
+
+  it("permits email submission in extenuating circumstances, with documentation", () => {
+    expect(html).toMatch(/extenuating circumstances/i);
+    expect(html).toMatch(/documentation/i);
+  });
+
+  it("does not cover the Final Exam", () => {
+    expect(html).toMatch(/Final Exam/);
+    expect(html).toMatch(/own conditions|does not (?:apply|cover)/i);
+  });
+
+  it("supplies envelopes as well as paper", () => {
+    expect(html).toMatch(/paper and envelopes|envelopes? and paper/i);
+  });
+
+  it("links to the Final Exam page", () => {
+    expect(html).toMatch(/href="[^"]*\/assessments\/final-exam\/"/);
+  });
 });
