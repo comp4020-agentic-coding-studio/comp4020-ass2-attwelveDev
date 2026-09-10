@@ -496,14 +496,18 @@ task that touches that file.
     schedule" or equivalent.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3 case for `policies/index.html` passes.
-  - [ ] `spec/policies.test.ts`'s five existing tests still pass unmodified.
-  - [ ] The Content and disclosure section (lines 52–68 in the current
+  - [x] `spec/voice.test.ts`'s F2/F3 case for `policies/index.html` passes.
+  - [x] `spec/policies.test.ts`'s five existing tests still pass unmodified.
+  - [x] The Content and disclosure section (lines 52–68 in the current
     file) is byte-for-byte unchanged.
-- **Human review:** Read the rewritten Attendance/Late work/Academic
-  integrity sections and confirm each still states the actual rule clearly
-  and reads as institutional-plain — not accidentally reintroducing a
-  technical metaphor the banned-term list doesn't happen to cover.
+- **Human review:** ACCEPTED 2026-09-10. Rewrote Attendance ("systems"/
+  `Unscheduled downtime`/`subsystem`/root-cause conversation → "Life
+  happens... a conversation with your tutor about what's going on"), Late
+  work (`manual override` → "a decision"), and Academic integrity ("your
+  own systems"/sleep `telemetry` → "your own habits"/"sleep schedule"),
+  preserving every actual rule (missed-Lab grace, 5%/day late penalty to a
+  5-day cap, integrity scope). User reviewed rendered screenshots at both
+  viewports and accepted as-is.
 - **Depends on:** Task 2 (for the test to check against).
 
 ### Task 6: Lectures + sessions, weeks 1–3 (F1, F2, F3, F8)
