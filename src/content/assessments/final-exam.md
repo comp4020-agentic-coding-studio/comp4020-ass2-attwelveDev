@@ -53,7 +53,9 @@ duration is not difficulty.
 
 The only material permitted is a black or blue pen. No phones, no
 smartwatches, no other electronic devices, and no calculators — the exam
-is closed book throughout.
+is closed book throughout. Materials provided at a station — the outfit
+rack at Station 2, the pantry at Station 5 — do not count against this
+restriction.
 
 No talking is permitted at any station, with one exception: Station 3
 makes talking compulsory, and a silent conversation fails the station on
