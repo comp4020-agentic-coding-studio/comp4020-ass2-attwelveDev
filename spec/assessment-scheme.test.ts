@@ -198,6 +198,10 @@ describe("assignment 2 touch grass", () => {
   it("sets the word count", () => {
     expect(html).toMatch(/1000|1,000/);
   });
+
+  it("submits the report on paper", () => {
+    expect(html).toMatch(/paper/i);
+  });
 });
 
 describe("assignment 3 adulting", () => {

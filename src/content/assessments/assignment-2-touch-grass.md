@@ -57,3 +57,6 @@ is the recording.
 
 A 1000-word report naming the activity, when it ran, and who else was
 there, addressing each of the three restrictions directly.
+
+The report is submitted on paper. See [Policies](/policies/) for where
+to hand it in and the extenuating-circumstances exception.
