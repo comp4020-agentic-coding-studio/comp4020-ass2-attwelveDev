@@ -900,21 +900,22 @@ task that touches that file.
 - **Refactor:** None expected — this task's implementation step already
   produces the target content.
 - **Acceptance criteria:**
-  - [ ] `spec/harness.test.ts`'s five tests still pass — rerun explicitly
+  - [x] `spec/harness.test.ts`'s five tests still pass — rerun explicitly
     after editing, not assumed.
-  - [ ] The weekly-structure section no longer claims Labs use the
+  - [x] The weekly-structure section no longer claims Labs use the
     five-slot shape.
-  - [ ] The new "Register and voice" section contains the don't/do table
+  - [x] The new "Register and voice" section contains the don't/do table
     verbatim as above.
-  - [ ] `CLAUDE.md`'s total line count does not increase (a concision sweep
-    that only adds content without cutting anything elsewhere has failed
-    its own goal) — verify with `wc -l CLAUDE.md` before and after.
-- **Human review:** Read the new "Register and voice" section and its
-  don't/do table and confirm it actually teaches a future agent the rule
-  (institutional seriousness applied to mundane specifics, never a
-  technical metaphor) rather than just restating "no jargon" — this section
-  is the harness's main defence against the exact drift this whole plan
-  exists to correct.
+  - [x] `CLAUDE.md`'s total line count does not increase (87 → 87) —
+    verified with `wc -l CLAUDE.md` before and after.
+- **Human review:** ACCEPTED 2026-09-10. One deviation from the plan's
+  literal implementation text: to make the line-count budget work without
+  cutting real instructional content, the PROCESS.md/PROCESS_LOG.md
+  code-fence template is no longer duplicated in `CLAUDE.md` — it now
+  points to `PROCESS_LOG.md`'s own header comment, which already carries
+  the identical template verbatim. Genuine deduplication, not a line-count
+  trick. User accepted both the Register-and-voice section's teaching
+  value and this deviation.
 - **Depends on:** None (can run any time after Task 2 exists, so the pointer
   to `spec/voice.test.ts` in the new Register section is accurate; sequenced
   last since it should describe the *finished* voice).

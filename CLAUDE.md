@@ -5,53 +5,38 @@
 ## Before pushing
 
 - `pnpm check` (types, build, `spec/` tests) must be green.
-- Verify visual/interactive changes by opening the page with `agent-browser`
-  (`open`, `screenshot`, `snapshot`) against the dev server at
-  `http://localhost:4321/<repo>/...` — the render is the truth, not the
-  source. Check both marking viewports: `agent-browser set viewport 1920
-  1080` (desktop) and `agent-browser set viewport 390 844` (phone).
+- Verify visual changes with `agent-browser` at both marking viewports
+  (`1920 1080`, `390 844`) — the render is the truth, not the source.
 
 ## Generated files
 
-Never hand-edit `dist/`, `.astro/`, or generated `api/*.json` — build
-output. Fix the source and rebuild.
+Never hand-edit `dist/`, `.astro/`, or generated `api/*.json`; fix the
+source and rebuild.
 
 ## Secrets
 
-Never widen `.gitignore` around `.claude/settings*.json`, `.env*`, or commit
-a key. `.claude/skills/**` is the one deliberate carve-out (plain
-instructions, no secrets) — don't extend it further.
+Never widen `.gitignore` around `.claude/settings*.json`, `.env*`, or
+commit a key. `.claude/skills/**` is the only carve-out.
 
 ## Commits
 
-- One commit per unit of work (feature, fix, doc change) once `pnpm check`
-  passes. No end-of-day mega-commits, no bundling unrelated changes.
-- Messages say what changed and why — not "fixed things".
+One commit per unit of work once `pnpm check` passes — no mega-commits,
+no bundling unrelated changes. Messages say what changed and why, not
+"fixed things".
 
 ## PROCESS.md and PROCESS_LOG.md
 
-`PROCESS.md` is the graded account of **my** decisions, not the agent's:
-3-4 moments, 400-600 words, each citing a commit/range that actually
-resolves (`pnpm check:evidence` checks this — never cite before
-committing).
+`PROCESS.md` is the graded account of **my** decisions: 3-4 moments,
+400-600 words, each citing a commit/range that actually resolves
+(`pnpm check:evidence` checks this — never cite before committing). A
+moment qualifies only if it says why the call beat the obvious one and
+how I knew the result was right — not just "it worked"; the strongest
+moments land the correction in the harness itself (a rule here, a check
+added to `spec/`/`scripts/`) rather than a one-off fix.
 
-A moment qualifies only if it says why the call beat the obvious one, and
-how I knew the result was right before accepting it — not just "it worked".
-The strongest moments are where the correction landed in the harness itself
-(a rule added here, a check added to `spec/`/`scripts/`, an attempt thrown
-away) rather than a one-off fix.
-
-Log every qualifying moment to `PROCESS_LOG.md` (append-only, repo root) as
-it happens — I'll pick the best 3-4 for `PROCESS.md` later. Format:
-
-```markdown
-## YYYY-MM-DD — <short title>
-**Obvious approach:** ...
-**What I decided instead, and why:** ...
-**How I knew it was right:** ...
-**Landed in the harness as:** ...
-**Commit:** [`<sha>`](<url>) — add once committed.
-```
+Log every qualifying moment to `PROCESS_LOG.md` (append-only, repo root)
+as it happens, in the format its own header comment shows — pick the
+best 3-4 for `PROCESS.md` later.
 
 # Course rules
 
@@ -60,17 +45,32 @@ something an agent can check its own work against directly.
 
 ## The weekly structure
 
-Every week (lecture + Lab) carries the same five slots, in this order, all
-filled: **Overview**, **Content**, **Case study**, **Reflection**,
-**Assessment tie-in** (which may read "None this week", explicitly).
-`spec/` enforces this, so a week cannot drift from the others.
+Every lecture carries the same five slots, in order: **Overview**,
+**Content**, **Case study**, **Reflection**, **Assessment tie-in** (which
+may read "None this week"). Every Lab carries its own three: **Before the
+Lab**, **In the Lab**, **Afterwards**. `spec/` enforces both shapes.
 
-## Register
+## Register and voice
 
-Never break character in a lecture, Lab, assessment or exam station. The one
-exception is the policies page, which carries exactly one plain-register
-**Content and disclosure** section; everything else on it, and every other
-page on the site, stays in character.
+Never break character in a lecture, Lab, assessment or exam station —
+the one exception is the policies page's **Content and disclosure**
+section; everything else stays in character.
+
+The joke is institutional seriousness applied to a concrete, mundane
+CS-student stereotype — never a technical metaphor from any domain (CS,
+networking, logistics, business-ops). Puns are fine; sustained metaphors
+are not — if a sentence needs a technical concept to land, rewrite it in
+mundane specifics.
+
+| Don't | Do |
+| --- | --- |
+| "root-cause analysis of a friendship failure" | "eating the same bowl of instant noodles four nights running and calling it meal planning" |
+| "personal systems running on manual override" | "your last haircut predates your current degree" |
+| "regression checks on hygiene" | "identify one reason to shower before, not after, a group project meeting" |
+
+Never wrap jargon in backticks/`<code>` — that undercuts the deadpan.
+`spec/voice.test.ts` checks a banned-term list against every content page;
+extend it there when a new metaphor slips in, not just the one instance.
 
 ## `role` is an enum, not free text
 
