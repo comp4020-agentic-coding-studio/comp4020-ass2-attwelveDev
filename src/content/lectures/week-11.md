@@ -1,8 +1,8 @@
 ---
 title: "Workplace Behavior"
 description:
-  Professional correspondence as a protocol with its own retry logic,
-  examined through the same email sent four times over
+  Professional correspondence, examined through the same email sent four
+  times over
 week: 11
 date: 2027-05-18
 teachers:
@@ -13,10 +13,11 @@ related:
 
 ## Overview
 
-A workplace runs on a smaller, more formal version of the same protocol
-week 7 covered: a message opens a channel, and the reply confirms it
-landed. The difference is that a workplace channel has an audit trail, so
-a bad opening is far harder to quietly retry.
+A workplace runs on a smaller, more formal version of the same
+back-and-forth week 7 covered: someone reaches out, and the reply
+confirms it landed. The difference is that a workplace conversation is
+usually in writing and kept, so a bad opening is far harder to quietly
+take back.
 
 ## Content
 
@@ -24,9 +25,8 @@ a bad opening is far harder to quietly retry.
   a client
 - why a first draft is a first draft, in professional correspondence
   specifically
-- reading a lack of reply in a professional channel — is it silence, or a
-  queue?
-- escalation paths: when to resend, when to ask someone else, when to wait
+- reading a lack of reply at work — is it silence, or are they just busy?
+- what to do next: when to resend, when to ask someone else, when to wait
 
 ## Case study
 

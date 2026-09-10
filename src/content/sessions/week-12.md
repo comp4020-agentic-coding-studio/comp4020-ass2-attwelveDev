@@ -17,7 +17,7 @@ related:
 ## Before the Lab
 
 Bring every schedule and system built across the semester: the week 2
-hygiene schedule, the week 4 sleep and exercise plan, the week 10 reorder
+hygiene schedule, the week 4 sleep and exercise plan, the week 10 shopping
 schedule, and anything else still running.
 
 ## In the Lab

@@ -705,18 +705,21 @@ task that touches that file.
   `subsystem` sentences.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3 cases for all five required pages pass.
-  - [ ] `spec/weekly-structure.test.ts`'s `"closes the loop on both
+  - [x] `spec/voice.test.ts`'s F2/F3 cases for all five required pages pass.
+  - [x] `spec/weekly-structure.test.ts`'s `"closes the loop on both
     recurring datasets"` test still passes (rerun explicitly, don't just
     assume).
-  - [ ] `spec/weekly-structure.test.ts`'s per-week structural tests still
+  - [x] `spec/weekly-structure.test.ts`'s per-week structural tests still
     pass for weeks 10–12.
-- **Human review:** Read week 12's rewritten lecture in full and confirm the
-  desk/sock-pile callback reads as a deliberate, satisfying continuity —
-  not merely present per the `/desk/i`/`/sock/i` regex check — and that
-  weeks 10–12 each keep one concrete hook (F8) rather than degrading into
-  generic list-of-tips prose once the supply-chain/protocol framing is
-  removed.
+- **Human review:** ACCEPTED 2026-09-10. Beyond the plan's listed changes,
+  found the same pattern as prior tasks: week 10's Overview sustained the
+  supply-chain metaphor well past the literal "reorder point"/"supply
+  chain" hits ("backup supplier", "the system doesn't route around it"),
+  and week 11's Overview extended the networking metaphor past "protocol"/
+  "retry logic" with "channel", "audit trail" and "queue". Both re-derived
+  in mundane terms. Week 12 drops all five `subsystem` occurrences; the
+  desk/sock-pile callback (shown to the user) is unchanged and the
+  regression test for it passes explicitly.
 - **Depends on:** Task 2, Task 6 (week-12's case study references week 1's
   desk, established in Task 6).
 
