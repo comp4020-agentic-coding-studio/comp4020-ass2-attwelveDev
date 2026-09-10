@@ -1,8 +1,8 @@
 ---
 title: Weekly Reflections
 description:
-  Eleven short weekly reflections on the systems you are running on yourself,
-  with the lowest dropped before the running total is calculated
+  Eleven short weekly reflections on the habits you are running on
+  yourself, with the lowest dropped before the running total is calculated
 week: 1
 due: 2027-03-02T12:00:00+11:00
 weight: 15
@@ -29,10 +29,10 @@ without a separate extension process.
 
 ## The prompts
 
-Each prompt names the week whose `subsystem` it reflects on:
+Each prompt names the week whose topic it reflects on:
 
 - Week 1 — what is already running, unmonitored, before any instruction is given
-- Week 2 — a hygiene routine's actual failure mode, not its intended one
+- Week 2 — a hygiene routine's actual failure, not the one you intended
 - Week 3 — a wardrobe decision made under time pressure
 - Week 4 — a night the sleep schedule held, or didn't, and why
 - Week 5 — the day's real radius, measured rather than estimated
@@ -40,7 +40,7 @@ Each prompt names the week whose `subsystem` it reflects on:
 - Week 7 — a conversation that stalled, examined rather than excused
 - Week 8 — a group chat's actual load-bearing member
 - Week 9 — an opening message sent, and what it cost to send
-- Week 10 — a delivery, a routine, or a receipt, read as `telemetry`
+- Week 10 — a delivery, a routine, or a receipt, read for what it actually shows
 - Week 11 — a piece of workplace conduct observed rather than performed
 
 Week 12 sets a twelfth prompt on the same schedule, but it is not graded: no

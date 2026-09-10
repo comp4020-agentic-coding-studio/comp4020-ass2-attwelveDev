@@ -768,17 +768,26 @@ task that touches that file.
   discovery already flags `index.astro`, and Task 11 must check the two
   tutor bios that mention the station.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3 cases for all three required assessment
+  - [x] `spec/voice.test.ts`'s F2/F3 cases for all three required assessment
     pages pass.
-  - [ ] `grep -ri "social debugging" src/` returns zero matches anywhere in
-    the repo once this task and its cross-references (Task 4, Task 11) are
-    done.
-  - [ ] `spec/data-integrity.test.ts` and `spec/cast.test.ts` still pass
+  - [x] `grep -ri "social.debugging" src/` returns zero matches except
+    `people/noor-kalantari.md` (Task 11's job, not yet run).
+  - [x] `spec/data-integrity.test.ts` and `spec/cast.test.ts` still pass
     unmodified (no jargon dependency, verified in Phase 2).
-- **Human review:** Read the renamed Station 4 and the rewritten
-  assignment-3/final-exam/weekly-reflections copy and confirm the
-  replacements land the joke — a banned-term check can only confirm the old
-  jargon is gone, not that the new station name or rewording is any good.
+- **Human review:** ACCEPTED 2026-09-10. Beyond this task's listed files:
+  (1) `weekly-reflections.md`'s week-2 summary still said "failure mode"
+  even though I'd already dropped that from week 2's own lecture in
+  Task 6 — cross-referenced and fixed for consistency. (2) Found a real F3
+  gap the plan's own Phase-2 investigation missed: `src/pages/lectures/
+  index.mdx` (never in the plan's inventory) had a legitimate, non-jargon
+  backtick-styled `` `related:` `` referencing a schema field — F3 bans
+  any `<code>` element regardless of intent, so it's reworded. (3)
+  Strengthened `spec/voice.test.ts`'s banned-terms check to normalize
+  hyphens before matching, since "social-debugging" in
+  `people/noor-kalantari.md` was silently passing the literal
+  `"social debugging"` (space) check — a real gap, not just this one
+  instance. User reviewed the renamed Station 4 and assignment-3 rendered
+  pages and accepted.
 - **Depends on:** Task 2.
 
 ### Task 11: People bios (F1, F2, F3)

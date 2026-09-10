@@ -108,15 +108,21 @@ function stripDisclosure(html: string): string {
   return html.slice(0, start);
 }
 
+/** A hyphenated variant ("social-debugging") must be caught the same as the spaced form. */
+function normalizeHyphens(text: string): string {
+  return text.replace(/-/g, " ");
+}
+
 describe("voice — banned terms (F2)", () => {
   const pages = renderedContentPages();
 
   it.each(pages)("$id carries no banned jargon term", ({ path, id }) => {
     const html = readFileSync(path, "utf8");
     const scoped = id === "policies/index.html" ? stripDisclosure(html) : html;
-    const lower = scoped.toLowerCase();
+    const lower = normalizeHyphens(scoped.toLowerCase());
     for (const term of BANNED_TERMS) {
-      expect(lower.includes(term), `${id} contains banned term "${term}"`).toBe(false);
+      const normalizedTerm = normalizeHyphens(term);
+      expect(lower.includes(normalizedTerm), `${id} contains banned term "${term}"`).toBe(false);
     }
   });
 });
