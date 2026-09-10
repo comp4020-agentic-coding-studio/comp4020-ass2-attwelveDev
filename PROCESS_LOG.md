@@ -240,6 +240,14 @@ Done line in `plan-feature/template.md`, and the retrofit of Tasks 4-12 and
 
 ## 2026-09-10 — The `Human review:` gate, exercised for real
 
+This is not a new decision — it is what happened the first time the
+previous entry's decision actually got used. I added the `Human review:`
+field to `plan-feature` and `execute-plan` because I felt mechanical
+checks like `spec/voice.test.ts` could never be enough to judge these
+changes: a check can assert a banned phrase is absent, it cannot assert
+that the replacement is actually good. That's the whole reason the gate
+exists. This entry is the first real test of it.
+
 **Obvious approach:** Treat the previous entry's open question as closed by
 inspection — the gate field exists in both skills, so trust it will work
 when a task actually needs it, the same way the rest of the plan's checks
