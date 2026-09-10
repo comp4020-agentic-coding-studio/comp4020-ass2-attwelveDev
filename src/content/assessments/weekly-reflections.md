@@ -46,3 +46,10 @@ Each prompt names the week whose topic it reflects on:
 Week 12 sets a twelfth prompt on the same schedule, but it is not graded: no
 week 13 exists to mark it against, so it is folded into Assignment 3's
 reflective component instead of standing alone.
+
+## Submission
+
+Each week's reflection is submitted on paper, sealed in an envelope, and
+handed to the Convenor's office or to your tutor — see
+[Policies](/policies/) for the full submission rule and the
+extenuating-circumstances exception.

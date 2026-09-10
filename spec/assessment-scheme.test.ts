@@ -132,6 +132,11 @@ describe("weekly reflections", () => {
   it("declares the drop-lowest rule", () => {
     expect(html).toMatch(/lowest/i);
   });
+
+  it("requires a sealed paper submission", () => {
+    expect(html).toMatch(/paper/i);
+    expect(html).toMatch(/sealed/i);
+  });
 });
 
 describe("assignment 1 makeover", () => {
