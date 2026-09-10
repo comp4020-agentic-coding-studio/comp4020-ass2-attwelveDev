@@ -62,6 +62,15 @@ The Wednesday interview time has not been specified: email the Convenor to
 confirm a slot before the deadline. A plan submitted without a confirmed
 slot is treated as incomplete.
 
+## Submission
+
+The plan is submitted as a single paper document — see
+[Policies](/policies/) for where to hand it in and the
+extenuating-circumstances exception. The email confirming your
+Wednesday interview slot is separate correspondence with the Convenor,
+not the assessment submission itself, and still goes by email as
+described above.
+
 ## How each band reads
 
 The bands describe the state of the submitted plan, not the person who

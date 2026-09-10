@@ -236,6 +236,11 @@ describe("assignment 3 adulting", () => {
     expect(html).toMatch(/Wednesday/);
     expect(html).toMatch(/not been specified|unspecified|confirm/i);
   });
+
+  it("submits the plan as one paper document, separate from the interview-scheduling email", () => {
+    expect(html).toMatch(/paper/i);
+    expect(html).toMatch(/not the assessment submission|separate from the (?:assessment )?submission/i);
+  });
 });
 
 describe("final exam", () => {
