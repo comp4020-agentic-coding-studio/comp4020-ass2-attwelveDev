@@ -545,7 +545,7 @@ that locality for no benefit.
 - [x] Every task in §5 complete and its tests passing
 - [x] `pnpm test` passes (runs `pnpm build && vitest run spec`)
 - [x] `pnpm check` passes (runs `pnpm typecheck && pnpm test`)
-- [ ] Manually verified with `agent-browser` at both marking viewports
+- [x] Manually verified with `agent-browser` at both marking viewports
   (`1920 1080`, `390 844`): `/policies/`, `/assessments/weekly-reflections/`,
   `/assessments/assignment-1-makeover/`,
   `/assessments/assignment-2-touch-grass/`,
