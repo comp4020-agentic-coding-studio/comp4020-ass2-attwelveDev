@@ -84,6 +84,12 @@ files, functions, and behaviour, not "handle X" or "improve Y."*
   tests above — nothing extra.
 - **Refactor:** cleanup expected once green (or "None expected.").
 - **Acceptance criteria:** bullet list, each independently checkable.
+- **Human review (if applicable):** what a human must look at and explicitly
+  accept because no automated check can settle it — tone, voice, phrasing
+  quality, visual/UX feel. Name the exact artifact (a diff, a rendered page,
+  the rewritten copy) and what a pass looks like. Omit this line entirely
+  when acceptance criteria alone are genuinely sufficient — don't add it as
+  boilerplate.
 - **Depends on:** other task numbers, or "None."
 
 ### Task 2: ...
@@ -100,6 +106,9 @@ done; note dependencies explicitly rather than relying on ordering alone)*
   project's marking viewports, exercised the golden path and the edge cases
   named in §2.1>`
 - [ ] Every requirement in §2 is covered — see §7
+- [ ] Every task with a `Human review:` line has been shown to the user and
+  explicitly accepted — not inferred, not just its acceptance criteria
+  passing
 - [ ] No item remains in §8
 
 ## 7. Requirements coverage check

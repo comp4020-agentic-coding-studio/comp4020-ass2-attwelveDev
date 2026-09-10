@@ -89,11 +89,36 @@ the task breakdown, non-negotiable:
   task does is add a test that reproduces the bug and fails.
 - **Every task has acceptance criteria** that are independently checkable
   without re-reading the whole plan.
+- **Name what only a human can settle.** Acceptance criteria should be
+  mechanical wherever a mechanical check can actually settle the question. If
+  a task's real correctness can't be — tone, voice, phrasing quality, visual
+  or UX feel, anything a linter or test can only approximate — add a
+  **Human review:** line naming the exact artifact to look at (a diff, a
+  rendered page, the rewritten copy) and what a pass looks like. A banned-word
+  list can prove the jargon is gone; it can't prove the rewrite is actually
+  funny or on-voice. Don't paper over that gap with an acceptance criterion
+  that sounds mechanical but isn't really checkable by anyone but a human.
 
 Also fill in the non-functional-requirements, out-of-scope, assumptions, and
 existing-code-context sections seriously — these are what make the plan
 self-contained. Don't leave a section out because it feels obvious; write
 "None." explicitly instead so a reader can tell it was considered.
+
+### Human-reviewed tasks are not done until the user says so
+
+A `Human review:` line changes what "done" means for that task: green tests
+and satisfied acceptance criteria are necessary but not sufficient. The task
+is only accepted once the user has actually looked at the named artifact and
+said so explicitly — not on silence, not on "looks fine", not inferred from
+the user moving on to the next thing.
+
+If the user rejects it, that is new information, not a bug to patch quietly:
+route it back through this skill rather than letting whoever is executing
+freelance a fix. A wording tweak that stays inside the task's existing
+approach can be redrafted in place (back to Phase 3 for that task); a
+rejection that reveals the approach or the requirement itself was wrong goes
+back to Phase 1. Either way, update the plan file in place — never leave the
+file claiming a task is done that the user just rejected.
 
 ## Phase 4 — Verify and fix before finalising
 
@@ -110,8 +135,13 @@ Before this plan is considered done, check it against itself:
 3. **No loose ends.** §8 (risks/open questions) must end up empty. If it
    isn't, that's unresolved ambiguity — take it back to the user (Phase 1),
    don't ship a plan with known gaps.
+4. **Human-review coverage.** For every requirement whose correctness can't
+   be fully pinned down by an automated check — tone, voice, subjective
+   quality, and the like — confirm at least one task carries a
+   `Human review:` line for it. Don't let these hide behind acceptance
+   criteria that only look mechanical.
 
-Only once all three pass does the plan's `Status` become `Approved` in the
+Only once all four pass does the plan's `Status` become `Approved` in the
 document header.
 
 ## Phase 5 — Save and report
@@ -122,7 +152,9 @@ document header.
    the `plans/` directory if it doesn't exist yet.
 3. Tell the user where it landed and give a one- or two-sentence summary of
    the approach and the number of tasks — don't paste the whole plan back
-   into the chat if it's long; they can open the file.
+   into the chat if it's long; they can open the file. If any task carries a
+   `Human review:` line, say so explicitly: those tasks need the user's
+   explicit sign-off during execution, not just green tests.
 4. Do not commit the file to git unless the user explicitly asks you to.
 
 ## A living checklist, not a one-shot artifact

@@ -198,3 +198,42 @@ at every large one, and without that clause the stop-and-ask rules would have ma
 it the former.
 
 **Commit:** [`fcfe8e2`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/fcfe8e2)
+
+## 2026-09-10 — A `Human review:` gate, because a banned-word list can't judge voice
+
+**Obvious approach:** Let the voice-realignment plan's tasks stand on
+`spec/voice.test.ts` alone — if the banned-phrase checks pass, the task is
+done, same as every other task in the plan.
+
+**What I decided instead, and why:** Added a `Human review:` field to the
+`plan-feature` and `execute-plan` skills themselves, not just to this one
+plan: any task whose correctness a mechanical check can only approximate
+now names the exact artifact a human must look at and explicitly accept,
+and a rejection either gets redrafted in place or hands back to planning if
+the task's approach was wrong. Retrofitted the nine content/voice tasks in
+`plans/2026-09-10-slop1521-voice-realignment.md` accordingly. The reason is
+that "banned phrase absent" and "replacement copy is actually funny and
+on-voice" are different claims, and only the first is machine-checkable —
+a task that only asserts the first would report itself done while the
+thing the whole plan exists to fix (drifted voice) went unverified.
+
+**How I knew it was right:** not by seeing it catch anything yet — nothing
+has been executed against the gate. I checked it by re-reading
+`spec/voice.test.ts` itself: every assertion in it is a presence/absence
+check against banned terms, none of them evaluate whether the surviving
+copy is good. That's a structural gap in the check, confirmed by reading
+the check, not a guess about what it probably covers.
+
+**What's still open:** the gate hasn't been exercised — no task has gone
+through an actual accept/reject cycle yet, so whether the hand-back-to-
+planning path works in practice is still unverified. That's a claim for a
+later entry, once `execute-plan` has actually run against this plan.
+
+**Landed in the harness as:** a `Human review:` field and its accept/reject
+handling in both `~/.claude/skills/plan-feature/SKILL.md` (Phase 3, Phase 4
+item 4) and `~/.claude/skills/execute-plan/SKILL.md` (Phase 3 steps 4-5,
+Phase 4, Phase 5), plus the corresponding template field and Definition-of-
+Done line in `plan-feature/template.md`, and the retrofit of Tasks 4-12 and
+§6/§7 in `plans/2026-09-10-slop1521-voice-realignment.md`.
+
+**Commit:** _pending — add once committed._

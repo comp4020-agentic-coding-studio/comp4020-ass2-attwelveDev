@@ -93,11 +93,17 @@ For each task, in order:
 4. **Verify.** Run the task's own verification, then the project's full check
    command. Walk the acceptance criteria one at a time and confirm each
    individually — they're written to be independently checkable, so check them
-   independently.
+   independently. If the task carries a **Human review:** line, green checks
+   are necessary but not sufficient: present the exact named artifact (the
+   diff, the rendered page, the rewritten copy) to the user and get an
+   explicit accept or reject before treating the task as done — silence or
+   moving on to the next task is not acceptance.
 5. **Record.** Tick the task in the plan file, and commit according to the
    project's stated convention (in this repo: one commit per task once the check
    command is green, with a message saying what changed and why). If the project
-   says nothing about commits, don't commit. **Never push.**
+   says nothing about commits, don't commit. **Never push.** Never tick or
+   commit a task carrying a **Human review:** line before the user has
+   explicitly accepted it — see Phase 4 for what to do when they don't.
 
 **While executing:**
 
@@ -137,6 +143,7 @@ For each task, in order:
   explicitly authorise it — deleting data, rewriting history, touching anything
   outward-facing.
 - Credentials, permissions or access are needed that you don't have.
+- A task carrying a **Human review:** line comes back rejected from the user.
 
 **How to stop:**
 
@@ -165,6 +172,19 @@ material consequence is a routine judgement call: make it, note it in the
 report, and keep going. A skill that stops at every small fork is as useless as
 one that guesses at every large one.
 
+### When a human-reviewed task is rejected
+
+A rejection here isn't the same shape as other blockers — asking already
+happened; the answer was no. Read the user's findings and decide which of two
+things happened:
+
+- **The wording/artifact was off, the approach wasn't.** Redraft the specific
+  thing and re-present it. No need to leave this skill for that.
+- **The task's approach, or the plan itself, was wrong.** Don't freelance a
+  new approach to route around the rejection. Hand back to `plan-feature`
+  with the user's specific findings so the task (or plan) gets amended there,
+  then resume execution against the updated plan (Phase 5).
+
 ## Phase 5 — Re-review whenever the plan or the approach changes
 
 Trigger a fresh Phase 1 review — against the **changed** plan, not the one you
@@ -174,6 +194,8 @@ remember — whenever:
 - Resolving a blocker changes the approach.
 - Execution reveals the plan was wrong about the code, the design, or the
   sequencing.
+- A `Human review:` rejection reveals the task's approach needs to change,
+  per the previous section.
 
 Then:
 
