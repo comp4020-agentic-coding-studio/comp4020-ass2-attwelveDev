@@ -26,7 +26,7 @@ describe("course record", () => {
   });
 
   it("names the course and its method", () => {
-    expect(api.course.title).toBe("Introduction to Life: Personal Systems Maintenance");
+    expect(api.course.title).toBe("Introduction to Life: Foundations of Being a Person");
   });
 
   it("runs in Semester 1 2027 across teaching and examination", () => {
@@ -39,7 +39,7 @@ describe("course record", () => {
   it("carries a description the catalogue will accept", () => {
     expect(api.course.description.length).toBeGreaterThanOrEqual(80);
     expect(api.course.description.length).toBeLessThanOrEqual(300);
-    expect(api.course.description).toContain("systems engineering");
+    expect(api.course.description).not.toContain("systems engineering");
   });
 
   it("declares one to three tags", () => {

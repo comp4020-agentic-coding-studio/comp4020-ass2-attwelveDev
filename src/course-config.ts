@@ -49,16 +49,18 @@ export const slopCourseMetaSchema = z
 // digit to your course's level (and `level` to match); keep the other three.
 export const courseMeta = slopCourseMetaSchema.parse({
   code: "SLOP1521",
-  title: "Introduction to Life: Personal Systems Maintenance",
+  title: "Introduction to Life: Foundations of Being a Person",
   session: "Semester 1",
   year: 2027,
   level: 1,
   startDate: "2027-02-22",
   endDate: "2027-06-19",
   description:
-    "The maintenance of a human being, taught as systems engineering: " +
-    "scheduling, root-cause analysis and regression checks applied to " +
-    "sleep, hygiene, conversation and money. Assessed by practical examination.",
+    "A practical course in the personal maintenance a computer science " +
+    "degree assumes you handled elsewhere: showering on a schedule, " +
+    "eating something with more than one food group, replying to a " +
+    "message before it's a week old, and holding a conversation that " +
+    "isn't about your degree.",
   tags: ["life skills", "wellbeing", "self-management"],
   learningOutcomes: [
     "Develop and maintain basic personal hygiene and daily routines without external prompting.",

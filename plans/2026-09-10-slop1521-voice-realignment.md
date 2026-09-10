@@ -253,10 +253,10 @@ task that touches that file.
   51-character title within its 100-char max.)
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `courseMeta.title` is exactly `"Introduction to Life: Foundations of Being a Person"`.
-  - [ ] `courseMeta.description` no longer contains "systems engineering", "root-cause", or "regression checks".
-  - [ ] `spec/course-record.test.ts` and `spec/homepage.test.ts` pass.
-  - [ ] `slopCourseMetaSchema.parse(courseMeta)` does not throw (verified by `pnpm typecheck` + the build step inside `pnpm test`).
+  - [x] `courseMeta.title` is exactly `"Introduction to Life: Foundations of Being a Person"`.
+  - [x] `courseMeta.description` no longer contains "systems engineering", "root-cause", or "regression checks".
+  - [x] `spec/course-record.test.ts` and `spec/homepage.test.ts` pass.
+  - [x] `slopCourseMetaSchema.parse(courseMeta)` does not throw (verified by `pnpm typecheck` + the build step inside `pnpm test`).
 - **Depends on:** None.
 
 ### Task 2: New `spec/voice.test.ts` (F2–F5) and deletion of `spec/glossary.test.ts` (F10)

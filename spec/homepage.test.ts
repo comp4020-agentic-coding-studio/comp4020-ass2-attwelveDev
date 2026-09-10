@@ -18,8 +18,9 @@ describe("homepage", () => {
     );
   });
 
-  it("leads with the systems framing", () => {
-    expect(html).toContain("systems engineering");
+  it("names the new course identity", () => {
+    expect(html).toContain("Introduction to Life: Foundations of Being a Person");
+    expect(html).not.toContain("Personal Systems Maintenance");
   });
 
   it("names the five-station examination", () => {
