@@ -594,22 +594,24 @@ task that touches that file.
   column presence, per-week chip counts) is unrelated to jargon and stays.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3 cases for all four content pages pass.
-  - [ ] `spec/treatment.test.ts` no longer contains any assertion that
+  - [x] `spec/voice.test.ts`'s F2/F3 cases for all four content pages pass.
+  - [x] `spec/treatment.test.ts` no longer contains any assertion that
     expects `<code>` in the lectures-index table, and its remaining tests
     (Topics column, per-week chip counts, Slides column) still pass.
-  - [ ] `spec/weekly-structure.test.ts`'s per-week structural tests
+  - [x] `spec/weekly-structure.test.ts`'s per-week structural tests
     (slot order, case-study length) still pass for weeks 4–6.
-  - [ ] `spec/treatment.test.ts`'s `"shows one topic chip per Content
+  - [x] `spec/treatment.test.ts`'s `"shows one topic chip per Content
     bullet"` test still passes — it counts exactly 4 `Content` bullets for
     week 4 specifically, so week 4's rewrite must keep 4 bullets (rewording
     them is fine, changing the count is not).
-- **Human review:** Read weeks 4–6's rewritten Content sections and confirm
-  each keeps one concrete, specific hook (F8) rather than collapsing into
-  generic advice once the jargon label is removed — this is especially
-  live for week 6, where the exception being described ("the one night a
-  real deadline needs the laptop open anyway") has to carry the joke on its
-  own now that `manual override` no longer flags it as one.
+- **Human review:** ACCEPTED 2026-09-10. Beyond the plan's listed changes,
+  found (and fixed) two more sustained metaphors: week 4's lecture and Lab
+  were built on a "maintenance window" framing throughout (description,
+  Overview, two Content bullets, both Lab paragraphs), and week 5's
+  description framed location-tracking as "a system with its own usage
+  data." Both re-derived in mundane terms; the fridge and GPS-radius case
+  studies are unchanged. User reviewed the rendered week-4 lecture and
+  accepted.
 - **Depends on:** Task 2.
 
 ### Task 8: Lectures + sessions, weeks 7–9 (F1, F2, F3, F5, F8)

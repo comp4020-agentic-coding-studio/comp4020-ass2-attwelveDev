@@ -24,7 +24,7 @@ laptop stays open for the same reason it always did.
 - what an hour with the laptop closed actually gets filled with, and
   whether that is planned or accidental
 - reading your own group chats as a log of when boundaries actually held
-- a `manual override` for the one evening a real deadline needs the laptop
+- one allowed exception for the evening a real deadline needs the laptop
   open anyway
 
 ## Case study

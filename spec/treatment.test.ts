@@ -290,13 +290,6 @@ describe("treatment — topics", () => {
     expect(chips.length, "week 4 has 4 Content bullets").toBe(4);
   });
 
-  it("preserves a glossary term's <code> wrapping through truncation", () => {
-    const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
-    const week06Row = findRowByWeek(tbodyRows(html), 6);
-    expect(week06Row, "no row found for week 6").toBeDefined();
-    expect(week06Row).toMatch(/<code>manual override<\/code>/);
-  });
-
   it("gives the Labs table a Topics column", () => {
     const html = readFileSync(resolve("dist/sessions/index.html"), "utf8");
     const thead = html.match(/<thead[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? "";

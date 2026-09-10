@@ -24,10 +24,9 @@ exercise, on the same model.
 Set a sleep schedule with a target bedtime and a fallback for the night it
 slips, and an exercise plan with a stated frequency and a named activity.
 Tutors reject any plan that reads as "sleep more" or "exercise more" — a
-maintenance window needs a time, not an intention.
+real plan needs a time, not an intention.
 
 ## Afterwards
 
 Keep both schedules. Assignment 1's hygiene product selection assumes the
-same maintenance-window model, and Assignment 3 asks for both again in
-full.
+same fallback-first model, and Assignment 3 asks for both again in full.
