@@ -437,20 +437,33 @@ task that touches that file.
   alt text.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3/F4 cases for `index.html` pass.
-  - [ ] `spec/homepage.test.ts`'s new hero-artwork test passes.
-  - [ ] `spec/homepage.test.ts`'s existing "pins the thesis verbatim",
+  - [x] `spec/voice.test.ts`'s F2/F3/F4 cases for `index.html` pass.
+  - [x] `spec/homepage.test.ts`'s new hero-artwork test passes.
+  - [x] `spec/homepage.test.ts`'s existing "pins the thesis verbatim",
     "names the five-station examination", "publishes the nine learning
     outcomes", and "retains no starter prose" tests still pass unmodified.
-  - [ ] Visually verified with `agent-browser` at 1920×1080 and 390×844
+  - [x] Visually verified with `agent-browser` at 1920×1080 and 390×844
     against the dev server, per `CLAUDE.md`'s "Before pushing" rule.
-- **Human review:** Read the new "What this course is"/"Who this course is
-  for" copy aloud and confirm it lands the mundane-stereotype joke without
-  narrating its own premise (F4) and without reading as try-hard; view the
-  new hero image at both marking viewports and confirm it reads as a
-  concrete, mundane image rather than a systems/technical visual (F9). A
-  passing `spec/voice.test.ts` case can only prove the banned phrases are
-  absent, not that the replacement copy or image is actually good.
+- **Human review:** ACCEPTED 2026-09-10. Executed as: rewrote "What this
+  course is"/"Who this course is for" per the plan's agreed copy, renaming
+  the Final Exam Station 4 reference from "social debugging" to "reading
+  the room" in this same task (a judgment call — Task 4's implementation
+  note said to defer that rename to Task 10, but Task 4's own F2
+  acceptance criterion requires "social debugging" gone from `index.html`
+  already, so the note and the criterion contradicted each other; resolved
+  by making the Task 10 station-rename call now and carrying it forward
+  consistently). For the hero image (F9): no image-generation tool was
+  available, so — with the user's direction mid-review — the asset is now
+  a real photo, "Zoning at the office" by Simon Law (CC BY-SA 2.0,
+  https://www.flickr.com/photos/sfllaw/5892567/), downloaded at its full
+  3072×2048 resolution and converted to AVIF, with a visible italic
+  caption crediting the photographer and linking the license (required by
+  BY-SA; placed as the first element of the page body, immediately after
+  the theme's own auto-rendered subtitle, since `ContentLayout` renders
+  that subtitle before any slotted content and there is no prop to
+  reorder it without editing the third-party theme). User reviewed three
+  rounds of screenshots (both viewports) and explicitly accepted the final
+  version.
 - **Depends on:** Task 1 (uses the new `courseMeta.title`/`description` via
   the page's existing `{courseMeta.title}`/`{courseMeta.description}`
   bindings).

@@ -28,9 +28,16 @@ const destinations = [
   title={`${courseMeta.code}: ${courseMeta.title}`}
   description={courseMeta.description}
   heroImage={heroImage}
-  heroImageAlt="A corridor of gold status-grid floor tiles, a few flagged black for maintenance, receding toward a lit doorway, in a two-ink risograph print"
+  heroImageAlt="A person reclining with headphones on beside a cluttered office desk — an old monitor, a tissue box, a mug, scattered papers — eyes closed, mid-shift"
   {...siteConfig}
 >
+  <p class="hero-credit">
+    Hero photo: "Zoning at the office" by{" "}
+    <a href="https://www.flickr.com/photos/sfllaw/5892567/">Simon Law</a>,
+    licensed{" "}
+    <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.
+  </p>
+
   <ul class="course-tags" aria-label="Course tags">
     {courseMeta.tags.map((tag) => <li>{tag}</li>)}
   </ul>
@@ -44,21 +51,21 @@ const destinations = [
 
   <h2>What this course is</h2>
   <p>
-    SLOP1521 applies systems engineering to the parts of being a person that a
-    computer science degree usually assumes you have already handled: sleep,
-    hygiene, dress, conversation, money and professional conduct. Each week
-    treats one <code>subsystem</code> as a system — schedule it, monitor it,
-    find the <code>root cause</code> when it fails — and the semester ends in
-    a five-station practical examination covering hygiene and health,
-    fashion, small talk, social debugging and daily survival.
+    SLOP1521 covers the material a computer science degree assumes you
+    picked up somewhere else: sleep, hygiene, dress, conversation, money,
+    and how to behave in front of another human being. Each topic is
+    treated as a real subject, with real assessment, because — department
+    opinion notwithstanding — it is one. The semester concludes with a
+    five-station practical examination covering hygiene and health,
+    fashion, small talk, reading the room and daily survival.
   </p>
 
   <h2>Who this course is for</h2>
   <p>
-    Anyone whose personal systems have been running on <code>manual
-    override</code> since high school and would like a maintenance
-    schedule instead. No prior experience assumed; some regressions
-    expected.
+    Anyone who has eaten the same bowl of instant noodles four nights
+    running and called it meal planning. Anyone whose last haircut
+    predates their current degree. No prior experience assumed; a working
+    knowledge of at least one hoodie is expected.
   </p>
 
   <h2>Learning outcomes</h2>
@@ -81,3 +88,13 @@ const destinations = [
     }
   </ul>
 </ContentLayout>
+
+<style>
+  .hero-credit {
+    margin-block-start: -0.5rem;
+    margin-block-end: var(--at-spacing-xl);
+    font-size: var(--at-font-size-xs);
+    font-style: italic;
+    color: var(--at-text-secondary);
+  }
+</style>

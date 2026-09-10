@@ -43,4 +43,9 @@ describe("homepage", () => {
   it("describes its own hero artwork", () => {
     expect(html).not.toContain("A lecture theatre reduced to flat gold and black shapes");
   });
+
+  it("describes its own hero artwork without a systems metaphor", () => {
+    expect(html.toLowerCase()).not.toContain("status-grid");
+    expect(html.toLowerCase()).not.toContain("flagged black for maintenance");
+  });
 });
