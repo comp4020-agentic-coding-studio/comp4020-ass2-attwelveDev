@@ -375,14 +375,18 @@ task that touches that file.
   to `"check"`.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `pnpm test:template` (which runs `vitest run scripts`) passes the
-    three new cases.
-  - [ ] `node scripts/check-voice-tone.ts` runs against the built `dist/`
+  - [x] `pnpm test:template` (which runs `vitest run scripts`) passes the
+    three new cases. (`scripts/check-evidence.test.ts` fails in this repo
+    independent of this task — confirmed by re-running it at the prior
+    commit, before `check-voice-tone.ts` existed; a missing
+    `marisol-quaye.avif` fixture, unrelated to F6/voice work. Reported, not
+    fixed here — out of this plan's scope.)
+  - [x] `node scripts/check-voice-tone.ts` runs against the built `dist/`
     and exits `0` even when it prints flagged lines (verify by temporarily
     running it against current pre-rewrite content, which contains no
     literal tell-phrases today, then confirm the exit code is `0`
     regardless).
-  - [ ] `pnpm check` does not invoke this script (grep `package.json`'s
+  - [x] `pnpm check` does not invoke this script (grep `package.json`'s
     `"check"` script definition to confirm).
 - **Depends on:** None.
 
