@@ -1,7 +1,7 @@
 ---
 title: "Fashion Fundamentals"
 description:
-  Dress as a system with occasions as inputs, examined through the
+  Dress as a match between wardrobe and occasion, examined through the
   conference t-shirt worn to a wedding
 week: 3
 date: 2027-03-09
@@ -14,9 +14,9 @@ related:
 
 ## Overview
 
-An outfit is the output of a system whose input is the occasion. Fashion
-Fundamentals treats "what to wear" as a lookup problem: given an occasion,
-what does the wardrobe actually have on hand, and does it match.
+An outfit is really just a match between what the occasion calls for and
+what the wardrobe actually has on hand. Fashion Fundamentals treats
+"what to wear" as that matching problem, not a matter of taste.
 
 ## Content
 

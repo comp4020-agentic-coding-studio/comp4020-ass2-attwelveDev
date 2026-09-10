@@ -539,21 +539,26 @@ task that touches that file.
   stopped noticing").
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3 cases for all three touched pages pass.
-  - [ ] `spec/weekly-structure.test.ts`'s "carries all five slots in order"
+  - [x] `spec/voice.test.ts`'s F2/F3 cases for all three touched pages pass.
+  - [x] `spec/weekly-structure.test.ts`'s "carries all five slots in order"
     and "gives every lecture a named case study" tests still pass for
     week 1 (structure unchanged, only prose rewritten).
-  - [ ] The week-1 desk case study still describes a "desk" (required later
+  - [x] The week-1 desk case study still describes a "desk" (required later
     by the week-12 "closes the loop" test).
-  - [ ] `spec/treatment.test.ts`'s `"shows one topic chip per spec item for
+  - [x] `spec/treatment.test.ts`'s `"shows one topic chip per spec item for
     a Lab"` test still passes — it counts exactly 2 spec items for
     `sessions/week-01.md` specifically, so that file's rewrite must keep 2
     items (rewording is fine, changing the count is not).
-- **Human review:** Read the rewritten week-1 lecture and Lab in full and
-  confirm the desk case study still lands as a memorable, specific hook
-  (F8) — that dropping "systems engineering" didn't flatten the Content
-  section into a generic, unhooked tips list. A passing banned-term check
-  only proves the jargon is gone, not that the replacement is funny.
+- **Human review:** ACCEPTED 2026-09-10. Beyond this task's original scope,
+  re-reading `lectures/week-02.md` and `week-03.md` (marked verify-only by
+  the plan) found sustained systems metaphors the literal grep missed:
+  week 2 built entirely on reliability-engineering language ("maintenance
+  schedule," "failure mode," "routine vs. corrective maintenance," "system
+  with inputs and outputs"); week 3 on "output of a system whose input is"/
+  "lookup problem." Both rewritten in this task, keeping the sock-pile and
+  t-shirt-at-a-wedding case studies intact. User reviewed the rendered
+  week-1 lecture/Lab and accepted weeks 2–3's rewrite by description
+  without requesting further screenshots.
 - **Depends on:** Task 2.
 
 ### Task 7: Lectures + sessions, weeks 4–6 (F1, F2, F3, F8)
