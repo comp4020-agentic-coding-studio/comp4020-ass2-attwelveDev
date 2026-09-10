@@ -270,4 +270,32 @@ describe("final exam", () => {
     expect(String(finalExam?.meta?.due)).toMatch(/^2027-06-09/);
     expect(String(week12Lecture?.meta?.date)).toBe("2027-05-25");
   });
+
+  it("states the permitted exam materials", () => {
+    expect(html).toMatch(/black or blue pen/i);
+    expect(html).toMatch(/closed book/i);
+    expect(html).toMatch(/phone/i);
+    expect(html).toMatch(/smartwatch/i);
+    expect(html).toMatch(/calculator/i);
+  });
+
+  it("requires silence except at Station 3", () => {
+    expect(html).toMatch(/no talking/i);
+    expect(html).toMatch(/Station 3/);
+    expect(html).toMatch(/compulsory/i);
+  });
+
+  it("issues an answer booklet for Stations 1 to 4 and marks Station 5 by observation", () => {
+    expect(html).toMatch(/answer booklet/i);
+    expect(html).toMatch(/observation/i);
+  });
+
+  it("treats broken exam rules as academic misconduct", () => {
+    expect(html).toMatch(/academic misconduct/i);
+  });
+
+  it("adds a materials-compliance line to the spec", () => {
+    const finalExam = assessments.find((node) => node.id === "assessments/final-exam");
+    expect(finalExam?.spec?.some((line) => /pen|materials/i.test(line))).toBe(true);
+  });
 });

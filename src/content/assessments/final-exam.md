@@ -23,6 +23,7 @@ spec:
   - all five stations are attended in sequence on the day
   - each station's task is completed within its stated duration
   - the survival station's output is edible
+  - no materials beyond a black or blue pen are brought into the exam
 ---
 
 ## The five stations
@@ -47,3 +48,19 @@ Each station runs back to back on exam day, in order:
 Total examined time is 2 hours 50 minutes, of which the four ten-minute
 stations are worth as much combined as the long cooking station alone —
 duration is not difficulty.
+
+## Exam conditions
+
+The only material permitted is a black or blue pen. No phones, no
+smartwatches, no other electronic devices, and no calculators — the exam
+is closed book throughout.
+
+No talking is permitted at any station, with one exception: Station 3
+makes talking compulsory, and a silent conversation fails the station on
+its own terms.
+
+An official exam answer booklet is issued for your written answers
+across Stations 1 to 4. Station 5 is not written up; examiners mark it
+by observation as it happens.
+
+Breaking any of the above is academic misconduct.
