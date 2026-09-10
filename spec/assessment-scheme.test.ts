@@ -155,6 +155,11 @@ describe("assignment 1 makeover", () => {
     expect(html).toMatch(/screenshot|picture|image/i);
     expect(html).toMatch(/justif/i);
   });
+
+  it("prints and attaches the outfit photos for paper submission", () => {
+    expect(html).toMatch(/paper/i);
+    expect(html).toMatch(/printed/i);
+  });
 });
 
 describe("assignment 2 touch grass", () => {

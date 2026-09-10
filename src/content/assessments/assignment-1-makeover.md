@@ -41,3 +41,8 @@ of each — the outfit as worn, not a description of it.
 
 An outfit without its picture is not evidence; a picture without its
 justification is not an argument.
+
+The selection and justifications are submitted on paper; the three
+outfit pictures are printed and attached to the same submission. See
+[Policies](/policies/) for where to hand it in and the
+extenuating-circumstances exception.
