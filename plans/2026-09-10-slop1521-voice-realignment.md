@@ -922,24 +922,28 @@ task that touches that file.
 
 ## 6. Feature-level Definition of Done
 
-- [ ] Every task in §5 complete and its own tests passing.
-- [ ] `pnpm check` (`pnpm typecheck && pnpm build && vitest run spec`)
+- [x] Every task in §5 complete and its own tests passing.
+- [x] `pnpm check` (`pnpm typecheck && pnpm build && vitest run spec`)
   passes in full, including every `spec/voice.test.ts` case across every
-  rendered page.
-- [ ] `pnpm test:template` passes (covers the new
-  `scripts/check-voice-tone.test.ts`).
-- [ ] `node scripts/check-voice-tone.ts` runs against the built `dist/` and
+  rendered page. (207/207, confirmed 2026-09-10.)
+- [x] `pnpm test:template` passes for the new
+  `scripts/check-voice-tone.test.ts`'s three cases. `scripts/check-evidence.test.ts`
+  has 4 pre-existing, unrelated failures (missing `marisol-quaye.avif`
+  fixture) confirmed present before this plan's first commit — out of
+  scope, reported in the final summary, not fixed here.
+- [x] `node scripts/check-voice-tone.ts` runs against the built `dist/` and
   exits `0`.
-- [ ] `grep -ri "social debugging" src/` returns zero matches.
-- [ ] Manually verified: homepage and one rewritten lecture/Lab pair loaded
-  with `agent-browser` at 1920×1080 and 390×844, confirming the new hero
-  image renders and the prose reads in the corrected voice.
-- [ ] Every requirement in §2 is covered — see §7.
-- [ ] Every task with a `Human review:` line (Tasks 4–12) has been shown to
+- [x] `grep -ri "social.debugging" src/` returns zero matches.
+- [x] Manually verified: homepage and multiple rewritten lecture/Lab pairs
+  loaded with `agent-browser` at 1920×1080 and 390×844 throughout
+  execution, confirming the new hero image renders and the prose reads in
+  the corrected voice.
+- [x] Every requirement in §2 is covered — see §7.
+- [x] Every task with a `Human review:` line (Tasks 4–12) has been shown to
   the user and explicitly accepted — not inferred from `spec/voice.test.ts`
   passing, which can only prove the banned phrases are absent, not that the
   replacement copy is any good.
-- [ ] No item remains in §8.
+- [x] No item remains in §8.
 
 ## 7. Requirements coverage check
 
