@@ -790,7 +790,7 @@ task that touches that file.
   pages and accepted.
 - **Depends on:** Task 2.
 
-### Task 11: People bios (F1, F2, F3)
+### Task 11: People bios (F1, F2, F3) — expanded scope, see Human review
 
 - **Description:** Rewrite `src/content/people/noor-kalantari.md` (new
   title/affiliation, currently "Interpersonal Protocols"; drop "protocols as
@@ -823,13 +823,26 @@ task that touches that file.
   you're out of something").
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/voice.test.ts`'s F2/F3 cases for all three pages pass.
-  - [ ] `spec/cast.test.ts`'s five existing tests still pass unmodified.
-  - [ ] `grep -ri "social debugging" src/content/people/` returns zero
+  - [x] `spec/voice.test.ts`'s F2/F3 cases for all three pages pass.
+  - [x] `spec/cast.test.ts`'s five existing tests still pass unmodified.
+  - [x] `grep -ri "social.debugging" src/content/people/` returns zero
     matches (cross-check with Task 10).
-- **Human review:** Read all three rewritten bios and confirm each still
-  reads as a specific, funny stereotype rather than generic filler once its
-  jargon clause is removed.
+- **Human review:** ACCEPTED 2026-09-10, after two rounds. The user asked,
+  mid-review, for something beyond this task's original jargon-removal
+  scope: richer bios giving each tutor an absurd-but-deadpan credential
+  relevant to what they teach (Cosima — a CS-student stereotype turned
+  world-renowned behavioural-adherence researcher; Noor — a prolific
+  first-dater; Petra — a former Michelin-starred chef; Thaddeus — a former
+  runway model), doubling down on the site's actual comedic mechanism
+  (institutional seriousness on absurd specifics) rather than just
+  removing jargon from the existing bios. This also pulled in
+  `thaddeus-vrell.md`, which Task 11 didn't originally require touching
+  (the plan's §2.3 left his one "system with failure modes" mention as a
+  judge-call) — rewritten now since the user named him directly, dropping
+  that phrase too. First round of drafts was accepted-with-changes (user
+  asked for more institutional-CV seriousness and amplified CS-student
+  specifics); second round was accepted as-is. All new bio text uses
+  they/them, since none of the four bios states a pronoun anywhere.
 - **Depends on:** Task 2, Task 10 (for the renamed-station cross-reference).
 
 ### Task 12: `CLAUDE.md` — Register and voice, concision sweep, Labs-structure correction (F11)
