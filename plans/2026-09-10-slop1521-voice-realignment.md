@@ -289,14 +289,14 @@ task that touches that file.
   spec/voice.test.ts` output), and `spec/glossary.test.ts` no longer exists.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - [ ] `spec/glossary.test.ts` no longer exists.
-  - [ ] `vitest run spec/voice.test.ts` runs and reports one case per
+  - [x] `spec/glossary.test.ts` no longer exists.
+  - [x] `vitest run spec/voice.test.ts` runs and reports one case per
     rendered page per describe block (confirms the `it.each` wiring works),
     failing on content pages not yet rewritten and passing on any that
     happen to already be clean (per §3.1, `week-02`/`week-03` lectures and
     several session files currently have no banned-term hits, so their F2
     case should already be green).
-  - [ ] `pnpm typecheck` passes (the new file is valid TypeScript).
+  - [x] `pnpm typecheck` passes (the new file is valid TypeScript).
 - **Depends on:** None (can run in parallel with Task 1, but sequenced after
   it in this plan since Task 1's identity fix is smaller and foundational).
 
