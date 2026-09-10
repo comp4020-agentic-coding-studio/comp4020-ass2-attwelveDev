@@ -236,4 +236,4 @@ Phase 4, Phase 5), plus the corresponding template field and Definition-of-
 Done line in `plan-feature/template.md`, and the retrofit of Tasks 4-12 and
 §6/§7 in `plans/2026-09-10-slop1521-voice-realignment.md`.
 
-**Commit:** _pending — add once committed._
+**Commit:** [`4e0dcf5`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/4e0dcf5)
