@@ -237,3 +237,47 @@ Done line in `plan-feature/template.md`, and the retrofit of Tasks 4-12 and
 §6/§7 in `plans/2026-09-10-slop1521-voice-realignment.md`.
 
 **Commit:** [`4e0dcf5`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/4e0dcf5)
+
+## 2026-09-10 — The `Human review:` gate, exercised for real
+
+**Obvious approach:** Treat the previous entry's open question as closed by
+inspection — the gate field exists in both skills, so trust it will work
+when a task actually needs it, the same way the rest of the plan's checks
+were trusted once written.
+
+**What I decided instead, and why:** Actually ran `execute-plan` against
+`plans/2026-09-10-slop1521-voice-realignment.md` end to end and used the
+gate as an operator, not just a reviewer. Task 11 (people bios) is where it
+mattered: the agent's first pass only removed the banned jargon, exactly
+as written, and `spec/voice.test.ts` passed — but the bios still read as
+generic once the jargon clause was gone. I rejected it and asked for
+something the task never specified: absurd, institutionally-serious
+credentials for each tutor (a CS-student-turned-professor, a
+Michelin-starred chef, a former runway model), because that is the
+site's actual comedic mechanism and the plan's jargon-removal framing had
+quietly narrowed a voice task into a find-and-replace task. A second round
+still wasn't specific enough — I asked for more CV-style seriousness and
+sharper amplification of the CS-student stereotype specifically — before
+accepting.
+
+**How I knew it was right:** the redraft-in-place path the gate was
+designed around is exactly what happened, in two short rounds, without
+needing to drop back into `plan-feature` or touch any spec file — because
+what was wrong was the artifact's specificity, not the plan's approach.
+That's the distinction the gate's Phase-4 rejection handling was built to
+make (`plan-feature/SKILL.md`, `execute-plan/SKILL.md`), and today is the
+first time it was actually tested against a real "this passes every check
+and still isn't good enough" moment rather than reasoned about in the
+abstract.
+
+**What's still open, closed:** the previous entry logged this gate with no
+task yet run through an accept/reject cycle. Every human-reviewed task in
+this plan (4 through 12) went through at least one; Task 11 went through
+two full rounds. The mechanism held without amendment.
+
+**Landed in the harness as:** no new harness change this time — this entry
+retires the open question the 2026-09-10 `4e0dcf5` entry left, using
+`plans/2026-09-10-slop1521-voice-realignment.md`'s own executed Task 11 as
+the evidence.
+
+**Commit:** [`9e9b814...b450bcf`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/compare/9e9b814...b450bcf)
