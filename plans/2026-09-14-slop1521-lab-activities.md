@@ -563,20 +563,41 @@ rule.
   the wrap-up as the thing the field observation warms the group up for.
   `## Afterwards` keeps "...Assignment 2 (Touch Grass Field Study), due
   week 8, marks the outing this books."
+- **Human review surfaced four corrections:**
+  1. While implementing, found `spec:` said "at least one non-CS person"
+     but [Assignment 2](../src/content/assessments/assignment-2-touch-grass.md)
+     actually requires two — corrected both the `spec:` bullet and the
+     in-body wording to "two" before first review.
+  2. "The 'Before the Lab' section is not really relevant... Perhaps
+     instead say prepare an outfit appropriate for going outdoors, because
+     this lab has an outdoor component." Replaced the leftover
+     "bring a rough map" prompt with outdoor-attire guidance tied to
+     Activity 1.
+  3. "Assignment 2 doesn't actually seem to have any booking, like
+     activity 2 mentions. It might apply to the social event activity...
+     but the other ones don't really have a 'booking'." Re-read Assignment
+     2's brief/marking criteria: it grades a report on an activity that
+     was run, with no booking/pre-registration step, and most of its seven
+     activity choices don't inherently require one. Reworded "book"/
+     "booking" throughout to "plan"/"planned" (spec, table row, body,
+     wrap-up).
+  4. "this wording makes it seem that students have to stick with the
+     planned outing for assignment 2. maybe just suggest that they can use
+     it for assignment 2, or come up with something else." Reworded the
+     wrap-up/afterwards so the planned outing is an option ("a candidate
+     you could use... or swap out for something else entirely"), not a
+     binding commitment.
 - **Files touched:** `src/content/sessions/week-05.md`.
 - **Tests first (red):** None new; baseline `pnpm check` green before edit.
-- **Implementation (green):** Body-only edit per Description; frontmatter
-  unchanged (existing `spec:` still describes the booked outing, produced
-  during/after the two doc activities rather than instead of them).
+- **Implementation (green):** Body and `spec:` edits per Description and
+  corrections above.
 - **Refactor:** None expected.
 - **Acceptance criteria:** `pnpm check` green; heading order intact; no
-  banned/framing/gendered terms; "Assignment 2 ... due week 8" reference
-  preserved; six-row table present; the outing-booking deliverable named in
-  `spec:` is still clearly produced somewhere in the rewritten body.
-- **Human review:** Diff/rendered page for `week-05.md`. Pass = the indoor
-  field-guide-compiling activity and the outdoor observation pair activity
-  don't crowd out the graded outing-booking step — a reader should still
-  be able to tell what actually gets booked and by when.
+  banned/framing/gendered terms; six-row table present; `spec:` matches
+  Assignment 2's actual two-non-CS-person requirement; the planned outing
+  is framed as an option students may use or replace, not a fixed
+  commitment.
+- **Human review:** Approved after four rounds of correction above.
 - **Depends on:** None.
 
 ### Task 6: Week 6 Lab — Hobby brainstorm + Pick a game
