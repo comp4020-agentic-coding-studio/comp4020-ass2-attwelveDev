@@ -1016,3 +1016,59 @@ changes:
 All four changes verified with `agent-browser` at 1920×1080 and 390×844,
 in both light and dark mode; `pnpm check` stayed green throughout (260
 tests).
+
+## 11. Post-review amendments, round 3 (2026-09-15): sticky header → fixed footer
+
+The user asked for a bigger structural change: `EntryNav` becomes a
+persistent **footer**, always stuck to the bottom of the viewport, rather
+than a header that scrolls with the page until it sticks under the top
+nav. This replaces Task 3–6's "sticky header" design (§4 Approach, §5
+Tasks 3–7) with a fixed-bottom bar, and also fixed a real regression the
+user caught: the round-2 full-bleed `::before` hack (`inset-inline:
+-100vw`) was contributing ~100vw of extra horizontal scrollable area on
+each side, stretching the page's actual scrollable width.
+
+1. **`.week-nav` is now `position: fixed; inset-inline: 0; inset-block-end:
+   0;`**, not `position: sticky; inset-block-start: var(--at-nav-height)`.
+   Since a fixed bar is trivially full-viewport-width by construction, the
+   `::before` full-bleed pseudo-element (added in round 2 specifically to
+   work around `.week-nav` being confined to `<main>`'s reading column) is
+   removed entirely — its background/blur/shadow moved back onto plain
+   `.week-nav`, and this is what actually fixes the overflow bug (`-100vw`
+   is gone, not just relocated). `.week-nav-inner` now needs its own
+   `max-width: 48rem; margin-inline: auto;` (matching `.at-nav-inner`'s own
+   established precedent) to stay at a readable row width instead of
+   stretching edge-to-edge itself.
+2. **The reveal trigger changed from "has the header become stuck" to "has
+   the page's own `<h1>` scrolled out of view".** A fixed footer never
+   changes position, so there's no "stuck" transition left to detect — the
+   `.week-nav-sentinel` element and the sentinel-relative
+   `IntersectionObserver` are both removed. The observer now watches
+   `document.querySelector("h1")` directly (every one of the four page
+   types renders exactly one — either `ContentLayout`'s bare `<h1>`, or
+   `Hero`'s `.at-hero-title` on Person pages with a photo), toggling the
+   same `.is-visible`/`.is-scrolled` classes when it stops/starts
+   intersecting. The sticky top nav bar still covers a fixed strip at the
+   very top of the viewport, so "out of view" needs the same
+   covered-height offset the old code read off `.week-nav`'s own resolved
+   `top` — now read directly off `.at-nav`'s rendered
+   `getBoundingClientRect().height` instead, since `.week-nav` has no
+   `top` value to read anymore. The same asymmetric-hysteresis technique
+   (a smaller margin to reveal, a larger one to re-hide) carries over
+   unchanged, just retargeted.
+3. **Reserved space at the end of the page.** A permanently fixed bottom
+   bar needs the rest of the page to leave room for it, or its last few
+   pixels sit on top of the site's own footer (licence text, theme
+   toggle). Added `--course-entry-nav-height` (measured via
+   `getBoundingClientRect` at both marking viewports — ~59px at
+   1920×1080, ~77px at 390×844 with two-line side content — rounded up to
+   `5.5rem` for headroom) and `body:has(.week-nav) { padding-block-end:
+   var(--course-entry-nav-height); }`, scoped via `:has()` to only the
+   four page types that actually render the footer.
+
+Verified with `agent-browser` at both marking viewports: the footer stays
+fixed to the bottom while scrolling, the label reveals only once the page's
+own heading leaves view, `document.documentElement.scrollWidth` no longer
+exceeds `window.innerWidth` (confirming the overflow bug is gone), and the
+site's own footer has clear space beneath the fixed bar at the end of every
+page. `pnpm check` stayed green throughout (264 tests).

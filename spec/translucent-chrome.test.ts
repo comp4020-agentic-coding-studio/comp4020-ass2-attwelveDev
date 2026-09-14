@@ -31,18 +31,13 @@ describe("translucent chrome", () => {
     expect(css).toMatch(/--course-chrome-saturate:\s*[\d.]+%/);
   });
 
-  it("gives the entry-nav header a translucent, blurred, saturated background using the shared tokens", () => {
+  it("gives the entry-nav footer a translucent, blurred, saturated background using the shared tokens", () => {
     const css = bundledCss();
-    // .week-nav's background/blur live on its ::before pseudo-element (see
-    // EntryNav.astro), not on .week-nav itself — it needs to extend past
-    // .week-nav's own box to reach the viewport edges. The minifier can
-    // also merge this into a combined selector list (e.g.
-    // ".week-nav::before,.at-nav{...}") when rules end up with identical
+    // The minifier can merge .week-nav into a combined selector list (e.g.
+    // ".week-nav,.at-nav{...}") when rules end up with identical
     // declarations, so match on the rule containing .week-nav rather than
     // assuming it's the sole selector.
     const rule = css.match(/[^}]*\.week-nav[^{]*\{[^}]*\}/)?.[0] ?? "";
-    // The minifier can rewrite ::before to the legacy single-colon :before.
-    expect(rule).toMatch(/:{1,2}before/);
     expect(rule).toContain("var(--course-chrome-alpha)");
     expect(rule).toContain("var(--course-chrome-blur)");
     expect(rule).toContain("var(--course-chrome-saturate)");
@@ -69,22 +64,26 @@ describe("translucent chrome", () => {
     expect(css).toMatch(/--course-chrome-blur:/);
   });
 
-  it("extends the entry-nav header's blurred background past its own box, without moving its content", () => {
-    // EntryNav.astro's own scoped style establishes the ::before box
-    // (position/inset/z-index) separately from course.css's background —
-    // this guards that the box is sized to reach past any realistic
-    // viewport width, and that .week-nav-inner (the actual nav content)
-    // carries no competing width/position override that would make it
-    // track the widened box.
-    const entryNavSource = readFileSync(
-      resolve("src/components/EntryNav.astro"),
-      "utf8",
-    );
-    const beforeRule = entryNavSource.match(/\.week-nav::before\s*{[^}]*}/)?.[0] ?? "";
-    expect(beforeRule).toMatch(/position:\s*absolute/);
-    expect(beforeRule).toMatch(/inset-inline:\s*-100vw/);
+  it("makes the entry-nav footer itself full-viewport-width, re-centering its content separately", () => {
+    // .week-nav is position: fixed with inset-inline: 0, so its
+    // background/blur naturally reach both viewport edges without any
+    // pseudo-element trick — but that also means .week-nav-inner (the
+    // actual links/label) needs its own max-width + margin-inline: auto
+    // to stay at a readable row width instead of stretching full-bleed too.
+    const entryNavSource = readFileSync(resolve("src/components/EntryNav.astro"), "utf8");
+    const weekNavRule = entryNavSource.match(/\.week-nav\s*{[^}]*}/)?.[0] ?? "";
+    expect(weekNavRule).toMatch(/position:\s*fixed/);
+    expect(weekNavRule).toMatch(/inset-inline:\s*0/);
     const innerRule = entryNavSource.match(/\.week-nav-inner\s*{[^}]*}/)?.[0] ?? "";
-    expect(innerRule).not.toMatch(/max-width|width:/);
+    expect(innerRule).toMatch(/max-width/);
+    expect(innerRule).toMatch(/margin-inline:\s*auto/);
+  });
+
+  it("reserves room at the end of the page so the fixed footer doesn't cover the site footer", () => {
+    const css = bundledCss();
+    expect(css).toMatch(/--course-entry-nav-height:\s*[\d.]+rem/);
+    const rule = courseCssSource.match(/body:has\(\.week-nav\)\s*{[^}]*}/)?.[0] ?? "";
+    expect(rule).toContain("var(--course-entry-nav-height)");
   });
 
   it("mixes every surface's tint from --at-bg-elevated, not a hardcoded colour", () => {
@@ -105,7 +104,7 @@ describe("translucent chrome", () => {
     // In light mode --at-bg-elevated equals --at-bg exactly, so the tint
     // alone can't demarcate the panel from the page — the shadow is what
     // actually does that job there.
-    const weekNavRule = courseCssSource.match(/\.week-nav::before\s*{[^}]*}/)?.[0] ?? "";
+    const weekNavRule = courseCssSource.match(/\.week-nav\s*{[^}]*}/)?.[0] ?? "";
     expect(weekNavRule).toContain("var(--at-shadow-md)");
     const atNavRule = courseCssSource.match(/\.at-nav\s*{[^}]*}/)?.[0] ?? "";
     expect(atNavRule).toContain("var(--at-shadow-md)");

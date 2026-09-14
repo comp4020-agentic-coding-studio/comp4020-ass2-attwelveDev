@@ -86,3 +86,27 @@ describe("week navigation header — scroll-triggered label", () => {
     expect(html).toMatch(/IntersectionObserver/);
   });
 });
+
+describe("entry-nav footer — fixed to the bottom", () => {
+  const entryNavSource = readFileSync(resolve("src/components/EntryNav.astro"), "utf8");
+
+  it("positions .week-nav as a fixed bar at the bottom of the viewport, not a sticky header", () => {
+    const rule = entryNavSource.match(/\.week-nav\s*{[^}]*}/)?.[0] ?? "";
+    expect(rule).toMatch(/position:\s*fixed/);
+    expect(rule).toMatch(/inset-block-end:\s*0/);
+    expect(rule).not.toMatch(/position:\s*sticky/);
+  });
+
+  it("no longer ships a sentinel element (the old sticky-detection technique)", () => {
+    const html = lecturePage("week-06");
+    expect(html).not.toContain("week-nav-sentinel");
+  });
+
+  it("observes the page's own <h1>, not a sentinel, to decide when to reveal the label", () => {
+    // TypeScript's generic type argument (querySelector<HTMLElement>) is
+    // stripped by Astro's script compilation, so match on the selector
+    // argument alone rather than the source-level generic syntax.
+    const html = lecturePage("week-06");
+    expect(html).toMatch(/querySelector\(.h1.\)/);
+  });
+});

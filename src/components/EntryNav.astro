@@ -16,7 +16,6 @@ interface Props {
 const { previous, next, currentLabel } = Astro.props;
 ---
 
-<div class="week-nav-sentinel" aria-hidden="true"></div>
 <nav class="week-nav" aria-label="Page navigation">
   <div class="week-nav-inner">
     <div class="week-nav-side week-nav-side--prev">
@@ -54,57 +53,30 @@ const { previous, next, currentLabel } = Astro.props;
 </nav>
 
 <style>
-  .week-nav-sentinel {
-    height: 0;
-    /* Scroll anchoring watches elements near the viewport and nudges the
-       scroll position to compensate for layout shifts it sees there —
-       and toggling .week-nav-title/.week-nav-side's width on scroll is
-       exactly that kind of shift, happening right at the viewport edge
-       where the sentinel and the sticky header sit. Left on, that can
-       feed back into this component's own IntersectionObserver: a
-       CSS-driven layout shift nudges scroll, which changes what the
-       observer sees, which changes the classes, which shifts layout
-       again. Opting this element and the header out (below) removes
-       the browser's own scroll compensation from that loop entirely. */
-    overflow-anchor: none;
-  }
-
   .week-nav {
-    position: sticky;
-    inset-block-start: var(--at-nav-height);
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
     z-index: 90;
-    /* No background here: course.css paints the translucent, blurred one on
-       ::before (below), not on this element directly. Astro scopes this
-       style with a data-astro-cid-* attribute selector, which is *more
-       specific* than course.css's plain .week-nav rule — course.css being
-       unlayered only lets it beat the theme's own layered rules, not this
-       component's own higher-specificity one. A background declared here
-       would silently win and paint over the blur. */
-    border-block-end: 1px solid var(--at-divider);
-    overflow-anchor: none;
-  }
-
-  .week-nav::before {
-    /* This element sits inside <main>, which is confined to the page's
-       readable-width content column — but the header's blurred background
-       should read edge-to-edge like the site nav's does. Rather than widen
-       .week-nav itself (which would force re-deriving and duplicating the
-       theme's own content-column width formula on .week-nav-inner just to
-       keep its content pinned in place), a ::before layer, sized far past
-       any realistic viewport width in each direction, paints the
-       background/blur behind everything without touching .week-nav's own
-       box or its children's layout at all. course.css supplies the actual
-       background/backdrop-filter declarations (unlayered, so it beats the
-       theme's layered rules) — this only establishes the box and stacking
-       order. */
-    content: "";
-    position: absolute;
-    inset-block: 0;
-    inset-inline: -100vw;
-    z-index: -1;
+    /* No background here: course.css supplies the translucent, blurred one.
+       Astro scopes this style with a data-astro-cid-* attribute selector,
+       which is *more specific* than course.css's plain .week-nav rule —
+       course.css being unlayered only lets it beat the theme's own layered
+       rules, not this component's own higher-specificity one. A background
+       declared here would silently win and paint over the blur. */
+    border-block-start: 1px solid var(--at-divider);
   }
 
   .week-nav-inner {
+    /* .week-nav itself is intentionally full-viewport-width (position:
+       fixed, inset-inline: 0) so its background/blur reach the edges like
+       the site nav's does — this re-centers the actual nav content to a
+       fixed row width, decoupled from the reading column's own (more
+       complex) formula, matching .at-nav-inner's own established
+       precedent in course.css for exactly this "nav row, not reading
+       measure" situation. */
+    max-width: 48rem;
+    margin-inline: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -279,18 +251,21 @@ const { previous, next, currentLabel } = Astro.props;
   // once for the very first real page load, so it's the only hook needed
   // (same pattern as this theme's Nav.astro/Footer.astro). Without it, the
   // observer set up on the first page in a browsing session would keep
-  // watching that page's now-detached sentinel after navigating elsewhere,
-  // and the new page's label would never get its own observer.
+  // watching that page's now-detached <h1> after navigating elsewhere, and
+  // the new page's label would never get its own observer.
   let observer: IntersectionObserver | undefined;
 
   function setupWeekNav() {
     observer?.disconnect();
 
-    const sentinel = document.querySelector<HTMLElement>(".week-nav-sentinel");
     const weekNav = document.querySelector<HTMLElement>(".week-nav");
     const currentLabel = document.querySelector<HTMLElement>("[data-week-nav-current]");
+    // Every page this component renders on (Lecture/Lab/Assessment/Person)
+    // has exactly one <h1> — either ContentLayout's own, or Hero's
+    // ".at-hero-title" when the page has a hero image (People only).
+    const heading = document.querySelector<HTMLElement>("h1");
 
-    if (!sentinel || !weekNav || !currentLabel) return;
+    if (!weekNav || !currentLabel || !heading) return;
 
     // Reset explicitly: a soft navigation morphs the DOM rather than
     // rebuilding it from scratch, so a class added by client JS on the
@@ -298,25 +273,17 @@ const { previous, next, currentLabel } = Astro.props;
     currentLabel.classList.remove("is-visible");
     weekNav.classList.remove("is-scrolled");
 
-    // The center label only makes sense once this header has actually
-    // become stuck at the top — before that point, .week-nav (and the
-    // label inside it) still sits in its normal, unstuck document-flow
-    // position, further down the page below the h1. An earlier version of
-    // this observer tracked the h1's own position instead: it could — and
-    // did — decide "reveal the label" at a scroll position where the
-    // header hadn't stuck yet, so the label appeared in that
-    // still-in-flow position, visible on screen *alongside* the still-
-    // visible h1, rather than pinned at the top in the h1's place.
-    //
-    // This tracks stuck-ness directly instead, with the standard
-    // "sentinel" technique: a zero-height marker immediately before this
-    // sticky element, observed with a root shrunk by exactly the sticky
-    // offset (this element's own resolved `inset-block-start`, i.e. the
-    // top nav's height). The sentinel sits at the same document position
-    // as this element's own top edge, so it stops intersecting at exactly
-    // the scroll position where the CSS itself starts pinning .week-nav
-    // there — no dependency on the h1's own height, position, or content.
-    const stickyOffset = parseFloat(getComputedStyle(weekNav).top) || 0;
+    // .week-nav is a fixed footer now, always on screen — the center label
+    // only needs to repeat the page's own title once that title (<h1>) has
+    // scrolled out of view; while it's still visible there's nothing to
+    // stand in for. The top nav bar is sticky and covers a fixed strip at
+    // the very top of the viewport, so "out of view" means past *that*
+    // strip, not past the bare viewport edge — same idea as this
+    // component's own sticky offset used to need, just measured off the
+    // top nav's actual rendered height instead of a CSS property read off
+    // this component's own now-fixed (not sticky) position.
+    const topNav = document.querySelector<HTMLElement>(".at-nav");
+    const coveredHeight = topNav?.getBoundingClientRect().height ?? 0;
 
     // A single fixed threshold flickers on real (touch/trackpad) scrolling:
     // a hand isn't perfectly still, so a hold that lands within a pixel or
@@ -327,31 +294,31 @@ const { previous, next, currentLabel } = Astro.props;
     // require a *bit more* scroll than entering it, so a small hover right
     // at the boundary can't retrigger the toggle.
     const HYSTERESIS_PX = 12;
-    let stuck = false;
+    let revealed = false;
 
     const watch = () => {
       observer?.disconnect();
-      // While unstuck, require scrolling a bit *past* the natural boundary
-      // before entering stuck (a smaller excluded margin — harder to
-      // trigger). While stuck, require scrolling a bit *back past* the
-      // boundary the other way before leaving it (a larger excluded
-      // margin — also harder to trigger). The dead zone between the two
-      // is where a shaky hold can't flip the state at all.
-      const margin = stuck ? stickyOffset + HYSTERESIS_PX : stickyOffset - HYSTERESIS_PX;
+      // While hidden, require scrolling a bit *past* the covered strip
+      // before revealing (a smaller excluded margin — harder to trigger).
+      // While revealed, require scrolling a bit *back past* it the other
+      // way before hiding again (a larger excluded margin — also harder to
+      // trigger). The dead zone between the two is where a shaky hold
+      // can't flip the state at all.
+      const margin = revealed ? coveredHeight + HYSTERESIS_PX : coveredHeight - HYSTERESIS_PX;
       observer = new IntersectionObserver(
         ([entry]) => {
-          const nowStuck = !entry.isIntersecting;
-          if (nowStuck === stuck) return;
-          stuck = nowStuck;
-          currentLabel.classList.toggle("is-visible", stuck);
+          const nowRevealed = !entry.isIntersecting;
+          if (nowRevealed === revealed) return;
+          revealed = nowRevealed;
+          currentLabel.classList.toggle("is-visible", revealed);
           // On narrow viewports, the side "Week N" labels only need to
           // give up their room to the center label once it's showing.
-          weekNav.classList.toggle("is-scrolled", stuck);
+          weekNav.classList.toggle("is-scrolled", revealed);
           watch();
         },
         { rootMargin: `-${Math.max(0, Math.ceil(margin))}px 0px 0px 0px`, threshold: 0 },
       );
-      observer.observe(sentinel);
+      observer.observe(heading);
     };
 
     watch();

@@ -189,11 +189,7 @@ h6 {
   --course-chrome-saturate: 180%;
 }
 
-/* .week-nav's own background lives on ::before, not here — see the
-   ::before rule in EntryNav.astro's <style> block for why (it needs to
-   extend past .week-nav's own box to reach the viewport edges, without
-   moving .week-nav's content). */
-.week-nav::before {
+.week-nav {
   background: color-mix(in oklch, var(--at-bg-elevated) var(--course-chrome-alpha), transparent);
   backdrop-filter: blur(var(--course-chrome-blur)) saturate(var(--course-chrome-saturate));
   box-shadow: var(--at-shadow-md);
@@ -208,4 +204,26 @@ h6 {
 .at-search-panel {
   background: color-mix(in oklch, var(--at-bg-elevated) var(--course-chrome-alpha), transparent);
   backdrop-filter: blur(var(--course-chrome-blur)) saturate(var(--course-chrome-saturate));
+}
+
+/* .week-nav is now a fixed footer (EntryNav.astro), permanently occupying
+   this much space at the bottom of the viewport on every page that renders
+   it — reserve the same amount at the end of the document so the site's
+   own footer (licence, theme toggle) never ends up underneath it. :has()
+   scopes this to only the pages that actually render .week-nav (Lecture/
+   Lab/Assessment/Person detail pages) rather than every page; on a browser
+   without :has() support this padding simply doesn't apply, so those pages
+   would show the fixed bar overlapping the last few pixels of the site
+   footer instead of breaking outright. */
+:root {
+  /* Measured rendered height (getBoundingClientRect) is ~59px at
+     1920×1080 and ~77px at 390×844 (two-line side content wraps a bit
+     taller on narrow viewports) — round up with headroom for content
+     variations (with/without a subtitle line) this plan didn't measure
+     directly. */
+  --course-entry-nav-height: 5.5rem;
+}
+
+body:has(.week-nav) {
+  padding-block-end: var(--course-entry-nav-height);
 }
