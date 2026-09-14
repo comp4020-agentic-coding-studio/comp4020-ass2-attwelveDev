@@ -73,3 +73,16 @@ describe("week navigation header — reserved space", () => {
     expect(html.match(/class="week-nav-side week-nav-side--next"/g)?.length).toBe(1);
   });
 });
+
+describe("week navigation header — scroll-triggered label", () => {
+  it("carries the current week's own label, initially hidden", () => {
+    const html = lecturePage("week-06");
+    expect(html).toContain("data-week-nav-current");
+    expect(html).toContain("Week 6");
+  });
+
+  it("ships the IntersectionObserver script that drives the reveal", () => {
+    const html = lecturePage("week-06");
+    expect(html).toMatch(/IntersectionObserver/);
+  });
+});

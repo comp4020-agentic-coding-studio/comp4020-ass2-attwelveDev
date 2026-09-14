@@ -15,6 +15,7 @@ const previous = lectures.find((entry) => entry.data.week === week - 1);
 const next = lectures.find((entry) => entry.data.week === week + 1);
 ---
 
+<div class="week-nav-sentinel" aria-hidden="true"></div>
 <nav class="week-nav" aria-label="Week navigation">
   <div class="week-nav-inner">
     <div class="week-nav-side week-nav-side--prev">
@@ -50,6 +51,10 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
 </nav>
 
 <style>
+  .week-nav-sentinel {
+    height: 0;
+  }
+
   .week-nav {
     position: sticky;
     inset-block-start: var(--at-nav-height);
@@ -75,7 +80,8 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
     justify-content: flex-end;
   }
 
-  .week-nav-link {
+  .week-nav-link,
+  .week-nav-link:visited {
     display: inline-flex;
     align-items: center;
     gap: var(--at-spacing-xs);
@@ -83,8 +89,15 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
     color: inherit;
   }
 
+  .week-nav-icon {
+    /* Without this, a tight row (a long center label competing for the
+       same space) shrinks the icon down to a few px before it touches
+       the already-capped title text at all — flex items shrink by
+       default, and an icon has no natural minimum size of its own. */
+    flex-shrink: 0;
+  }
+
   .week-nav-side--next .week-nav-link {
-    flex-direction: row-reverse;
     text-align: right;
   }
 
@@ -104,9 +117,23 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
   }
 
   .week-nav-current {
-    flex: 0 0 auto;
+    /* max-width: 50% is constant — the same whether this is hidden or
+       showing, never toggled by ".is-visible". An earlier version
+       reserved 0 width while hidden and only 50% once visible: that
+       meant the amount of room left for the side "Week N"/subtitle
+       text was itself different in the two states, so revealing the
+       label could force the sides to reflow (a subtitle that fit on one
+       line before scrolling wrapping to two once the label appeared) —
+       a resize nobody asked for, on top of the intended fade. Reserving
+       the same width at all times means only opacity/transform (both
+       compositor-only, no layout impact) ever change on scroll — the
+       sides never reflow because scrolling changed. */
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 50%;
     margin: 0;
     text-align: center;
+    overflow-wrap: break-word;
     opacity: 0;
     transform: translateY(-0.25rem);
     transition:
@@ -123,5 +150,87 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
     .week-nav-subtitle {
       display: none;
     }
+
+    /* Narrow viewports can't fit both side "Week N" labels at their
+       natural width and the current-week label at once without
+       overflow. An earlier version kept "Week N" at full width until
+       the center label needed the room, then collapsed it on the same
+       scroll trigger — but *resizing* it at that moment, even as an
+       instant (non-animated) snap, was still a visible jump. Sized down
+       permanently instead: small enough from the very first render to
+       coexist with the center label at its widest, so nothing ever
+       resizes on scroll at all. 5rem comfortably fits the widest case
+       ("Week 10"/"Week 11"/"Week 12", ~4.4rem unconstrained) without
+       clipping. */
+    .week-nav-title {
+      max-width: 5rem;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    /* Guarantees each side its full icon + title width regardless of how
+       much room the center label's own max-width asks for — the center
+       label already tolerates shrinking and wrapping (it has min-width:
+       0), so it's the one that gives way in a genuine space conflict,
+       never the icon or "Week N" getting silently crushed by the
+       default flex-shrink race. */
+    .week-nav-side {
+      min-width: 6.5rem;
+    }
   }
 </style>
+
+<script>
+  // Astro's ClientRouter does soft (client-side) navigation between pages,
+  // and only re-runs this script on "astro:page-load" — which also fires
+  // once for the very first real page load, so it's the only hook needed
+  // (same pattern as this theme's Nav.astro/Footer.astro). Without it, the
+  // observer set up on the first page in a browsing session would keep
+  // watching that page's now-detached sentinel after navigating elsewhere,
+  // and the new page's label would never get its own observer.
+  let observer: IntersectionObserver | undefined;
+
+  function setupWeekNav() {
+    observer?.disconnect();
+
+    const sentinel = document.querySelector<HTMLElement>(".week-nav-sentinel");
+    const weekNav = document.querySelector<HTMLElement>(".week-nav");
+    const currentLabel = document.querySelector<HTMLElement>("[data-week-nav-current]");
+
+    if (!sentinel || !weekNav || !currentLabel) return;
+
+    // Reset explicitly: a soft navigation morphs the DOM rather than
+    // rebuilding it from scratch, so a class added by client JS on the
+    // previous page can otherwise survive onto the new page's markup.
+    currentLabel.classList.remove("is-visible");
+
+    // The center label only makes sense once this header has actually
+    // become stuck at the top — before that point, .week-nav (and the
+    // label inside it) still sits in its normal, unstuck document-flow
+    // position, further down the page below the h1. An earlier version of
+    // this observer tracked the h1's own position instead: it could — and
+    // did — decide "reveal the label" at a scroll position where the
+    // header hadn't stuck yet, so the label appeared in that
+    // still-in-flow position, visible on screen *alongside* the still-
+    // visible h1, rather than pinned at the top in the h1's place.
+    //
+    // This tracks stuck-ness directly instead, with the standard
+    // "sentinel" technique: a zero-height marker immediately before this
+    // sticky element, observed with a root shrunk by exactly the sticky
+    // offset (this element's own resolved `inset-block-start`, i.e. the
+    // top nav's height). The sentinel sits at the same document position
+    // as this element's own top edge, so it stops intersecting at exactly
+    // the scroll position where the CSS itself starts pinning .week-nav
+    // there — no dependency on the h1's own height, position, or content.
+    const stickyOffset = parseFloat(getComputedStyle(weekNav).top) || 0;
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        currentLabel.classList.toggle("is-visible", !entry.isIntersecting);
+      },
+      { rootMargin: `-${Math.ceil(stickyOffset)}px 0px 0px 0px`, threshold: 0 },
+    );
+    observer.observe(sentinel);
+  }
+
+  document.addEventListener("astro:page-load", setupWeekNav);
+</script>
