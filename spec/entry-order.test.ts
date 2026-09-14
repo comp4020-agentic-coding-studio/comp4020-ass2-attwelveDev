@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neighbors } from "../src/lib/entry-order";
+import { assessmentNavLabel, neighbors } from "../src/lib/entry-order";
 
 describe("neighbors", () => {
   it("returns both neighbours for a middle entry", () => {
@@ -20,5 +20,22 @@ describe("neighbors", () => {
   it("returns both undefined when the id isn't in the list", () => {
     const list = [{ id: "a" }, { id: "b" }, { id: "c" }];
     expect(neighbors(list, "z")).toEqual({ previous: undefined, next: undefined });
+  });
+});
+
+describe("assessmentNavLabel", () => {
+  it("splits an 'Assignment N: name' title into primary + subtitle", () => {
+    expect(assessmentNavLabel("Assignment 2: Touch Grass Field Study")).toEqual({
+      primary: "Assignment 2",
+      subtitle: "Touch Grass Field Study",
+    });
+  });
+
+  it("leaves a title with no 'Assignment N:' prefix as a plain primary label", () => {
+    expect(assessmentNavLabel("Final Exam")).toEqual({ primary: "Final Exam" });
+  });
+
+  it("leaves 'Weekly Reflections' as a plain primary label", () => {
+    expect(assessmentNavLabel("Weekly Reflections")).toEqual({ primary: "Weekly Reflections" });
   });
 });

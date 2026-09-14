@@ -9,6 +9,19 @@ export function neighbors<T extends { id: string }>(
   return { previous: sorted[index - 1], next: sorted[index + 1] };
 }
 
+// "Assignment N: <name>" splits into a short "Assignment N" nav title with
+// the descriptive part as a subtitle, mirroring how Lectures/Labs show
+// "Week N" with the lecture/Lab title underneath. Assessments that don't
+// follow that pattern (Final Exam, Weekly Reflections) render as a plain
+// title with no subtitle, same as before.
+const ASSIGNMENT_TITLE_PATTERN = /^(Assignment \d+): (.+)$/;
+
+export function assessmentNavLabel(title: string): { primary: string; subtitle?: string } {
+  const match = title.match(ASSIGNMENT_TITLE_PATTERN);
+  if (!match) return { primary: title };
+  return { primary: match[1], subtitle: match[2] };
+}
+
 // getPublishedCollection is imported dynamically inside each sorted*()
 // function rather than at module top level: its own module imports
 // "astro:content", a virtual module only resolvable inside Astro's build

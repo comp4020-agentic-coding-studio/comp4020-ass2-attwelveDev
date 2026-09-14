@@ -88,17 +88,24 @@ describe("Assessment navigation", () => {
     expect(html).not.toMatch(/week-nav-side--next">\s*<a/);
   });
 
-  it("shows the assessment's title with no week prefix", () => {
-    const middleId = uniqueOrderedIds[1];
+  it("shows 'Assignment N' as the title and the assignment's name as the subtitle", () => {
+    // uniqueOrderedIds[1] is assignment-1-makeover ("Assignment 1: Makeover"),
+    // linked as the "next" control from uniqueOrderedIds[0].
     const html = assessmentPage(uniqueOrderedIds[0]);
-    const api = JSON.parse(readFileSync(resolve("dist/api/index.json"), "utf8")) as CourseApi;
-    const node = api.nodes.find(
-      (n) => n.type === "assessments" && n.id === `assessments/${middleId}`,
-    );
-    if (!node) throw new Error(`no assessment node for ${middleId}`);
-    expect(html).toContain(node.title);
     const linkSection = html.match(/<a class="week-nav-link"[\s\S]*?<\/a>/)?.[0] ?? "";
+    expect(linkSection).toContain("Assignment 1");
+    expect(linkSection).toContain("Makeover");
     expect(linkSection).not.toMatch(/Week/);
+  });
+
+  it("shows a plain title with no subtitle for an assessment with no 'Assignment N:' prefix", () => {
+    // uniqueOrderedIds[0] is weekly-reflections, which has no "Assignment N:"
+    // prefix to split, so it renders as a plain, un-split title.
+    const secondId = uniqueOrderedIds[1];
+    const html = assessmentPage(secondId);
+    const linkSection = html.match(/<a class="week-nav-link"[\s\S]*?<\/a>/)?.[0] ?? "";
+    expect(linkSection).toContain("Weekly Reflections");
+    expect(linkSection).not.toContain("week-nav-subtitle");
   });
 });
 

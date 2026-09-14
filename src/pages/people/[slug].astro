@@ -61,38 +61,40 @@ const description = person.data.description;
     }}
     currentLabel={person.data.title}
   />
-  <dl>
-    {roleLabel && (
-      <>
-        <dt>Role</dt>
-        <dd>{roleLabel}</dd>
-      </>
-    )}
-    {person.data.affiliation && (
-      <>
-        <dt>Affiliation</dt>
-        <dd>{person.data.affiliation}</dd>
-      </>
-    )}
-    {person.data.email && (
-      <>
-        <dt>Email</dt>
-        <dd>
-          <a href={`mailto:${person.data.email}`}>{person.data.email}</a>
-        </dd>
-      </>
-    )}
-    {person.data.url && (
-      <>
-        <dt>Web</dt>
-        <dd>
-          <a href={person.data.url}>{person.data.url}</a>
-        </dd>
-      </>
-    )}
-    <dt>Contact</dt>
-    <dd>{person.data.contact}</dd>
-  </dl>
+  <section class="course-specsheet" aria-label="Person details">
+    <dl>
+      {roleLabel && (
+        <>
+          <dt>Role</dt>
+          <dd>{roleLabel}</dd>
+        </>
+      )}
+      {person.data.affiliation && (
+        <>
+          <dt>Affiliation</dt>
+          <dd>{person.data.affiliation}</dd>
+        </>
+      )}
+      {person.data.email && (
+        <>
+          <dt>Email</dt>
+          <dd>
+            <a href={`mailto:${person.data.email}`}>{person.data.email}</a>
+          </dd>
+        </>
+      )}
+      {person.data.url && (
+        <>
+          <dt>Web</dt>
+          <dd>
+            <a href={person.data.url}>{person.data.url}</a>
+          </dd>
+        </>
+      )}
+      <dt>Contact</dt>
+      <dd>{person.data.contact}</dd>
+    </dl>
+  </section>
 
   <Content />
 </ContentLayout>
