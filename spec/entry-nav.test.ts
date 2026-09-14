@@ -101,3 +101,41 @@ describe("Assessment navigation", () => {
     expect(linkSection).not.toMatch(/Week/);
   });
 });
+
+describe("People navigation", () => {
+  function personPage(id: string): string {
+    return readFileSync(resolve(`dist/people/${id}/index.html`), "utf8");
+  }
+
+  it("gives the first person (Cosima Adjei) exactly one entry-nav link (next only)", () => {
+    const html = personPage("cosima-adjei");
+    const matches = html.match(/class="week-nav-link"/g) ?? [];
+    expect(matches.length).toBe(1);
+    expect(html).toMatch(/href="[^"]*\/people\/noor-kalantari\/"/);
+  });
+
+  it("gives the last person (Thaddeus Vrell) exactly one entry-nav link (previous only)", () => {
+    const html = personPage("thaddeus-vrell");
+    const matches = html.match(/class="week-nav-link"/g) ?? [];
+    expect(matches.length).toBe(1);
+    expect(html).toMatch(/href="[^"]*\/people\/petra-lindqvist\/"/);
+  });
+
+  it("gives a middle person (Noor Kalantari) exactly two entry-nav links", () => {
+    const html = personPage("noor-kalantari");
+    const matches = html.match(/class="week-nav-link"/g) ?? [];
+    expect(matches.length).toBe(2);
+    expect(html).toMatch(/href="[^"]*\/people\/cosima-adjei\/"/);
+    expect(html).toContain("Cosima Adjei");
+    expect(html).toContain("Convenor");
+    expect(html).toMatch(/href="[^"]*\/people\/petra-lindqvist\/"/);
+    expect(html).toContain("Petra Lindqvist");
+    expect(html).toContain("Tutor");
+  });
+
+  it("uses the person's name as the center label, not a week number", () => {
+    const html = personPage("noor-kalantari");
+    const match = html.match(/data-week-nav-current[^>]*>([^<]*)</);
+    expect(match?.[1].trim()).toBe("Noor Kalantari");
+  });
+});

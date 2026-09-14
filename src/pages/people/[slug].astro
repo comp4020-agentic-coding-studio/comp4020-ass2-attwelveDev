@@ -2,6 +2,9 @@
 import { render } from "astro:content";
 import { getPublishedCollection } from "astro-course-university/content";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import { withBase } from "astro-theme-university/url";
+import EntryNav from "../../components/EntryNav.astro";
+import { neighbors, sortedPeople } from "../../lib/entry-order";
 import { siteConfig } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -21,6 +24,14 @@ const roleLabels: Record<string, string> = {
   other: "",
 };
 const roleLabel = person.data.role ? roleLabels[person.data.role] : undefined;
+
+function navRoleLabel(role: string | undefined): string | undefined {
+  if (!role) return undefined;
+  return roleLabels[role] || undefined;
+}
+
+const people = await sortedPeople();
+const { previous, next } = neighbors(people, person.id);
 // Astro's generated type does not retain the image/alt refinement relationship,
 // so narrow the alt at the rendering boundary as well.
 const rawPhotoAlt = (person.data as { photoAlt?: unknown }).photoAlt;
@@ -37,6 +48,19 @@ const description = person.data.description;
   heroImageAlt={photoAlt}
   {...siteConfig}
 >
+  <EntryNav
+    previous={previous && {
+      href: withBase(`/people/${previous.id}/`),
+      primaryLabel: previous.data.title,
+      subtitleLabel: navRoleLabel(previous.data.role),
+    }}
+    next={next && {
+      href: withBase(`/people/${next.id}/`),
+      primaryLabel: next.data.title,
+      subtitleLabel: navRoleLabel(next.data.role),
+    }}
+    currentLabel={person.data.title}
+  />
   <dl>
     {roleLabel && (
       <>
