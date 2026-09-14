@@ -157,31 +157,55 @@ h6 {
   max-width: 100%;
 }
 
-/* Subtle translucent + blurred chrome (Plan
-   2026-09-15-entry-nav-and-translucent-chrome.md, Task 7): one shared
-   alpha/blur pair reused across the per-page nav header, the site nav
-   bar, and the search panel, each color-mix'd over that surface's own
-   existing background token so light/dark mode and the bg-vs-elevated
-   distinction the theme already encodes are both preserved. */
+/* Frosted-glass chrome (Plan 2026-09-15-entry-nav-and-translucent-chrome.md,
+   Task 7): one shared alpha/blur/saturate triple reused across the per-page
+   nav header, the site nav bar, and the search panel, each color-mix'd over
+   --at-bg-elevated (not --at-bg) and given the theme's own --at-shadow-md,
+   so all three read as one distinct, floating panel rather than a same-
+   colour overlay — --at-bg and --at-bg-elevated are identical in light mode
+   (tokens.css:69-80), so a tint mixed from --at-bg alone is mathematically
+   invisible over the page's own flat background there: color-mix'ing X% of
+   a colour with transparent, then compositing over a backdrop that's that
+   *same* colour, renders back to that exact colour with zero visible
+   difference. The shadow is what actually demarcates the panel's edges in
+   light mode; --at-bg-elevated's own contrast does the same job in dark
+   mode, where the two tokens differ. The saturate boost alongside the blur
+   is what makes scrolled content underneath read as frosted glass rather
+   than plain transparency where content DOES pass beneath it — blur alone,
+   even at a large radius, barely registers over a mostly flat background.
+
+   No -webkit-backdrop-filter fallback: the build's CSS minifier drops the
+   *unprefixed* backdrop-filter whenever a byte-identical -webkit- version
+   is declared alongside it in the same rule (confirmed by direct build
+   inspection — this reproduces with or without rule-merging across
+   selectors), which would silently break the blur everywhere except in
+   the one legacy-prefixed browsers it was meant to support. Every
+   evergreen browser (Safari included, from Safari 18) supports the
+   unprefixed property; older Safari falls back to the plain translucent
+   colour with no blur, which degrades acceptably rather than breaking. */
 :root {
   --course-chrome-alpha: 55%;
-  --course-chrome-blur: 24px;
+  --course-chrome-blur: 32px;
+  --course-chrome-saturate: 180%;
 }
 
-.week-nav {
-  background: color-mix(in oklch, var(--at-bg) var(--course-chrome-alpha), transparent);
-  backdrop-filter: blur(var(--course-chrome-blur));
-  -webkit-backdrop-filter: blur(var(--course-chrome-blur));
+/* .week-nav's own background lives on ::before, not here — see the
+   ::before rule in EntryNav.astro's <style> block for why (it needs to
+   extend past .week-nav's own box to reach the viewport edges, without
+   moving .week-nav's content). */
+.week-nav::before {
+  background: color-mix(in oklch, var(--at-bg-elevated) var(--course-chrome-alpha), transparent);
+  backdrop-filter: blur(var(--course-chrome-blur)) saturate(var(--course-chrome-saturate));
+  box-shadow: var(--at-shadow-md);
 }
 
 .at-nav {
-  background: color-mix(in oklch, var(--at-bg) var(--course-chrome-alpha), transparent);
-  backdrop-filter: blur(var(--course-chrome-blur));
-  -webkit-backdrop-filter: blur(var(--course-chrome-blur));
+  background: color-mix(in oklch, var(--at-bg-elevated) var(--course-chrome-alpha), transparent);
+  backdrop-filter: blur(var(--course-chrome-blur)) saturate(var(--course-chrome-saturate));
+  box-shadow: var(--at-shadow-md);
 }
 
 .at-search-panel {
   background: color-mix(in oklch, var(--at-bg-elevated) var(--course-chrome-alpha), transparent);
-  backdrop-filter: blur(var(--course-chrome-blur));
-  -webkit-backdrop-filter: blur(var(--course-chrome-blur));
+  backdrop-filter: blur(var(--course-chrome-blur)) saturate(var(--course-chrome-saturate));
 }

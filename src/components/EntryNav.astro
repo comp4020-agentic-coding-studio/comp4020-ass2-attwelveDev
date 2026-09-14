@@ -73,14 +73,35 @@ const { previous, next, currentLabel } = Astro.props;
     position: sticky;
     inset-block-start: var(--at-nav-height);
     z-index: 90;
-    /* No background here: course.css supplies the translucent one. Astro
-       scopes this style with a data-astro-cid-* attribute selector, which
-       is *more specific* than course.css's plain .week-nav rule — course.css
-       being unlayered only lets it beat the theme's own layered rules, not
-       this component's own higher-specificity one. A background declared
-       here would silently win and paint over the blur. */
+    /* No background here: course.css paints the translucent, blurred one on
+       ::before (below), not on this element directly. Astro scopes this
+       style with a data-astro-cid-* attribute selector, which is *more
+       specific* than course.css's plain .week-nav rule — course.css being
+       unlayered only lets it beat the theme's own layered rules, not this
+       component's own higher-specificity one. A background declared here
+       would silently win and paint over the blur. */
     border-block-end: 1px solid var(--at-divider);
     overflow-anchor: none;
+  }
+
+  .week-nav::before {
+    /* This element sits inside <main>, which is confined to the page's
+       readable-width content column — but the header's blurred background
+       should read edge-to-edge like the site nav's does. Rather than widen
+       .week-nav itself (which would force re-deriving and duplicating the
+       theme's own content-column width formula on .week-nav-inner just to
+       keep its content pinned in place), a ::before layer, sized far past
+       any realistic viewport width in each direction, paints the
+       background/blur behind everything without touching .week-nav's own
+       box or its children's layout at all. course.css supplies the actual
+       background/backdrop-filter declarations (unlayered, so it beats the
+       theme's layered rules) — this only establishes the box and stacking
+       order. */
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline: -100vw;
+    z-index: -1;
   }
 
   .week-nav-inner {

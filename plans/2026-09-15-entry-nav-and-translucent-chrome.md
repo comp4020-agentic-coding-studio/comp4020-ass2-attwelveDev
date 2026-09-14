@@ -938,3 +938,81 @@ execute-plan skill.
 
 All three fixes verified with `agent-browser` at 1920×1080 and 390×844
 after the change; `pnpm check` stayed green throughout (256 tests).
+
+## 10. Post-review amendments, round 2 (2026-09-15)
+
+A second round of feedback on the round-1 fixes above surfaced four more
+changes:
+
+1. **Center-label separator.** Lecture/Lab/Assessment center labels used an
+   em dash (`Week 6 — Title`), inconsistent with the page's own `<h1>`/
+   `<title>`, which use a colon (`Week 6 Lecture: Title`). Changed to a
+   colon (`Week 6: Title`, `Assignment 2: Touch Grass Field Study`) in all
+   three `[slug].astro` pages. Side-link labels were already split across
+   two lines with no separator character, so they're unaffected.
+2. **Assessment due dates need a time, and Weekly Reflections needs a
+   custom recurring-schedule description.** Added `formatCourseDateTime()`
+   to `src/lib/dates.ts`, which appends the course-local time of day
+   (formatted in the `Australia/Sydney` IANA zone — Canberra has no
+   separate zone and shares its offsets/DST transitions — rather than
+   hardcoding "12:00", so it stays correct even though every `due` value
+   is guaranteed noon-local by `spec/assessment-scheme.test.ts`). Added an
+   optional `dueDisplay` string to the assessments schema so content can
+   override the specsheet's rendered "Due" row entirely — used once, by
+   `weekly-reflections.md` ("12:00, Every Tuesday, Weeks 2-12"), since its
+   `due` field only carries one representative date for sorting.
+3. **Frosted glass wasn't actually visible — three compounding causes,**
+   each confirmed by direct inspection before fixing (not assumed):
+   - Blur/saturate alone barely register over a mostly flat background —
+     added `saturate(180%)` alongside the blur (a standard glassmorphism
+     technique) and raised the blur radius from 24px to 32px.
+   - **A genuine build-tool bug:** the CSS minifier drops the *unprefixed*
+     `backdrop-filter` whenever a byte-identical `-webkit-backdrop-filter`
+     is declared in the same rule — confirmed by inspecting the built HTML
+     directly and by testing with the vendor prefix removed (survives) vs.
+     present (dropped), independent of whether the rule was merged with
+     another identical one. `getComputedStyle(...).backdropFilter` read
+     `"none"` with the prefix present; `"blur(32px) saturate(1.8)"` with it
+     removed. Fixed by dropping the `-webkit-` fallback entirely — every
+     evergreen browser (Safari from version 18) supports the unprefixed
+     property; older Safari degrades to a plain translucent colour with no
+     blur rather than breaking.
+   - **`--at-bg` and `--at-bg-elevated` are byte-identical in light mode**
+     (`tokens.css:69-80`) — so a tint color-mix'd from `--at-bg` at any
+     alpha is mathematically invisible over the page's own flat background
+     in light mode specifically (compositing X% of colour C with
+     transparent, over a backdrop that's already exactly C, always renders
+     back to C). This is why "extend the background to the sides" produced
+     no visible change: the extended area was correctly painted, but
+     identical in colour to the plain page background surrounding it.
+     Switched `.week-nav::before` and `.at-nav` from `--at-bg` to
+     `--at-bg-elevated` (already used by `.at-search-panel`) and added
+     `box-shadow: var(--at-shadow-md)` to both — the shadow is what
+     actually demarcates the panel in light mode (where the two background
+     tokens still match), while `--at-bg-elevated`'s own contrast does that
+     job in dark mode. This is a further amendment to the Task 7 Approach
+     text's original rationale ("preserving the elevation difference the
+     theme already encodes" — i.e. nav bars on `--at-bg`, only the search
+     panel elevated), which turned out to be visually insufficient once
+     actually checked rather than assumed.
+4. **The entry-nav header's background didn't extend to the viewport
+   edges.** `.week-nav` renders inside `<main class="at-main">`, which
+   (unlike the body's direct children `.at-nav`/`.at-footer`) is not a
+   grid item with access to the body grid's `full`/`inset`/`content`
+   named lines, and isn't itself a subgrid — so there's no equivalent to
+   `.at-nav`'s `grid-column: full` available to it. Rather than widen
+   `.week-nav` itself (which would force duplicating the theme's own
+   content-column width formula onto `.week-nav-inner` just to keep its
+   content pinned in place — risking the "content shouldn't move"
+   constraint), added a `.week-nav::before` pseudo-element, sized via
+   `position: absolute; inset-inline: -100vw` (comfortably past any
+   realistic viewport width in each direction), that carries the
+   background/blur/shadow entirely separately from `.week-nav`'s own box
+   and children. Verified via `getComputedStyle` that the box's computed
+   `left`/`right` extend to roughly ±2700px past a 1920px viewport, and
+   visually that `.week-nav-inner`'s content sits in exactly the same
+   position as before.
+
+All four changes verified with `agent-browser` at 1920×1080 and 390×844,
+in both light and dark mode; `pnpm check` stayed green throughout (260
+tests).
