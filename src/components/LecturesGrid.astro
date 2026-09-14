@@ -1,13 +1,12 @@
 ---
-import { getPublishedCollection } from "astro-course-university/content";
 import Icon from "astro-theme-university/components/Icon.astro";
 import { withBase } from "astro-theme-university/url";
 import TopicChips from "./TopicChips.astro";
 import { formatCourseDate } from "../lib/dates";
+import { sortedLectures } from "../lib/entry-order";
 import { extractContentTopics } from "../lib/topics";
 
-const lectures = await getPublishedCollection("lectures");
-const visible = lectures.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+const visible = await sortedLectures();
 ---
 
 <div class="course-schedule">

@@ -1,10 +1,9 @@
 ---
-import { getPublishedCollection } from "astro-course-university/content";
 import { withBase } from "astro-theme-university/url";
 import { formatCourseDate } from "../lib/dates";
+import { sortedAssessments } from "../lib/entry-order";
 
-const assessments = await getPublishedCollection("assessments");
-const visible = assessments.sort((a, b) => a.data.week - b.data.week);
+const visible = await sortedAssessments();
 ---
 
 <ul class="course-list">
