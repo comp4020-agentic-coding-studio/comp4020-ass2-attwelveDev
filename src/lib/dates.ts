@@ -22,7 +22,7 @@ const courseTime = new Intl.DateTimeFormat("en-AU", {
   timeZone: "Australia/Sydney",
 });
 
-/** Format a date with its course-local time of day, e.g. "30 April 2027, 12:00". */
+/** Format a date with its course-local time of day, e.g. "12:00, 30 April 2027". */
 export function formatCourseDateTime(value: Date): string {
-  return `${formatCourseDate(value)}, ${courseTime.format(value)}`;
+  return `${courseTime.format(value)}, ${formatCourseDate(value)}`;
 }
