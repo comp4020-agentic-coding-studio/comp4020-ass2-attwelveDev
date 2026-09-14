@@ -30,10 +30,11 @@ own if you have not started it yet.
 | 0:45–0:55 | Discussion / debrief of Activity 2 |
 | 0:55–1:00 | Wrap-up, reflection prompt reminder |
 
-Last week's Lab was about noticing a device-free stretch happening on its
-own and figuring out how to reproduce it. This week is the same noticing
-skill turned on a conversation: catching the moment it runs dry, and
-knowing what to say next instead of letting it sit there.
+**Introduction.** Last week's Lab was about noticing a device-free
+stretch happening on its own and figuring out how to reproduce it. This
+week is the same noticing skill turned on a conversation: catching the
+moment it runs dry, and knowing what to say next instead of letting it
+sit there.
 
 **Activity 1 (rotating pairs, 15 min): Small talk stations.** Two-minute
 rounds, a new partner each round. Before each round, thirty seconds of
