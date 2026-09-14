@@ -27,6 +27,13 @@ This course treats that as the starting condition, not the problem.
 - how the weekly shape works: a lecture states the theory, the Lab runs it
 - the assessment scheme, in outline: five items, always weighted, always
   visible
+- a recurring rubric this course applies to all five areas, every week,
+  all semester: Critical (needs attention now), Monitor (not urgent, but
+  worth tracking), Stable (fine as-is)
+- today's starting self-assessment scores hygiene, dress, sleep,
+  conversation and money honestly, against what you actually do rather
+  than what you'd like to do, and the result nominates this semester's
+  first priority area
 
 ## Case study
 
