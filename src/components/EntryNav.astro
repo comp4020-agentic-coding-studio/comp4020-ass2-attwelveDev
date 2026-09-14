@@ -1,46 +1,49 @@
 ---
-import { getPublishedCollection } from "astro-course-university/content";
-import { withBase } from "astro-theme-university/url";
 import Icon from "astro-theme-university/components/Icon.astro";
 
-interface Props {
-  week: number;
-  title: string;
+export interface EntryNavItem {
+  href: string;
+  primaryLabel: string;
+  subtitleLabel?: string;
 }
 
-const { week, title } = Astro.props;
+interface Props {
+  previous?: EntryNavItem;
+  next?: EntryNavItem;
+  currentLabel: string;
+}
 
-const lectures = await getPublishedCollection("lectures");
-const previous = lectures.find((entry) => entry.data.week === week - 1);
-const next = lectures.find((entry) => entry.data.week === week + 1);
+const { previous, next, currentLabel } = Astro.props;
 ---
 
 <div class="week-nav-sentinel" aria-hidden="true"></div>
-<nav class="week-nav" aria-label="Week navigation">
+<nav class="week-nav" aria-label="Page navigation">
   <div class="week-nav-inner">
     <div class="week-nav-side week-nav-side--prev">
       {
         previous && (
-          <a class="week-nav-link" href={withBase(`/lectures/${previous.id}/`)}>
+          <a class="week-nav-link" href={previous.href}>
             <Icon name="nav-arrow-left" class="week-nav-icon" />
             <span class="week-nav-text">
-              <span class="week-nav-title">Week {previous.data.week}</span>
-              <span class="week-nav-subtitle">{previous.data.title}</span>
+              <span class="week-nav-title">{previous.primaryLabel}</span>
+              {previous.subtitleLabel && (
+                <span class="week-nav-subtitle">{previous.subtitleLabel}</span>
+              )}
             </span>
           </a>
         )
       }
     </div>
     <p class="week-nav-current" data-week-nav-current>
-      Week {week} — {title}
+      {currentLabel}
     </p>
     <div class="week-nav-side week-nav-side--next">
       {
         next && (
-          <a class="week-nav-link" href={withBase(`/lectures/${next.id}/`)}>
+          <a class="week-nav-link" href={next.href}>
             <span class="week-nav-text">
-              <span class="week-nav-title">Week {next.data.week}</span>
-              <span class="week-nav-subtitle">{next.data.title}</span>
+              <span class="week-nav-title">{next.primaryLabel}</span>
+              {next.subtitleLabel && <span class="week-nav-subtitle">{next.subtitleLabel}</span>}
             </span>
             <Icon name="nav-arrow-right" class="week-nav-icon" />
           </a>

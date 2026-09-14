@@ -5,9 +5,10 @@ import RelatedContent from "astro-course-university/components/RelatedContent.as
 import Icon from "astro-theme-university/components/Icon.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
 import { withBase } from "astro-theme-university/url";
+import EntryNav from "../../components/EntryNav.astro";
 import TeachingTeam from "../../components/TeachingTeam.astro";
 import WeekMeta from "../../components/WeekMeta.astro";
-import WeekNav from "../../components/WeekNav.astro";
+import { neighbors, sortedLectures } from "../../lib/entry-order";
 import { graphCollections, siteConfig } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -18,10 +19,25 @@ export async function getStaticPaths() {
 const { lecture } = Astro.props;
 const { Content } = await render(lecture);
 const title = `Week ${lecture.data.week} Lecture: ${lecture.data.title}`;
+
+const lectures = await sortedLectures();
+const { previous, next } = neighbors(lectures, lecture.id);
 ---
 
 <ContentLayout title={title} description={lecture.data.description} {...siteConfig}>
-  <WeekNav week={lecture.data.week} title={lecture.data.title} />
+  <EntryNav
+    previous={previous && {
+      href: withBase(`/lectures/${previous.id}/`),
+      primaryLabel: `Week ${previous.data.week}`,
+      subtitleLabel: previous.data.title,
+    }}
+    next={next && {
+      href: withBase(`/lectures/${next.id}/`),
+      primaryLabel: `Week ${next.data.week}`,
+      subtitleLabel: next.data.title,
+    }}
+    currentLabel={`Week ${lecture.data.week} — ${lecture.data.title}`}
+  />
   <WeekMeta week={lecture.data.week} date={lecture.data.date} kind="lecture" />
   {lecture.data.slides && (
     <p>
