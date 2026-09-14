@@ -156,3 +156,32 @@ h6 {
   width: auto;
   max-width: 100%;
 }
+
+/* Subtle translucent + blurred chrome (Plan
+   2026-09-15-entry-nav-and-translucent-chrome.md, Task 7): one shared
+   alpha/blur pair reused across the per-page nav header, the site nav
+   bar, and the search panel, each color-mix'd over that surface's own
+   existing background token so light/dark mode and the bg-vs-elevated
+   distinction the theme already encodes are both preserved. */
+:root {
+  --course-chrome-alpha: 82%;
+  --course-chrome-blur: 12px;
+}
+
+.week-nav {
+  background: color-mix(in oklch, var(--at-bg) var(--course-chrome-alpha), transparent);
+  backdrop-filter: blur(var(--course-chrome-blur));
+  -webkit-backdrop-filter: blur(var(--course-chrome-blur));
+}
+
+.at-nav {
+  background: color-mix(in oklch, var(--at-bg) var(--course-chrome-alpha), transparent);
+  backdrop-filter: blur(var(--course-chrome-blur));
+  -webkit-backdrop-filter: blur(var(--course-chrome-blur));
+}
+
+.at-search-panel {
+  background: color-mix(in oklch, var(--at-bg-elevated) var(--course-chrome-alpha), transparent);
+  backdrop-filter: blur(var(--course-chrome-blur));
+  -webkit-backdrop-filter: blur(var(--course-chrome-blur));
+}
