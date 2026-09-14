@@ -25,8 +25,9 @@ const { Content } = await render(session);
   <WeekMeta week={session.data.week} date={session.data.date} kind="lab" />
   <Content />
   <SpecList spec={session.data.spec}>
-    What you bring to the session. Written so a reader can tell whether it has
-    been met without asking you.
+    This Lab's objectives: what you're expected to bring away from the
+    session, written so a reader can tell whether each one has been met
+    without asking you.
   </SpecList>
   <TeachingTeam teachers={session.data.teachers} />
   <RelatedContent entry={session} collections={graphCollections} />

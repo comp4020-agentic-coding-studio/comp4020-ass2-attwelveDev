@@ -86,20 +86,56 @@ here, not re-litigated.
    existing lecture/Lab titles for that week.
 9. Week 3's ranking activity is implemented with the five outfits
    described in prose (no image files added or referenced).
-10. No file outside `src/content/sessions/*.md` and
-    `src/pages/sessions/index.astro` is modified.
+10. No file outside `src/content/sessions/*.md`,
+    `src/pages/sessions/index.astro`, and `src/pages/sessions/[slug].astro`
+    is modified — except that a week's own `src/content/lectures/week-NN.md`
+    may also be touched, and only to add a single `related:` entry, when
+    §2.1.14 requires declaring an Assessment `related:` edge on the lecture
+    rather than the Lab.
 11. Any pair activity refers to the other participant as "one other
     student," never "partner" or "your partner" — applies to every week's
     Discussion/debrief prose and heading, not just Week 1.
 12. Any Likert-style/agreement-scale rating used in an activity is spelled
     out as an explicit list of every point on the scale (e.g. 1 Strongly
     disagree … 5 Strongly agree), never just its two endpoints.
+13a. `src/pages/sessions/[slug].astro`'s `SpecList` caption is reworded once
+    (it renders identically on every week's page, so one edit covers all
+    12) to read clearly as this Lab's objectives — what a student is
+    expected to bring away from the session — rather than the current
+    "What you bring to the session," which reads ambiguously (could be
+    misread as "what to bring with you," a preparation instruction rather
+    than an outcome). This is the only change permitted to that file; its
+    template structure, the `assessments/[slug].astro` page (a different
+    `SpecList` caption), and every other file stay untouched.
 13. Where a week's activity output is explicitly revisited or reused in a
     later week (per the continuity references in §3 and the Task
     descriptions below — e.g. Week 1's self-assessment scores, reused by
     Week 12's "Then and now" activity), the earlier week's Wrap-up names
     that future revisit explicitly, not just the later week's Before-the-
     Lab.
+14. Where prose names another specific content page by name (an
+    Assignment, another week's Lab or lecture), that mention is a markdown
+    link to that page's actual route (e.g.
+    `[Assignment 1](/assessments/assignment-1-makeover/)`), not plain text —
+    following the existing convention already used elsewhere in this repo
+    (e.g. `[Policies](/policies/)` in `assignment-1-makeover.md`). Applies
+    every time such a mention occurs, including a mention repeated more than
+    once in the same file. A plain markdown link is not a graph edge (only
+    `related:` frontmatter, or a `{/* embed: ... */}` directive, produces
+    one — confirmed by reading `content-helpers.ts`'s `refsOf`), so whenever
+    a Lab's prose links to another content page this way, that page's ref
+    is also added as a `related:` edge, unless it is already connected via
+    an existing `related:` edge on either side. `related` is undirected —
+    declaring it once, on either page, is sufficient for both pages'
+    Related sections to show the connection; do not declare it on both
+    sides. When the linked page is an Assessment, the edge is declared on
+    that week's own **lecture** file (e.g. `lectures/week-02`), not the Lab
+    file — the lecture is the "center" node for a given week's content, and
+    declaring the edge there instead of on the Lab avoids an Assessment's
+    Related section listing both a week's Lab and its Lecture for what is
+    really one week's content. This matches the existing pattern already in
+    the repo (`lectures/week-03` and `lectures/week-04` both already relate
+    to `assessments/assignment-1-makeover`).
 
 ### 2.2 Non-functional requirements
 
@@ -303,16 +339,46 @@ rule.
   since that's what the existing `spec:` list requires.
   `## Before the Lab` keeps "Bring your nominated area from week 1's
   check-in..."; `## Afterwards` keeps "...the artefact week 4's Assignment
-  1 draws its hygiene product selection from."
-- **Files touched:** `src/content/sessions/week-02.md`.
+  1 draws its hygiene product selection from." The activity itself runs
+  individually first (fill in the calendar, private) then discussed with
+  one other student, so — per §2.1.2/§2.1.11 — the table's Activity 2 row
+  carries no size annotation and "(pairs)" sits on the "Discussion /
+  debrief" row instead. The Wrap-up names the same forward reference as
+  `## Afterwards` (week 4's Assignment 1), not a different one, per
+  §2.1.13. Both mentions of "Assignment 1" (Wrap-up and `## Afterwards`)
+  are markdown links to `/assessments/assignment-1-makeover/`, per §2.1.14,
+  and `assessments/assignment-1-makeover` is added to
+  `src/content/lectures/week-02.md`'s `related:` list (not `week-02.md`'s
+  own) per §2.1.14's Assessment-links-to-the-lecture rule — the lecture is
+  the week's "center" node, and Assignment 1's Related section already
+  lists `lectures/week-03`/`lectures/week-04` this same way, so this keeps
+  it consistent rather than also listing Week 2's Lab there. This task also
+  carries requirement 2.1.13a: reword `src/pages/sessions/[slug].astro`'s
+  `SpecList` caption — this surfaced during Week 2's Human review as
+  unclear, and since the caption is shared by every week's page, fixing it
+  once here covers all 12.
+- **Files touched:** `src/content/sessions/week-02.md`,
+  `src/content/lectures/week-02.md` (one `related:` entry only, per
+  §2.1.10's exception), `src/pages/sessions/[slug].astro`.
 - **Tests first (red):** None new; baseline `pnpm check` green before edit.
 - **Implementation (green):** Body-only edit per Description; frontmatter
   unchanged (existing `spec:` already matches the reconciled Activity 2).
+  The `SpecList` caption edit is a one-line rewording, not a structural
+  change to the component or its layout.
 - **Refactor:** None expected.
 - **Acceptance criteria:** Same shape as Task 1's, applied to
   `week-02.md`/`dist/sessions/week-02/`: `pnpm check` green, heading order
   intact, no banned/framing/gendered terms, "week 4's Assignment 1"
-  reference preserved, six-row table present.
+  reference preserved, six-row table present. Additionally: the rendered
+  `SpecList` caption on every week's page (spot-checked via `week-02` and
+  `week-01`) reads as this Lab's objectives, not "what to pack"; both
+  "Assignment 1" mentions render as working links to
+  `/assessments/assignment-1-makeover/`; the Assignment 1 page's Related
+  section includes "Personal Hygiene and Maintenance" (the lecture) exactly
+  once, and Week 2's Lab page's own Related section is unchanged from
+  before (just the lecture) — the Lab does not gain a reciprocal listing on
+  Assignment 1's page, since the edge is declared lecture-to-assessment,
+  not Lab-to-assessment.
 - **Human review:** Diff/rendered page for `week-02.md`. Pass = the
   calendar-critique and peer-check activities read as genuinely
   collaborative (not solitary busywork retrofitted with a group label), and
@@ -703,7 +769,9 @@ rule.
 | 2.1.10 (no files outside the two named paths touched) | All tasks (Files touched lists) |
 | 2.1.11 ("one other student," not "partner") | Tasks 1–12 (any pair activity) |
 | 2.1.12 (agreement scales spelled out in full) | Tasks 1–12 (any Likert-style rating) |
-| 2.1.13 (Wrap-up names a later week's revisit) | Task 1 (names Task 12's revisit); revisit any other week's Task if a similar forward reference is identified during that task's Human review |
+| 2.1.13 (Wrap-up names a later week's revisit) | Task 1 (names Task 12's revisit); Task 2 (names Task 4's Assignment 1 revisit); revisit any other week's Task if a similar forward reference is identified during that task's Human review |
+| 2.1.13a (SpecList caption reworded as objectives) | Task 2 |
+| 2.1.14 (named content pages linked, not plain text, and mirrored in `related:`, on the lecture when the target is an Assessment) | Task 2 (Assignment 1, ×2, plus `related:` edge on `lectures/week-02.md`); revisit any other week's Task if a similar named mention is identified during that task's Human review |
 | 2.2 (non-functional: none beyond defaults) | N/A — no task required |
 
 ## 8. Risks / open questions

@@ -9,6 +9,7 @@ teachers:
   - thaddeus-vrell
 related:
   - sessions/week-02
+  - assessments/assignment-1-makeover
 ---
 
 ## Overview
