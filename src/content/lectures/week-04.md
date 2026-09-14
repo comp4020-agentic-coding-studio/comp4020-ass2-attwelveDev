@@ -10,6 +10,7 @@ teachers:
 related:
   - sessions/week-04
   - assessments/assignment-1-makeover
+  - assessments/assignment-3-adulting
 ---
 
 ## Overview

@@ -1,7 +1,7 @@
 ---
 title: "Assignment 3: Time to be an Adult"
 description:
-  A week-long plan across seven components of independent living, submitted
+  A week-long plan across eight components of independent living, submitted
   in full and interviewed against on the Wednesday
 week: 12
 due: 2027-05-28T12:00:00+10:00
@@ -15,7 +15,7 @@ marking:
       weight: 14
     - name: "Budget: category coverage and plausibility against stated income"
       weight: 12
-    - name: "Sleep schedule: viability"
+    - name: "Sleep schedule: viability and a stated fallback"
       weight: 10
     - name: "Exercise: frequency and specificity"
       weight: 8
@@ -34,17 +34,20 @@ marking:
     - name: Skincare
       weight: 4
 spec:
-  - all seven plan components are submitted
+  - all eight plan components are submitted
+  - the daily routine states a fallback for the night sleep slips
   - the Wednesday interview time is confirmed by email in advance
   - the plan stands on its own without you there to narrate it
 ---
 
 ## The plan
 
-Submit a single week-long plan covering seven components:
+Submit a single week-long plan covering eight components:
 
 - **Daily routine** — an hour-by-hour schedule for the week, covering wake,
-  sleep and meals.
+  sleep and meals, with a stated fallback for the night sleep slips.
+- **Exercise** — a stated frequency and a named activity for the week, not
+  "more."
 - **Laundry** — a wash schedule stating a frequency and colour separation,
   not "as needed."
 - **Meal plan** — every meal for the week, with nutritional coverage stated
@@ -80,7 +83,7 @@ wrote it:
   survive a week of actual use without an unplanned change.
 - **D** — every component is present and mostly consistent; one or two
   would need an unplanned change mid-week.
-- **C** — all seven components are present, but several show scheduling
+- **C** — all eight components are present, but several show scheduling
   conflicts a real week would surface immediately.
 - **P** — most components are present, but coverage is thin enough that
   the plan reads as an outline rather than something runnable.

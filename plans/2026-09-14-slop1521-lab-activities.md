@@ -490,23 +490,63 @@ rule.
   half). Partners reject any plan reading as "sleep more" or "exercise
   more."
   `## Before the Lab` keeps "Bring your week 2 hygiene schedule..."; `##
-  Afterwards` keeps "...Assignment 1's hygiene product selection assumes
-  the same fallback-first model, and Assignment 3 asks for both again in
-  full."
-- **Files touched:** `src/content/sessions/week-04.md`.
+  Afterwards` keeps a closing pointer back to Assignment 3.
+
+  Human review surfaced three corrections against this initial resolve:
+  1. Activity 2 originally read "keep both halves of the plan," which
+     reviewed as confusing — reworded throughout to explicit "your sleep
+     schedule and exercise plan," and Activity 2's own instruction now
+     names the week 2 hygiene schedule directly ("extend your week 2
+     hygiene schedule with the same model"), tying it back to `## Before
+     the Lab` the same way the page already does.
+  2. The initial Wrap-up claimed "Assignment 1's hygiene product
+     selection assumes the same fallback-first model" — false:
+     Assignment 1 covers hygiene *products* and outfits, not sleep or
+     exercise, and has no fallback concept. Dropped entirely. The
+     Assignment 3 claim was also overclaiming continuity of the exact
+     artifact ("marks both again in full") when a student may revise
+     either before submitting in week 12 — reworded to "revise either
+     before Assignment 3 asks for updated versions of both, marked in
+     week 12."
+  3. Reviewing Assignment 3 against its own marking criteria surfaced a
+     pre-existing bug: "Exercise: frequency and specificity" is a graded
+     criterion (8%) with no corresponding component in `## The plan`'s
+     eight-vs-seven-component list. Widened scope to fix
+     `assessments/assignment-3-adulting.md` directly (same precedent as
+     Task 3's `course.css` carve-out) — added the missing **Exercise**
+     plan bullet and corrected "seven" → "eight" in four places
+     (description, spec, plan intro, band C).
+  4. Per Human review, extended this Lab's sleep-fallback framing into
+     Assignment 3 itself: the "Daily routine" plan bullet and the "Sleep
+     schedule" marking criterion and spec bullet now both name "a stated
+     fallback for the night sleep slips," rewarding students who plan
+     for a bad night the same way this Lab does.
+- **Files touched:** `src/content/sessions/week-04.md`;
+  `src/content/lectures/week-04.md` (one `related:` entry only, per
+  §2.1.14, declaring the Assignment-3 edge that Assignment-1's edge
+  already covers on this lecture but Assignment 3's does not yet);
+  `src/content/assessments/assignment-3-adulting.md` (widened scope per
+  Human review — Exercise plan-component bugfix + sleep-fallback
+  framing, not part of the original file list).
 - **Tests first (red):** None new; baseline `pnpm check` green before edit.
-- **Implementation (green):** Body-only edit per Description; frontmatter
-  unchanged (existing `spec:` already names both sleep and exercise
-  deliverables).
+- **Implementation (green):** Body-only edit to `week-04.md` per
+  Description, plus the one `related:` entry on `lectures/week-04.md`;
+  `week-04.md`'s own frontmatter unchanged (existing `spec:` already
+  names both sleep and exercise deliverables); targeted wording/bugfix
+  edits to `assignment-3-adulting.md` as described above.
 - **Refactor:** None expected.
 - **Acceptance criteria:** `pnpm check` green; heading order intact; no
   banned/framing/gendered terms; both "Assignment 1" and "Assignment 3"
   references preserved; six-row table present; body explicitly names an
-  exercise plan with a stated frequency, not just sleep.
-- **Human review:** Diff/rendered page for `week-04.md`. Pass = the Jordan
-  case study reads verbatim-faithful to the source doc's tone, and the
-  exercise deliverable is as prominent as the sleep deliverable (not an
-  afterthought clause).
+  exercise plan with a stated frequency, not just sleep; Assignment 3's
+  plan-component list and marking criteria agree on component count and
+  both mention Exercise.
+- **Human review:** Diff/rendered page for `week-04.md` and
+  `assignment-3-adulting.md`. Pass = the Jordan case study reads
+  verbatim-faithful to the source doc's tone, the exercise deliverable is
+  as prominent as the sleep deliverable (not an afterthought clause), and
+  no claim about another assessment page overstates what that page
+  actually contains.
 - **Depends on:** None.
 
 ### Task 5: Week 5 Lab — Field observation + Field guide
