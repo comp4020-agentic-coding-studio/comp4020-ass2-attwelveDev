@@ -36,7 +36,7 @@ const { previous, next } = neighbors(lectures, lecture.id);
       primaryLabel: `Week ${next.data.week}`,
       subtitleLabel: next.data.title,
     }}
-    currentLabel={`Week ${lecture.data.week} — ${lecture.data.title}`}
+    currentLabel={`Week ${lecture.data.week}: ${lecture.data.title}`}
   />
   <WeekMeta week={lecture.data.week} date={lecture.data.date} kind="lecture" />
   {lecture.data.slides && (

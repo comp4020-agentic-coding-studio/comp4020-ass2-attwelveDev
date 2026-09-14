@@ -39,7 +39,7 @@ const { previous, next } = neighbors(sessions, session.id);
       primaryLabel: `Week ${next.data.week}`,
       subtitleLabel: next.data.title,
     }}
-    currentLabel={`Week ${session.data.week} — ${session.data.title}`}
+    currentLabel={`Week ${session.data.week}: ${session.data.title}`}
   />
   <WeekMeta week={session.data.week} date={session.data.date} kind="lab" />
   <Content />

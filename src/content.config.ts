@@ -49,6 +49,11 @@ export const collections = {
       .extend({
         week: weekSchema,
         due: z.coerce.date(),
+        // Overrides the specsheet's rendered "Due" row for an assessment
+        // whose deadline isn't a single instant — e.g. Weekly Reflections,
+        // due every Tuesday across several weeks. `due` above still carries
+        // one representative date for sorting/ordering purposes.
+        dueDisplay: z.string().trim().min(1).optional(),
         weight: z.coerce.number().positive().max(100),
         marking: z.discriminatedUnion("mode", [weightedMarking, holisticMarking]).optional(),
       })

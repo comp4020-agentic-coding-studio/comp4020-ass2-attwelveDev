@@ -5,6 +5,7 @@ description:
   yourself, with the lowest dropped before the running total is calculated
 week: 1
 due: 2027-03-02T12:00:00+11:00
+dueDisplay: 12:00, Every Tuesday, Weeks 2-12
 weight: 15
 marking:
   mode: weighted
