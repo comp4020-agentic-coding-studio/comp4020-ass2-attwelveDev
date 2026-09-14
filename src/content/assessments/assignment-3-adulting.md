@@ -1,7 +1,7 @@
 ---
 title: "Assignment 3: Time to be an Adult"
 description:
-  A week-long plan across eight components of independent living, submitted
+  A week-long plan across nine components of independent living, submitted
   in full and interviewed against on the Wednesday
 week: 12
 due: 2027-05-28T12:00:00+10:00
@@ -34,7 +34,7 @@ marking:
     - name: Skincare
       weight: 4
 spec:
-  - all eight plan components are submitted
+  - all nine plan components are submitted
   - the daily routine states a fallback for the night sleep slips
   - the Wednesday interview time is confirmed by email in advance
   - the plan stands on its own without you there to narrate it
@@ -42,7 +42,7 @@ spec:
 
 ## The plan
 
-Submit a single week-long plan covering eight components:
+Submit a single week-long plan covering nine components:
 
 - **Daily routine** — an hour-by-hour schedule for the week, covering wake,
   sleep and meals, with a stated fallback for the night sleep slips.
@@ -54,6 +54,13 @@ Submit a single week-long plan covering eight components:
   and repetition kept within reason.
 - **Budget** — every planned expense for the week against a stated income,
   itemised by category.
+- **Grocery logistics** — a one-week grocery list against an explicit
+  grocery budget in dollars, carved out of the week's stated income and
+  capped at 15% of it, plausible against real one-person grocery prices
+  rather than padded or lowballed to make the list easier, with no meal
+  repeated more than twice, plus a standing schedule for at least three
+  household items showing when each is due to run out and a recurring
+  order or trip timed to avoid a rush purchase.
 - **The date** — an activity booked, at a stated time, with attire decided
   in advance.
 - **The hangout** — time negotiated with close friends outside the course,
@@ -83,7 +90,7 @@ wrote it:
   survive a week of actual use without an unplanned change.
 - **D** — every component is present and mostly consistent; one or two
   would need an unplanned change mid-week.
-- **C** — all eight components are present, but several show scheduling
+- **C** — all nine components are present, but several show scheduling
   conflicts a real week would surface immediately.
 - **P** — most components are present, but coverage is thin enough that
   the plan reads as an outline rather than something runnable.

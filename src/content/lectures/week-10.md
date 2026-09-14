@@ -10,6 +10,7 @@ teachers:
   - petra-lindqvist
 related:
   - sessions/week-10
+  - assessments/assignment-3-adulting
 ---
 
 ## Overview
