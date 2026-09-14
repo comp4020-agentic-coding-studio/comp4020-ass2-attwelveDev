@@ -835,6 +835,24 @@ two.
       starting-unstuck state, no longer flips the state at all — only a
       clear, sustained scroll past either edge of the ~35px dead zone
       does.
+  15. **#14's hysteresis alone didn't fully resolve real-device
+      scrolling**: the user still saw a live "jittery, flickering" state
+      scrolling back up specifically (scrolling down was clean),
+      something the fully-synthetic, instant `scrollTo()` jumps used to
+      verify #14 can't reproduce — those never exercise what happens
+      *during* a continuous, physical scroll gesture. The mechanism:
+      browsers apply automatic *scroll anchoring* — nudging the scroll
+      position to compensate for a layout shift that happens near the
+      viewport, mid-scroll. Every toggle in this component (the title's
+      width, the side's min-width) is exactly that kind of shift,
+      happening right where the sticky header sits. Left on, that
+      compensation can feed back into this component's own
+      `IntersectionObserver`: a shift nudges scroll, which changes what
+      the observer sees, which toggles classes, which shifts layout
+      again. `overflow-anchor: none` on `.week-nav` and
+      `.week-nav-sentinel` opts the browser's own scroll compensation
+      out of that loop entirely. Confirmed fixed on the user's real
+      device — scrolling up no longer flickers.
 
   Each of these was verified by live browser testing (see the Human
   review note below), not by `spec/week-nav.test.ts` — none change what

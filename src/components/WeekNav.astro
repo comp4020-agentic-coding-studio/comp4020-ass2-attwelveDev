@@ -53,6 +53,17 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
 <style>
   .week-nav-sentinel {
     height: 0;
+    /* Scroll anchoring watches elements near the viewport and nudges the
+       scroll position to compensate for layout shifts it sees there —
+       and toggling .week-nav-title/.week-nav-side's width on scroll is
+       exactly that kind of shift, happening right at the viewport edge
+       where the sentinel and the sticky header sit. Left on, that can
+       feed back into this component's own IntersectionObserver: a
+       CSS-driven layout shift nudges scroll, which changes what the
+       observer sees, which changes the classes, which shifts layout
+       again. Opting this element and the header out (below) removes
+       the browser's own scroll compensation from that loop entirely. */
+    overflow-anchor: none;
   }
 
   .week-nav {
@@ -61,6 +72,7 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
     z-index: 90;
     background: var(--at-bg);
     border-block-end: 1px solid var(--at-divider);
+    overflow-anchor: none;
   }
 
   .week-nav-inner {
@@ -170,22 +182,27 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
       white-space: nowrap;
       /* Only opacity is transitioned — max-width itself still snaps
          instantly (see the comment above), since animating it is what
-         caused the earlier reflow jank. But scrolling back up restores
-         that width instantly too, while the center label's own opacity
-         fade-out (unavoidably, it's a genuine 200ms transition) is still
-         mid-flight — so for a stretch of that 200ms, "Week N" was back
-         at full strength *and* the center label hadn't finished fading
-         out yet, reading as both fully visible together ("duplicated").
-         Fading this element's own opacity over the same 200ms turns
-         that overlap into an ordinary crossfade (one rising as the
-         other falls) instead of two fully-opaque things at once. */
+         caused the earlier reflow jank.
+         The 200ms *delay* here (not on the reverse rule below) matters:
+         a same-duration, undelayed opacity fade on both this and the
+         center label crossfades correctly in principle, but for a good
+         chunk of that shared 200ms both are simultaneously at a high,
+         clearly-legible opacity — which reads as "both visible at once"
+         even though nothing is actually stuck or flickering. Delaying
+         this element's reappearance until *after* the center label's own
+         200ms fade-out has fully finished means at most one of the two
+         is ever meaningfully visible at a time — sequenced, not
+         overlapped. (The other direction — becoming hidden, below —
+         needs no delay: it starts alongside the center label's fade-in,
+         and nobody reported an issue with that direction.) */
       opacity: 1;
-      transition: opacity 200ms ease;
+      transition: opacity 200ms ease 200ms;
     }
 
     .week-nav.is-scrolled .week-nav-title {
       max-width: 0;
       opacity: 0;
+      transition: opacity 200ms ease;
     }
 
     /* Guarantees each side its full icon + title width while "Week N" is
@@ -203,10 +220,26 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
        side and the center label moves. */
     .week-nav-side {
       min-width: 6.5rem;
+      /* Delayed 200ms, same as .week-nav-title's own reappearance and
+         for the same reason: restoring this floor reclaims room from
+         the center label's box, and if that happens the instant
+         scrolling-up crosses the boundary — before the center label
+         has actually finished its own 200ms fade-out — the center
+         label's still-*visible* text gets its available width yanked
+         out from under it mid-fade (its wrap can visibly reflow while
+         still on screen, not merely while invisible like "Week N"'s own
+         resize is). This is mobile-only (this whole block lives under
+         the narrow-viewport query) — there's no equivalent min-width
+         tug-of-war at wide viewports, since nothing there needs the
+         center label's room back. Restoring only after the center
+         label has had its full 200ms to disappear removes the tug
+         entirely. */
+      transition: min-width 0s linear 200ms;
     }
 
     .week-nav.is-scrolled .week-nav-side {
       min-width: 0;
+      transition: min-width 0s;
     }
   }
 </style>
