@@ -147,3 +147,12 @@ h6 {
 .at-card-image {
   transition-duration: 150ms;
 }
+
+/* Content-body images (e.g. week-03's outfit photos) are sourced at
+   whatever aspect ratio the original photo happened to have — cap the
+   rendered height so a tall portrait shot can't dominate the viewport. */
+.at-main img {
+  max-height: 60vh;
+  width: auto;
+  max-width: 100%;
+}

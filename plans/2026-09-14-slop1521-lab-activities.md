@@ -18,10 +18,11 @@ every continuity thread the site already has running between Labs and
 toward assignments. One sentence stating the no-laptops/no-screens-in-Lab
 policy is added to the Labs overview page
 (`src/pages/sessions/index.astro`). Full design rationale and the 8
-resolved probes (Week 3 images, Week 4 exercise, Week 9 deliverable
+resolved probes (Week 3 outfits, Week 4 exercise, Week 9 deliverable
 mismatch, Week 11 spelling, table-vs-prose format, etc.) live in
 `specs/2026-09-14-slop1521-lab-activities.md` §5 and are treated as settled
-here, not re-litigated.
+here, not re-litigated. Week 3's original prose-only resolution was later
+reversed mid-implementation at the user's request — see §2.1.9.
 
 ## 2. Requirements
 
@@ -84,11 +85,34 @@ here, not re-litigated.
    becomes supporting discussion material, not a competing deliverable.
 8. Week 11 uses "Behavior" (US spelling) throughout, matching the site's
    existing lecture/Lab titles for that week.
-9. Week 3's ranking activity is implemented with the five outfits
-   described in prose (no image files added or referenced).
+9. Week 3's ranking activity uses five real, CC-licensed photographs (one
+   per outfit) — a reversal of the original prose-only resolution, made
+   mid-implementation at the user's request. Claude sources candidates
+   (Wikimedia Commons / Openverse) and the user approves; each photo is a
+   local file co-located next to `week-03.md` and embedded inline via
+   markdown, with a one-line photographer/license credit underneath,
+   matching the site's existing `.hero-credit` attribution convention.
+   Each outfit's description stays a visible caption alongside its photo
+   (not alt-text-only), trimmed/rewritten so it states only what the
+   chosen photo actually shows — the photo is primary, the description
+   follows it, not the reverse. Any photo with a visible face belonging to
+   an identifiable bystander or subject is cropped to remove that face
+   before use (real CC-licensed photography of specific comedic outfit
+   details turned out to be almost entirely candid shots of identifiable
+   strangers, which is not acceptable for illustrating unflattering
+   outfit categories without consent). The fifth outfit
+   ("slept-in-look") is replaced with a "typical CS student"
+   black-hoodie-and-jeans outfit, after an exhaustive search (Wikimedia
+   Commons, Openverse) found no appropriate CC candidate for a slept-in
+   look — its description still explicitly names "CS student."
 10. No file outside `src/content/sessions/*.md`,
     `src/pages/sessions/index.astro`, and `src/pages/sessions/[slug].astro`
-    is modified — except that a week's own `src/content/lectures/week-NN.md`
+    is modified — except the five image files added under
+    `src/content/sessions/` for Week 3 per §2.1.9; except one added rule in
+    `src/styles/course.css` capping content-body image height (site-wide,
+    required by Week 3's Human review to stop a tall source photo from
+    dominating the viewport); and except that a week's own
+    `src/content/lectures/week-NN.md`
     may also be touched, and only to add a single `related:` entry, when
     §2.1.14 requires declaring an Assessment `related:` edge on the lecture
     rather than the Lab.
@@ -152,7 +176,8 @@ markdown table rendering through the existing theme's table styles.
   this feature must satisfy (heading order, non-empty `spec:`, banned
   terms).
 - Any new route, page, component, or content collection.
-- Sourcing or generating image assets for Week 3.
+- Generating (rather than sourcing existing CC-licensed) image assets for
+  Week 3 — no AI-generated or synthetic imagery.
 - Restructuring the `spec:` frontmatter list into a per-sub-activity
   checklist (wording accuracy only).
 
@@ -248,8 +273,9 @@ plus one for the Labs overview page. Each week's task:
 1. Rewrites `## In the Lab` to insert the standing table (§2.1.2) followed
    by two short paragraphs of prose adapting that week's Activity 1 and
    Activity 2 from `prompts/lab-activities-all-weeks.md`, applying the
-   resolutions from the spec (Week 3 no images, Week 4 exercise, Week 9
-   deliverable, Week 11 spelling).
+   resolutions from the spec (Week 3 outfits — see §2.1.9 for the
+   photo-based revision, Week 4 exercise, Week 9 deliverable, Week 11
+   spelling).
 2. Lightly extends `## Before the Lab` and `## Afterwards` with the source
    doc's framing/wrap-up beats, while keeping every quoted continuity
    sentence from §3 above in substance.
@@ -390,29 +416,63 @@ rule.
 
 - **Description:** Rewrite `## In the Lab` in
   `src/content/sessions/week-03.md`. Activity 1 = "Ranking exercise"
-  (groups of 4, doc lines 61–71) — the five outfits (business-casual,
-  head-to-toe loungewear, overdressed-in-a-suit-with-novelty-tie, gym kit,
-  slept-in-look) are **described in prose**, not sourced as images (per
-  spec resolution #4); groups rank them for an assigned occasion, then
-  rotate occasions and re-rank, then present their least-sure ranking.
-  Activity 2 = "Assemble three outfits" (individual, shared in pairs, doc
-  line 73) — kept as the existing rehearsal-for-Assignment-1 deliverable,
-  now with a partner offering one suggestion per outfit.
-  `## Afterwards` keeps "...Assignment 1 asks for the same shape with
-  photographic evidence attached."
-- **Files touched:** `src/content/sessions/week-03.md`.
+  (groups of 4, doc lines 61–71) — the five outfits (off-duty casual,
+  head-to-toe loungewear, overdressed-in-a-suit-with-loud-tie, gym kit,
+  and a "typical CS student" black-hoodie-and-jeans look replacing the
+  original slept-in-look) are each illustrated with one real, CC-licensed
+  photograph (per the reversed §2.1.9 resolution) — a local file
+  co-located next to `week-03.md`, embedded inline via markdown, with the
+  outfit's one-line description kept as a visible caption underneath the
+  photo and a one-line photographer/license credit under that. Every
+  photo with a visible face belonging to an identifiable bystander or
+  subject is cropped to remove that face first. Each description is
+  trimmed/rewritten to state only what its photo actually shows (some
+  original comedic specifics — the novelty cartoon-print tie, the one odd
+  sock, "faintly damp" gym kit — do not survive contact with a real,
+  sourceable photo and are dropped or genericised); the CS-student
+  outfit's description explicitly names "CS student." Six concrete,
+  exaggerated-but-mundane occasions (thesis defence rescheduled onto a
+  public holiday, a first lunch with the in-laws, a cousin's
+  birthday party, a claimed-but-not-yet-real internship interview, jury
+  duty during an assignment crunch, a late Friday group-project meeting)
+  are named in a list so groups have an actual assignment to rank
+  against, not an unnamed placeholder. Groups rank the five outfits for
+  an assigned occasion, then rotate occasions and re-rank, then present
+  their least-sure ranking. Activity 2 = "Assemble three outfits"
+  (individual, shared in pairs, doc line 73) — kept as the existing
+  rehearsal-for-Assignment-1 deliverable, now with a partner offering one
+  suggestion per outfit. `## Afterwards` keeps "... Assignment 1 asks for
+  the same shape with photographic evidence attached." Separately, the
+  five outfit photos are cropped to a moderate, fairly consistent aspect
+  ratio (none taller than roughly 1.6:1) and a small site-wide CSS rule
+  (`.at-main img { max-height: 60vh; ... }`) caps how tall any
+  content-body image can render, so a portrait-oriented source photo
+  can't dominate the viewport regardless of its native ratio.
+- **Files touched:** `src/content/sessions/week-03.md`; five new image
+  files co-located under `src/content/sessions/` (one per outfit);
+  `src/styles/course.css` (one added rule capping content-image height —
+  site-wide, not week-03-specific, but required to satisfy this task's
+  Human review).
 - **Tests first (red):** None new; baseline `pnpm check` green before edit.
-- **Implementation (green):** Body-only edit per Description; frontmatter
-  unchanged.
+- **Implementation (green):** Body-only edit per Description, plus the
+  five image files and the `course.css` rule; frontmatter unchanged.
 - **Refactor:** None expected.
 - **Acceptance criteria:** `pnpm check` green; heading order intact; no
   banned/framing/gendered terms; "photographic evidence" Assignment-1
-  reference preserved; six-row table present; no `<img>`/image reference
-  added for the five outfits.
-- **Human review:** Diff/rendered page for `week-03.md`. Pass = the five
-  outfits are distinguishable and recognisable from prose alone (no image
-  needed to understand the joke), and the existing three-outfits-for-three-
-  occasions deliverable still reads as the graded rehearsal it is.
+  reference preserved; six-row table present; each of the five outfits has
+  exactly one embedded photo, a matching caption, and a credit line; no
+  photo shows an identifiable bystander or subject's face; six named
+  occasions present in a list; no content-body image renders taller than
+  60vh at either marking viewport.
+- **Human review:** Diff/rendered page for `week-03.md`. Pass = each
+  photo plausibly matches its (possibly trimmed) caption, no face is
+  visible in any of the five photos, the CS-student outfit's description
+  reads naturally in place of the dropped slept-in-look, credits are
+  present and accurate, the six named occasions read as concrete,
+  exaggerated, mundane-CS-student-stereotype humor in the site's voice
+  (not a technical metaphor), no image dominates the screen at either
+  marking viewport, and the existing three-outfits-for-three-occasions
+  deliverable still reads as the graded rehearsal it is.
 - **Depends on:** None.
 
 ### Task 4: Week 4 Lab — Jordan's Week case study + sleep/exercise plan
@@ -765,7 +825,7 @@ rule.
 | 2.1.6 (Week 4 exercise co-equal) | Task 4 |
 | 2.1.7 (Week 9 deliverable reconciliation) | Task 9 |
 | 2.1.8 (Week 11 US spelling) | Task 11 |
-| 2.1.9 (Week 3 no images) | Task 3 |
+| 2.1.9 (Week 3 photos, one per outfit, cropped/credited/captioned) | Task 3 |
 | 2.1.10 (no files outside the two named paths touched) | All tasks (Files touched lists) |
 | 2.1.11 ("one other student," not "partner") | Tasks 1–12 (any pair activity) |
 | 2.1.12 (agreement scales spelled out in full) | Tasks 1–12 (any Likert-style rating) |
