@@ -73,7 +73,12 @@ const { previous, next, currentLabel } = Astro.props;
     position: sticky;
     inset-block-start: var(--at-nav-height);
     z-index: 90;
-    background: var(--at-bg);
+    /* No background here: course.css supplies the translucent one. Astro
+       scopes this style with a data-astro-cid-* attribute selector, which
+       is *more specific* than course.css's plain .week-nav rule — course.css
+       being unlayered only lets it beat the theme's own layered rules, not
+       this component's own higher-specificity one. A background declared
+       here would silently win and paint over the blur. */
     border-block-end: 1px solid var(--at-divider);
     overflow-anchor: none;
   }

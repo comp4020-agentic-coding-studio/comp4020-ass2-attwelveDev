@@ -164,8 +164,8 @@ h6 {
    existing background token so light/dark mode and the bg-vs-elevated
    distinction the theme already encodes are both preserved. */
 :root {
-  --course-chrome-alpha: 82%;
-  --course-chrome-blur: 12px;
+  --course-chrome-alpha: 55%;
+  --course-chrome-blur: 24px;
 }
 
 .week-nav {
