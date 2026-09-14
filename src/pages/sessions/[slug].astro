@@ -4,8 +4,11 @@ import { getPublishedCollection } from "astro-course-university/content";
 import RelatedContent from "astro-course-university/components/RelatedContent.astro";
 import SpecList from "astro-course-university/components/SpecList.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import { withBase } from "astro-theme-university/url";
+import EntryNav from "../../components/EntryNav.astro";
 import TeachingTeam from "../../components/TeachingTeam.astro";
 import WeekMeta from "../../components/WeekMeta.astro";
+import { neighbors, sortedSessions } from "../../lib/entry-order";
 import { graphCollections, sessionLabels, siteConfig } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -15,6 +18,9 @@ export async function getStaticPaths() {
 
 const { session } = Astro.props;
 const { Content } = await render(session);
+
+const sessions = await sortedSessions();
+const { previous, next } = neighbors(sessions, session.id);
 ---
 
 <ContentLayout
@@ -22,6 +28,19 @@ const { Content } = await render(session);
   description={session.data.description}
   {...siteConfig}
 >
+  <EntryNav
+    previous={previous && {
+      href: withBase(`/sessions/${previous.id}/`),
+      primaryLabel: `Week ${previous.data.week}`,
+      subtitleLabel: previous.data.title,
+    }}
+    next={next && {
+      href: withBase(`/sessions/${next.id}/`),
+      primaryLabel: `Week ${next.data.week}`,
+      subtitleLabel: next.data.title,
+    }}
+    currentLabel={`Week ${session.data.week} — ${session.data.title}`}
+  />
   <WeekMeta week={session.data.week} date={session.data.date} kind="lab" />
   <Content />
   <SpecList spec={session.data.spec}>
