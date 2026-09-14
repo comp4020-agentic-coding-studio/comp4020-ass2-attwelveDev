@@ -52,3 +52,52 @@ describe("Lab navigation", () => {
     expect(html).toContain(titleForWeek(5));
   });
 });
+
+describe("Assessment navigation", () => {
+  const assessmentsIndexHtml = readFileSync(resolve("dist/assessments/index.html"), "utf8");
+  const orderedIds = [...assessmentsIndexHtml.matchAll(/\/assessments\/([a-z0-9-]+)\//g)].map(
+    (m) => m[1],
+  );
+  const uniqueOrderedIds = [...new Set(orderedIds)];
+
+  function assessmentPage(id: string): string {
+    return readFileSync(resolve(`dist/assessments/${id}/index.html`), "utf8");
+  }
+
+  it("reproduces the assessments overview page's own order as prev/next", () => {
+    for (let i = 0; i < uniqueOrderedIds.length - 1; i++) {
+      const a = uniqueOrderedIds[i];
+      const b = uniqueOrderedIds[i + 1];
+      const html = assessmentPage(a);
+      expect(html).toMatch(new RegExp(`class="week-nav-link" href="[^"]*/assessments/${b}/"`));
+    }
+  });
+
+  it("gives the first assessment exactly one entry-nav link (next only)", () => {
+    const html = assessmentPage(uniqueOrderedIds[0]);
+    const matches = html.match(/class="week-nav-link"/g) ?? [];
+    expect(matches.length).toBe(1);
+    expect(html).not.toMatch(/week-nav-side--prev">\s*<a/);
+  });
+
+  it("gives the last assessment exactly one entry-nav link (previous only)", () => {
+    const last = uniqueOrderedIds[uniqueOrderedIds.length - 1];
+    const html = assessmentPage(last);
+    const matches = html.match(/class="week-nav-link"/g) ?? [];
+    expect(matches.length).toBe(1);
+    expect(html).not.toMatch(/week-nav-side--next">\s*<a/);
+  });
+
+  it("shows the assessment's title with no week prefix", () => {
+    const middleId = uniqueOrderedIds[1];
+    const html = assessmentPage(uniqueOrderedIds[0]);
+    const api = JSON.parse(readFileSync(resolve("dist/api/index.json"), "utf8")) as CourseApi;
+    const node = api.nodes.find(
+      (n) => n.type === "assessments" && n.id === `assessments/${middleId}`,
+    );
+    if (!node) throw new Error(`no assessment node for ${middleId}`);
+    expect(html).toContain(node.title);
+    const linkSection = html.match(/<a class="week-nav-link"[\s\S]*?<\/a>/)?.[0] ?? "";
+    expect(linkSection).not.toMatch(/Week/);
+  });
+});

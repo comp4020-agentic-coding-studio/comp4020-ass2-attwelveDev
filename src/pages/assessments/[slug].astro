@@ -5,8 +5,11 @@ import RelatedContent from "astro-course-university/components/RelatedContent.as
 import SpecList from "astro-course-university/components/SpecList.astro";
 import Callout from "astro-theme-university/components/Callout.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import { withBase } from "astro-theme-university/url";
+import EntryNav from "../../components/EntryNav.astro";
 import MarkingModel from "../../components/MarkingModel.astro";
 import { formatCourseDate } from "../../lib/dates";
+import { neighbors, sortedAssessments } from "../../lib/entry-order";
 import { graphCollections, siteConfig } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -19,6 +22,9 @@ export async function getStaticPaths() {
 
 const { assessment } = Astro.props;
 const { Content } = await render(assessment);
+
+const assessments = await sortedAssessments();
+const { previous, next } = neighbors(assessments, assessment.id);
 ---
 
 <ContentLayout
@@ -26,6 +32,17 @@ const { Content } = await render(assessment);
   description={assessment.data.description}
   {...siteConfig}
 >
+  <EntryNav
+    previous={previous && {
+      href: withBase(`/assessments/${previous.id}/`),
+      primaryLabel: previous.data.title,
+    }}
+    next={next && {
+      href: withBase(`/assessments/${next.id}/`),
+      primaryLabel: next.data.title,
+    }}
+    currentLabel={assessment.data.title}
+  />
   {
     assessment.data.draft && (
       <Callout type="warning">
