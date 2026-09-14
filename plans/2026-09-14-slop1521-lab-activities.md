@@ -161,6 +161,37 @@ reversed mid-implementation at the user's request — see §2.1.9.
     the repo (`lectures/week-03` and `lectures/week-04` both already relate
     to `assessments/assignment-1-makeover`).
 
+15. `## Before the Lab` must set up something the rewritten `## In the Lab`
+    actually uses — an item to bring, a prior artifact to have on hand, a
+    piece of information the first activity references — not a leftover
+    prompt from before this plan's activities existed. Discovered on
+    Week 6: the original "bring your group chat's timestamps" prompt had
+    nothing to do with the brainstorm/game/mechanism activities being
+    added, once Human review flagged it. Check every remaining week's
+    `## Before the Lab` against its own rewritten body for this same kind
+    of drift before presenting for Human review, not just when asked.
+16. No activity has a student use, or asks them to imagine having, a
+    laptop, phone, or other screen physically present *during* the Lab —
+    Task 13 establishes a standing course policy that no laptops or
+    screens are used in any Lab, ever. A mechanism, plan, or artifact that
+    concerns device use *outside* the Lab (e.g. Week 6's device-free
+    window "at home") is fine; requiring the device on-hand in the room to
+    demonstrate or design it is not. Discovered on Week 6: an early draft
+    had students "clear your laptop off the desk" and "reach for their
+    phone" mid-Lab, both rewritten to rely on the Lab's own already-device-
+    free condition instead. Check every remaining week's activities against
+    this before presenting for Human review.
+17. When a week's two Lab activities are related enough that a proposed
+    separate follow-on step (e.g. "design your mechanism") only makes
+    sense in light of one of them, integrate that step into the activity
+    it depends on rather than appending it as an extra block — keep the
+    six-row table's Activity 1 → Presentation → Activity 2 → Discussion/
+    debrief (pairs) → Wrap-up shape intact. Discovered on Week 6: an
+    initial draft added mechanism-design as a seventh, disconnected block
+    after Activity 2, breaking the established pattern every other week
+    follows; folded into Activity 2 itself instead, restoring Discussion/
+    debrief (pairs) as the block immediately after it.
+
 ### 2.2 Non-functional requirements
 
 None beyond project defaults. No new dependencies, components, or content
@@ -615,21 +646,56 @@ rule.
   from the brainstorm/game session about not reaching for a phone.
   `## Afterwards` keeps "Run the mechanism for a week before week 7's Lab.
   Bring back whether it held, and if not, where it failed."
+- **Human review surfaced five corrections:**
+  1. "what does mind-mapping actually involve, in this context? maybe add
+     further prompting and guidance." Spelled out the mind-map mechanics
+     concretely: a centre circle plus four required, named branches (where,
+     cost, a known person who does it, first-session shape), with an
+     explicit rule for picking the hobby (all four filled in).
+  2. "the 'Design your mechanism' activity... does not relate to activity
+     2, breaking the pattern of labs established throughout the course so
+     far. is it possible to integrate the two activities?" Folded mechanism
+     design into Activity 2 itself (play the game, then design the
+     mechanism using that same experience) instead of appending it as a
+     seventh block, restoring the standard Activity 1 → Presentation →
+     Activity 2 → Discussion/debrief (pairs) → Wrap-up shape. Generalized
+     as §2.1.17.
+  3. "it reads a bit silly... why is the laptop going into the box or
+     pouch of the game? what does that even mean?" The first integrated
+     draft had the laptop literally stored in the game's packaging, which
+     didn't make physical sense for most of the listed games. Reworked to
+     a sensible mechanism: the game occupies the desk space during play,
+     and the pair designs a way to keep that space device-free
+     deliberately afterward.
+  4. "the premise for this course is that it doesn't use laptops or phones
+     in the labs. I'm not sure why they would have they laptop there in
+     the first place." Real bug: Task 13's standing "no laptops or screens
+     in any Lab, ever" policy meant no draft of this activity should have
+     had a laptop or phone physically present in the room. Reworked
+     Activity 2 to notice the device-free stretch the game already
+     produced, and design a mechanism for reproducing it *at home*; reworded
+     the Wrap-up line inherited from the source doc ("who reached for their
+     phone first") for the same reason. Generalized as §2.1.16.
+  5. "the 'Before the Lab' message doesn't make sense anymore... perhaps
+     mention bringing a game." The leftover "bring your group chat
+     timestamps" prompt no longer connected to anything in the rewritten
+     body; replaced with bringing an item from Activity 2's game list.
+     Generalized as §2.1.15.
 - **Files touched:** `src/content/sessions/week-06.md`.
 - **Tests first (red):** None new; baseline `pnpm check` green before edit.
-- **Implementation (green):** Body-only edit per Description; frontmatter
-  unchanged.
+- **Implementation (green):** Body and `## Before the Lab` edits per
+  Description and corrections above; frontmatter unchanged.
 - **Refactor:** None expected.
 - **Acceptance criteria:** `pnpm check` green; heading order intact; no
   banned/framing/gendered terms (note: "no technical language allowed" is
   in-fiction framing the tutor enforces on students, not the site breaking
   character — must still avoid any actual banned term appearing in the
   rendered prose itself); "Run the mechanism for a week..." reference
-  preserved; six-row table present.
-- **Human review:** Diff/rendered page for `week-06.md`. Pass = the
-  brainstorm/game activities read as genuinely screen-free and specific
-  (named games, not "a board game"), and the device-free-mechanism
-  deliverable is still clearly what's designed and carried forward.
+  preserved; six-row table present with the standard five-block pattern
+  restored; no activity requires a laptop/phone physically present during
+  the Lab; `## Before the Lab` sets up something the rewritten body
+  actually uses.
+- **Human review:** Approved after five rounds of correction above.
 - **Depends on:** None.
 
 ### Task 7: Week 7 Lab — Small talk stations + Reading the room
