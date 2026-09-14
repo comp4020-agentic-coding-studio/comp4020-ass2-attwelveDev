@@ -199,6 +199,11 @@ h6 {
   background: color-mix(in oklch, var(--at-bg-elevated) var(--course-chrome-alpha), transparent);
   backdrop-filter: blur(var(--course-chrome-blur)) saturate(var(--course-chrome-saturate));
   box-shadow: var(--at-shadow-md);
+  /* Mirrors .week-nav's own border-block-start (EntryNav.astro) — both
+     bars get a divider on the edge that faces the page content, overriding
+     the theme's own border-block-end: none (components.css, unlayered so
+     it beats that layered rule). */
+  border-block-end: 1px solid var(--at-divider);
 }
 
 .at-search-panel {

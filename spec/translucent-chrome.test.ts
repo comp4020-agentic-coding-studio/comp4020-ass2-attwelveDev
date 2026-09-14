@@ -109,4 +109,16 @@ describe("translucent chrome", () => {
     const atNavRule = courseCssSource.match(/\.at-nav\s*{[^}]*}/)?.[0] ?? "";
     expect(atNavRule).toContain("var(--at-shadow-md)");
   });
+
+  it("gives the site nav bar the same divider border as the entry-nav footer", () => {
+    // .week-nav's border-block-start (EntryNav.astro) and .at-nav's
+    // border-block-end (here) sit on the edge each bar shares with the
+    // page content, mirroring each other — both keyed off the same
+    // --at-divider token, not independently hardcoded values.
+    const entryNavSource = readFileSync(resolve("src/components/EntryNav.astro"), "utf8");
+    const weekNavRule = entryNavSource.match(/\.week-nav\s*{[^}]*}/)?.[0] ?? "";
+    expect(weekNavRule).toMatch(/border-block-start:\s*1px solid var\(--at-divider\)/);
+    const atNavRule = courseCssSource.match(/\.at-nav\s*{[^}]*}/)?.[0] ?? "";
+    expect(atNavRule).toMatch(/border-block-end:\s*1px solid var\(--at-divider\)/);
+  });
 });
