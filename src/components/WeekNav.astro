@@ -151,31 +151,62 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
       display: none;
     }
 
-    /* Narrow viewports can't fit both side "Week N" labels at their
-       natural width and the current-week label at once without
-       overflow. An earlier version kept "Week N" at full width until
-       the center label needed the room, then collapsed it on the same
-       scroll trigger — but *resizing* it at that moment, even as an
-       instant (non-animated) snap, was still a visible jump. Sized down
-       permanently instead: small enough from the very first render to
-       coexist with the center label at its widest, so nothing ever
-       resizes on scroll at all. 5rem comfortably fits the widest case
-       ("Week 10"/"Week 11"/"Week 12", ~4.4rem unconstrained) without
-       clipping. */
+    /* Narrow viewports can't fit "Week N" at its natural width, the
+       side's own guaranteed floor (below), and the center label's own
+       permanent 50% reservation all at once — so "Week N" collapses
+       once the header is stuck and the center label actually needs
+       that room, and the side's floor relaxes with it (below).
+       A prior attempt sized "Week N" down permanently instead, to avoid
+       any resize at all — but reserving that fixed width at all times,
+       on top of the center label's own *permanent* 50% (needed for the
+       desktop subtitle-wrap fix — see .week-nav-current), left far less
+       than 50% actually available once both were honored together, so
+       the center label wrapped into an unreadably cramped multi-line
+       stack. The center label needs the room back more than "Week N"
+       needs to avoid an instant, non-animated snap. */
     .week-nav-title {
       max-width: 5rem;
       overflow: hidden;
       white-space: nowrap;
+      /* Only opacity is transitioned — max-width itself still snaps
+         instantly (see the comment above), since animating it is what
+         caused the earlier reflow jank. But scrolling back up restores
+         that width instantly too, while the center label's own opacity
+         fade-out (unavoidably, it's a genuine 200ms transition) is still
+         mid-flight — so for a stretch of that 200ms, "Week N" was back
+         at full strength *and* the center label hadn't finished fading
+         out yet, reading as both fully visible together ("duplicated").
+         Fading this element's own opacity over the same 200ms turns
+         that overlap into an ordinary crossfade (one rising as the
+         other falls) instead of two fully-opaque things at once. */
+      opacity: 1;
+      transition: opacity 200ms ease;
     }
 
-    /* Guarantees each side its full icon + title width regardless of how
-       much room the center label's own max-width asks for — the center
-       label already tolerates shrinking and wrapping (it has min-width:
-       0), so it's the one that gives way in a genuine space conflict,
-       never the icon or "Week N" getting silently crushed by the
-       default flex-shrink race. */
+    .week-nav.is-scrolled .week-nav-title {
+      max-width: 0;
+      opacity: 0;
+    }
+
+    /* Guarantees each side its full icon + title width while "Week N" is
+       showing (at rest — the center label is invisible then, so there's
+       no competing demand yet), matching the icon/title's own natural
+       requirement, not an arbitrary round number. Relaxes to 0 the
+       moment "Week N" collapses, since the icon (flex-shrink: 0, above)
+       needs no floor of its own to stay full size, and the freed room
+       is exactly what the center label needs to avoid the cramped wrap
+       above. Because the icon sits at the row's own outer edge (first
+       child for the previous link, last for the next, already pinned
+       there by .week-nav-inner's space-between) rather than the inner
+       edge next to the center label, its on-screen position is the
+       same before and after this — only the *boundary* between this
+       side and the center label moves. */
     .week-nav-side {
       min-width: 6.5rem;
+    }
+
+    .week-nav.is-scrolled .week-nav-side {
+      min-width: 0;
     }
   }
 </style>
@@ -203,6 +234,7 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
     // rebuilding it from scratch, so a class added by client JS on the
     // previous page can otherwise survive onto the new page's markup.
     currentLabel.classList.remove("is-visible");
+    weekNav.classList.remove("is-scrolled");
 
     // The center label only makes sense once this header has actually
     // become stuck at the top — before that point, .week-nav (and the
@@ -223,13 +255,44 @@ const next = lectures.find((entry) => entry.data.week === week + 1);
     // the scroll position where the CSS itself starts pinning .week-nav
     // there — no dependency on the h1's own height, position, or content.
     const stickyOffset = parseFloat(getComputedStyle(weekNav).top) || 0;
-    observer = new IntersectionObserver(
-      ([entry]) => {
-        currentLabel.classList.toggle("is-visible", !entry.isIntersecting);
-      },
-      { rootMargin: `-${Math.ceil(stickyOffset)}px 0px 0px 0px`, threshold: 0 },
-    );
-    observer.observe(sentinel);
+
+    // A single fixed threshold flickers on real (touch/trackpad) scrolling:
+    // a hand isn't perfectly still, so a hold that lands within a pixel or
+    // two of the exact boundary can cross it back and forth several times,
+    // restarting the opacity transition each time and never letting it
+    // settle — visually, the center label and "Week N" both stuck at some
+    // mid-fade blend indefinitely. HYSTERESIS_PX makes leaving a state
+    // require a *bit more* scroll than entering it, so a small hover right
+    // at the boundary can't retrigger the toggle.
+    const HYSTERESIS_PX = 12;
+    let stuck = false;
+
+    const watch = () => {
+      observer?.disconnect();
+      // While unstuck, require scrolling a bit *past* the natural boundary
+      // before entering stuck (a smaller excluded margin — harder to
+      // trigger). While stuck, require scrolling a bit *back past* the
+      // boundary the other way before leaving it (a larger excluded
+      // margin — also harder to trigger). The dead zone between the two
+      // is where a shaky hold can't flip the state at all.
+      const margin = stuck ? stickyOffset + HYSTERESIS_PX : stickyOffset - HYSTERESIS_PX;
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          const nowStuck = !entry.isIntersecting;
+          if (nowStuck === stuck) return;
+          stuck = nowStuck;
+          currentLabel.classList.toggle("is-visible", stuck);
+          // On narrow viewports, the side "Week N" labels only need to
+          // give up their room to the center label once it's showing.
+          weekNav.classList.toggle("is-scrolled", stuck);
+          watch();
+        },
+        { rootMargin: `-${Math.max(0, Math.ceil(margin))}px 0px 0px 0px`, threshold: 0 },
+      );
+      observer.observe(sentinel);
+    };
+
+    watch();
   }
 
   document.addEventListener("astro:page-load", setupWeekNav);

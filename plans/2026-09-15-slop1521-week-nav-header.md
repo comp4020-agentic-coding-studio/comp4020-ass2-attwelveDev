@@ -786,6 +786,55 @@ two.
       vs. two lines) and the side column's own position are now
       identical before, during, and after the transition, on both the
       wide and narrow viewports tested.
+  12. **#10 and #11's fully-permanent widths, applied together, broke
+      mobile again from a different direction**: with *both* the center
+      label's 50% and "Week N"'s own width permanently reserved at all
+      times, their combined demand exceeded the row's actual width at
+      true 390px, and the browser's flex-shrink math honored "Week N"'s
+      protected floor over the center label's own preference — squeezing
+      the center label into an unreadably cramped multi-line stack (the
+      user's report: "Week 1 — / Orientatio / n: / Welcome / to Life").
+      Reinstated a conditional collapse for "Week N" specifically (back
+      toward #6's original approach, not #10's permanent one) — the
+      center label needs the room back more than "Week N" needs to
+      avoid a resize entirely — but with `.week-nav-side`'s own
+      min-width *also* now conditional (present at rest, protecting the
+      icon/title; relaxed to 0 once scrolled, freeing that room for the
+      center label). The width snap itself stays instant/untransitioned,
+      as established in #9.
+  13. **The instant snap from #12, alone, produced a new problem when
+      scrolling back up**: "Week N" springs back to full width and
+      opacity instantly the moment the header un-sticks, but the center
+      label's own opacity fade-*out* is a genuine 200ms transition — so
+      for a chunk of that 200ms, "Week N" was back at full strength
+      *and* the center label hadn't finished disappearing, reading as
+      both fully visible together (the user: "I can see everything
+      duplicated"). Gave "Week N" its own opacity transition (200ms,
+      matching the center label's) layered on top of the still-instant
+      `max-width` snap — the *space* frees up immediately (no layout
+      jank, per #9), but the *visual* overlap now reads as an ordinary
+      crossfade (one rising as the other falls) rather than two fully-
+      opaque things at once.
+  14. **A single fixed toggle threshold flickers under real (touch/
+      trackpad) scrolling**: a hand isn't perfectly still, so a scroll
+      that comes to rest within a pixel or two of the exact sticky
+      boundary can cross it back and forth several times, restarting
+      the fade each time and never letting anything settle — visually,
+      a "lingering" blend of both states for as long as the hold sits
+      near that pixel (the user: "it just lingers there when I hold
+      this scroll position"). Added hysteresis: entering "stuck" now
+      requires scrolling slightly *past* the natural boundary
+      (`stickyOffset - 12px` — a smaller excluded margin, so it takes
+      more downward scroll to satisfy), and leaving it requires
+      scrolling slightly *back past* the boundary the other way
+      (`stickyOffset + 12px`) — recreating the `IntersectionObserver`
+      with the appropriate margin each time state actually changes,
+      guarded so a same-value report is a no-op rather than a pointless
+      recreation. Confirmed empirically: deliberately jittering scroll
+      ±3px around the natural boundary, from both a starting-stuck and
+      starting-unstuck state, no longer flips the state at all — only a
+      clear, sustained scroll past either edge of the ~35px dead zone
+      does.
 
   Each of these was verified by live browser testing (see the Human
   review note below), not by `spec/week-nav.test.ts` — none change what
