@@ -149,15 +149,19 @@ describe("voice — framing narration (F4)", () => {
     (page) => page.id.startsWith("lectures/week-") && page.id.endsWith("/index.html"),
   );
 
-  it.each(lecturePages)("$id's Overview section never narrates its own premise", ({ path, id }) => {
-    const html = readFileSync(path, "utf8");
-    const overview = sectionBody(html, "Overview").toLowerCase();
-    for (const phrase of FRAMING_PHRASES) {
-      expect(overview.includes(phrase), `${id}'s Overview contains framing phrase "${phrase}"`).toBe(
-        false,
-      );
-    }
-  });
+  it.each(lecturePages)(
+    "$id's Introduction section never narrates its own premise",
+    ({ path, id }) => {
+      const html = readFileSync(path, "utf8");
+      const introduction = sectionBody(html, "Introduction").toLowerCase();
+      for (const phrase of FRAMING_PHRASES) {
+        expect(
+          introduction.includes(phrase),
+          `${id}'s Introduction contains framing phrase "${phrase}"`,
+        ).toBe(false);
+      }
+    },
+  );
 });
 
 describe("voice — gendered pairing (F5)", () => {

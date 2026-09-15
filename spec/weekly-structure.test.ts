@@ -86,17 +86,17 @@ describe("weekly structure — lectures", () => {
       const html = renderedPage(lecture.id);
       assertHeadingsInOrder(
         html,
-        ["Overview", "Content", "Case study", "Reflection", "Assessment tie-in"],
+        ["Introduction", "Definitions", "Body", "In-lecture activity", "Conclusion"],
         lecture.id,
       );
     }
   });
 
-  it("gives every lecture a named case study", () => {
+  it("gives every lecture a substantial Body section", () => {
     for (const lecture of lectures) {
       const html = renderedPage(lecture.id);
-      const heading = findHeading(html, "Case study");
-      expect(heading.start, `${lecture.id} has no Case study heading`).toBeGreaterThan(-1);
+      const heading = findHeading(html, "Body");
+      expect(heading.start, `${lecture.id} has no Body heading`).toBeGreaterThan(-1);
       const end = nextHeadingIndex(html, heading.end);
       const text = html
         .slice(heading.end, end)
@@ -104,7 +104,7 @@ describe("weekly structure — lectures", () => {
         .trim();
       expect(
         text.length,
-        `${lecture.id}'s Case study section is too short to name a real case study`,
+        `${lecture.id}'s Body section is too short to carry real content`,
       ).toBeGreaterThanOrEqual(80);
     }
   });

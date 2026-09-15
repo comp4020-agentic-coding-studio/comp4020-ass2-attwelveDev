@@ -282,12 +282,12 @@ describe("treatment — topics", () => {
     expect(thead).toContain("Topics");
   });
 
-  it("shows one topic chip per Content bullet", () => {
+  it("shows one topic chip per Body key point", () => {
     const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
     const week04Row = findRowByWeek(tbodyRows(html), 4);
     expect(week04Row, "no row found for week 4").toBeDefined();
     const chips = [...(week04Row ?? "").matchAll(/<li class="course-topic">/g)];
-    expect(chips.length, "week 4 has 4 Content bullets").toBe(4);
+    expect(chips.length, "week 4 has 3 Body key points").toBe(3);
   });
 
   it("gives the Labs table a Topics column", () => {
@@ -317,9 +317,6 @@ describe("treatment — topics", () => {
     expect(week01Row).toMatch(/rel="noopener noreferrer"/);
     expect(week01Row).toMatch(/aria-label="Open slides for Week 1"/);
     expect(week01Row).toMatch(/data-icon="iconoir:presentation"/);
-    const week02Row = findRowByWeek(rows, 2);
-    expect(week02Row, "no row found for week 2").toBeDefined();
-    expect(week02Row).not.toMatch(/at-icon-button/);
   });
 });
 

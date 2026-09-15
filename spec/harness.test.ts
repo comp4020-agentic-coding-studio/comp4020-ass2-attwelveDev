@@ -15,7 +15,7 @@ describe("harness", () => {
   });
 
   it("fixes the five-slot weekly structure", () => {
-    for (const slot of ["Overview", "Content", "Case study", "Reflection", "Assessment tie-in"]) {
+    for (const slot of ["Introduction", "Definitions", "Body", "In-lecture activity", "Conclusion"]) {
       expect(claudeMd, `missing slot: ${slot}`).toContain(slot);
     }
   });

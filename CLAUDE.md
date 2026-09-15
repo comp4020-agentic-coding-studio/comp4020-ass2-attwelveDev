@@ -45,10 +45,10 @@ something an agent can check its own work against directly.
 
 ## The weekly structure
 
-Every lecture carries the same five slots, in order: **Overview**,
-**Content**, **Case study**, **Reflection**, **Assessment tie-in** (which
-may read "None this week"). Every Lab carries its own three: **Before the
-Lab**, **In the Lab**, **Afterwards**. `spec/` enforces both shapes.
+Every lecture carries the same five slots, in order: **Introduction**,
+**Definitions**, **Body**, **In-lecture activity**, **Conclusion**. Every
+Lab carries its own three: **Before the Lab**, **In the Lab**,
+**Afterwards**. `spec/` enforces both shapes.
 
 ## Register and voice
 

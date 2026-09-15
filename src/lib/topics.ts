@@ -3,10 +3,10 @@ export interface TopicSegment {
   code: boolean;
 }
 
-/** Bullets under a lecture's `## Content` heading, backticks intact,
- *  continuation lines (indented two spaces) rejoined onto their bullet. */
+/** Each key point's bold lead-in under a lecture's `## Body` heading
+ *  (written `- **Title.** argument...`), backticks intact. */
 export function extractContentTopics(body: string): string[] {
-  const heading = body.match(/^## Content\n/m);
+  const heading = body.match(/^## Body\n/m);
   if (!heading) return [];
   const afterHeading = body.slice((heading.index ?? 0) + heading[0].length);
   const nextHeading = afterHeading.match(/\n## /);
@@ -14,9 +14,8 @@ export function extractContentTopics(body: string): string[] {
   const bullets: string[] = [];
   for (const line of section.split("\n")) {
     if (line.startsWith("- ")) {
-      bullets.push(line.slice(2).trim());
-    } else if (line.trim() && bullets.length > 0) {
-      bullets[bullets.length - 1] += ` ${line.trim()}`;
+      const leadIn = line.slice(2).trim().match(/^\*\*([^*]+)\*\*/);
+      bullets.push(leadIn ? leadIn[1].replace(/\.$/, "") : line.slice(2).trim());
     }
   }
   return bullets;

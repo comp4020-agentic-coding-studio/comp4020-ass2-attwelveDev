@@ -11,3 +11,21 @@
  * slide class you reach for (`_class: quote`), a code-heavy layout, a
  * background. */
 @import url("astro-theme-university/styles/deck.css");
+
+/* CheckIn.astro (src/components/) is reused directly inside deck slides —
+   see src/decks/week-01.deck.mdx — but decks don't load the site's
+   course.css, only this file, so its .course-check-in styling is restated
+   here against the tokens deck.css itself declares (dark-only, no
+   --at-accent-soft available, so its formula is reproduced inline). */
+.course-check-in {
+  margin-block: 1rem 1.5rem;
+  padding: 1rem 1.5rem;
+  border-inline-start: 3px solid var(--at-accent);
+  border-radius: var(--at-border-radius);
+  background: rgb(from var(--at-accent) r g b / 14%);
+}
+
+.course-check-in-label {
+  color: var(--at-accent);
+  font-weight: 600;
+}
