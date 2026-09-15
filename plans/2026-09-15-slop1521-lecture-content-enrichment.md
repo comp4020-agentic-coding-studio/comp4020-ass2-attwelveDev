@@ -858,22 +858,45 @@ list, not just against voice/tone.
 
 ## 6. Feature-level Definition of Done
 
-- [ ] Every task in §5 complete and its tests passing.
-- [ ] `pnpm typecheck` passes.
-- [ ] `pnpm test` (`pnpm build && vitest run spec`) passes with zero
+- [x] Every task in §5 complete and its tests passing.
+- [x] `pnpm typecheck` passes.
+- [x] `pnpm test` (`pnpm build && vitest run spec`) passes with zero
   failures across `spec/weekly-structure.test.ts`, `spec/treatment.test.ts`,
   `spec/voice.test.ts`, `spec/deck.test.ts`, and any new spec files added
-  in Tasks 2-4.
-- [ ] `pnpm check` passes as the pre-push gate, confirmed only once Task
-  16 lands (per §4's Approach — intermediate local commits in the
-  migration cluster are not individually required to be green).
+  in Tasks 2-4 (323 tests, 19 files, all green).
+- [x] `pnpm check` passes as the pre-push gate, confirmed once Task 16
+  landed (per §4's Approach — intermediate local commits in the migration
+  cluster were not individually required to be green, and weren't).
 - [ ] Manually verified: every one of the 12 rewritten lecture pages and
-  12 slide decks loaded in `agent-browser` at `1920x1080` and `390x844`;
-  `astromotion-check` run across `src/decks` with no reported overflow.
-- [ ] Every requirement in §2 is covered — see §7.
+  12 slide decks loaded in `agent-browser` at `1920x1080` and `390x844`.
+  **Partial** — done in full for Week 1 only (both viewports, both
+  themes, screenshots reviewed with the user). For Weeks 2-12 the user
+  asked mid-execution to stop receiving screenshots and inspect the real
+  site directly instead (`pnpm dev`/`pnpm preview`) — every week's build
+  and automated checks (typecheck, `vitest`, the `astromotion` build-hook
+  structural check, banned-term/gendered-term greps run manually per
+  task) are green, but the dual-viewport *visual* pass itself is
+  deferred to the user's own inspection, not completed by an agent.
+  `astromotion-check` (the standalone CLI) was not run — it needs an
+  optional `puppeteer-core` dependency not installed in this project;
+  the build's own `astromotion` integration hook runs the equivalent
+  structural check on every build instead (confirmed clean for all 12
+  decks each time) — see Task 5's note on this substitution.
+- [x] Every requirement in §2 is covered — see §7.
 - [ ] Every task with a `Human review:` line (Tasks 2, 5-16) has been
-  shown to the user and explicitly accepted.
-- [ ] No item remains in §8.
+  shown to the user and explicitly accepted. **Partial** — Tasks 2 and 5
+  (Week 1) were shown and explicitly accepted, with several rounds of
+  user feedback folded back in (courseMeta title, a dedicated signposting
+  slide, `CheckIn` reuse in decks, full reflection prompts kept in both
+  places, no lecture-page sign-off sentence, the "Body" heading kept as
+  named). Tasks 6-16 (Weeks 2-12) were built to that same, by-then-
+  codified standard and to the mechanical `spec/deck.test.ts` conventions
+  checks, but were not individually shown to the user for a per-task
+  accept/reject — the user redirected review to inspecting the live site
+  themselves partway through. Weeks 2-12 are therefore unreviewed by the
+  user as of this plan's last edit; flag anything found wrong on
+  inspection and it'll be fixed as a follow-up, not silently left.
+- [x] No item remains in §8.
 
 ## 7. Requirements coverage check
 
