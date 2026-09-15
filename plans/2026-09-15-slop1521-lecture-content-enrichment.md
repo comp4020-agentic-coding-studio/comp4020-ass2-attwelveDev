@@ -267,6 +267,59 @@ choice of which direction it points, so the plan keeps the migration
 grouped instead of pretending an isolated foundation commit is safe to
 push on its own.
 
+**Deck-authoring conventions, established during Task 5's human review and
+binding on every deck task from here on (Tasks 6-16)** — Task 5's Week 1
+deck went through a review round that surfaced five generalisable rules,
+now mechanically enforced by `spec/deck.test.ts`'s "deck — authoring
+conventions" block (reading each `.deck.mdx` file's raw source, not built
+HTML) so a later week can't silently drift from what Week 1 established:
+
+1. **Title slide.** `import { courseMeta } from "../course-config";` and
+   `## {courseMeta.title}` on the title slide — never a hand-typed course
+   title/subtitle, which drifts from `src/course-config.ts`'s canonical
+   value the moment either one is edited alone.
+2. **Signposting gets its own slide.** The Introduction's Signpost element
+   (every week's prompts-file entry has one) is never bundled into the
+   scope/"diagnostic only" slide's prose — it lands on its own `## What's
+   ahead` slide, as a short bulleted list.
+3. **Check-ins reuse the component.** `import CheckIn from
+   "../components/CheckIn.astro";`, and every check-in question is
+   `<CheckIn question="..." />` — never plain `Check-in: ...` text. (Decks
+   don't load the site's `course.css`, so `src/decks/theme.css` carries a
+   small `.course-check-in`/`.course-check-in-label` rule restating that
+   styling against tokens `deck.css` itself declares — already added in
+   Task 5, nothing further needed per week.)
+4. **The reflection prompt survives in full, twice.** The new heading
+   contract has no `## Reflection` slot, so the actual per-week prompt text
+   (not just "a reflection is due") must still appear: as a bold-lead-in
+   paragraph in the lecture's Conclusion (`**This week's reflection**, due
+   ...`) and as the deck's own dedicated `## This week's reflection` slide.
+   Neither location may collapse it back down to a bare "due next week"
+   mention.
+5. **Conclusion ends at the content.** The lecture page's Conclusion
+   paragraph does not carry a sign-off sentence ("Thanks, and see you
+   there.") — that reads as an unearned false ending once the reflection
+   prompt (rule 4) already follows it. The deck's own closing `{/* _class:
+   impact */}` "Thanks, questions?" slide is a separate, legitimate
+   presenter convention and is unaffected by this rule.
+
+A week that needs an extra "cast" slide beyond the standing per-week shape
+(Week 1's staff-introduction slide, introducing the four people named in
+its "Staff and policies" key point) titles that slide to match its parent
+key point's `## Key point N — ...` heading exactly, rather than inventing
+an untitled or differently-named slide — Reveal.js tolerates two slides
+sharing one heading text (their generated `id`s are auto-deduplicated), so
+this costs nothing structurally. This rule has no dedicated mechanical
+check (it only applies on the handful of weeks that need an extra cast
+slide at all), so it's a human-review item rather than a `deck.test.ts`
+assertion.
+
+Task 6 (Week 2) already complies with all five mechanically-checked rules
+— confirmed by the same `spec/deck.test.ts` block — since it was built
+after this review. Tasks 7-16 must comply from the outset rather than
+retrofit; each task's own Human review step should spot-check against this
+list, not just against voice/tone.
+
 ## 5. Task breakdown
 
 ### Task 1: Add `citations` field to the `lectures` schema
@@ -549,15 +602,22 @@ push on its own.
   - `week-02.deck.mdx`: full depth per the plan — fridge hook, all 5
     definitions, all 3 key points with full citation detail, the seven-
     day-grid activity instructions, conclusion, references slide citing
-    Aiello et al.
+    Aiello et al. — following §4's deck-authoring conventions (courseMeta
+    title slide, a dedicated "What's ahead" signpost slide, `<CheckIn />`
+    reused for every check-in, a dedicated "This week's reflection" slide
+    carrying the full prompt, no lecture-page sign-off sentence).
 - **Refactor:** None expected.
 - **Acceptance criteria:**
   - `pnpm build && vitest run spec` — Week 2's heading order, deck-exists,
-    and Slides-column checks all pass.
+    Slides-column, and `spec/deck.test.ts`'s deck-authoring-conventions
+    checks all pass.
   - Topic chips for week 2's row show 3 (one per Body key point).
 - **Human review:** Same as Task 5's — rendered lecture page + deck at
   both viewports, voice/tone check.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
+- **Status:** Done — built and reviewed before §4's deck-authoring-
+  conventions note was written up, but already compliant with it
+  (confirmed by `spec/deck.test.ts`'s new checks); accepted by the user.
 
 ### Task 7: Week 3 — Fashion Fundamentals
 
@@ -574,7 +634,7 @@ push on its own.
 - **Acceptance criteria:** Same shape as Task 6's, for week 3; 3 topic
   chips.
 - **Human review:** Same as Task 5's, for Week 3's page + deck.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 8: Week 4 — Sleep, Health, and Exercise
 
@@ -599,7 +659,7 @@ push on its own.
 - **Acceptance criteria:** Same shape as Task 6's; **exactly 3** topic
   chips for week 4 (confirms Task 5's updated hardcoded count is correct).
 - **Human review:** Same as Task 5's, for Week 4's page + deck.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 9: Week 5 — Touching Grass 101
 
@@ -619,7 +679,7 @@ push on its own.
 - **Acceptance criteria:** Same shape as Task 6's, plus the "links each
   week to its counterpart" regression check for week 5 passing.
 - **Human review:** Same as Task 5's, for Week 5's page + deck.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 10: Week 6 — Laptop and CS Separation
 
@@ -641,7 +701,7 @@ push on its own.
   particular attention to voice, since this week's source material is
   itself framed in cognitive-capacity language that must be paraphrased
   into mundane terms, not lifted directly.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 11: Week 7 — Small Talk and Silence
 
@@ -657,7 +717,7 @@ push on its own.
 - **Refactor:** None expected.
 - **Acceptance criteria:** Same shape as Task 6's.
 - **Human review:** Same as Task 5's, for Week 7's page + deck.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 12: Week 8 — Friendship and Group Communication
 
@@ -674,7 +734,7 @@ push on its own.
 - **Refactor:** None expected.
 - **Acceptance criteria:** Same shape as Task 6's.
 - **Human review:** Same as Task 5's, for Week 8's page + deck.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 13: Week 9 — Dating Without Documentation
 
@@ -703,7 +763,7 @@ push on its own.
 - **Human review:** Same as Task 5's, for Week 9's page + deck, with
   explicit attention to gender-neutral phrasing throughout (not just the
   automated term list).
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 14: Week 10 — Basic Adulting 101
 
@@ -722,7 +782,7 @@ push on its own.
   (Task 4) must render this citation's trade-book note distinctly (spot-
   checked once this task lands).
 - **Human review:** Same as Task 5's, for Week 10's page + deck.
-- **Depends on:** Task 5.
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4).
 
 ### Task 15: Week 11 — Workplace Behaviour
 
@@ -740,9 +800,10 @@ push on its own.
 - **Refactor:** None expected.
 - **Acceptance criteria:** Same shape as Task 6's.
 - **Human review:** Same as Task 5's, for Week 11's page + deck.
-- **Depends on:** Task 5, Task 13 (references the Week 9 citation as a
-  callback — Week 9 should already exist so the callback reads correctly,
-  though this is a content-quality dependency, not a build one).
+- **Depends on:** Task 5 (including its deck-authoring conventions, §4),
+  Task 13 (references the Week 9 citation as a callback — Week 9 should
+  already exist so the callback reads correctly, though this is a
+  content-quality dependency, not a build one).
 
 ### Task 16: Week 12 — Integration, and the final Slides-column assertion
 

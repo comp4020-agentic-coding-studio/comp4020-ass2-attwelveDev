@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -48,5 +48,51 @@ describe("deck", () => {
     expect(html).toContain(
       "Competence is a skill like any other. CS culture just never taught you this one.",
     );
+  });
+});
+
+/**
+ * Deck-authoring conventions established while building Week 1's deck
+ * (plan Task 5), generalised to every week's deck (Tasks 6-16) per the
+ * plan's own note: read from source `.deck.mdx` files rather than built
+ * HTML, since these are about how a deck is *authored*, not just how it
+ * renders.
+ */
+describe("deck — authoring conventions", () => {
+  const deckFiles = readdirSync(resolve("src/decks"))
+    .filter((name) => name.endsWith(".deck.mdx"))
+    .map((name) => ({ name, source: readFileSync(resolve("src/decks", name), "utf8") }));
+
+  it("found at least one deck to check", () => {
+    expect(deckFiles.length).toBeGreaterThan(0);
+  });
+
+  it.each(deckFiles)("$name's title slide uses the canonical course title", ({ name, source }) => {
+    expect(source, `${name} doesn't import courseMeta`).toMatch(
+      /import\s*\{\s*courseMeta\s*\}\s*from\s*"\.\.\/course-config"/,
+    );
+    expect(source, `${name}'s title slide doesn't reference courseMeta.title`).toContain(
+      "{courseMeta.title}",
+    );
+  });
+
+  it.each(deckFiles)("$name reuses CheckIn.astro instead of plain check-in text", ({ name, source }) => {
+    expect(source, `${name} doesn't import CheckIn`).toMatch(
+      /import\s+CheckIn\s+from\s*"\.\.\/components\/CheckIn\.astro"/,
+    );
+    // A bare "Check-in:" outside the component means someone reverted to
+    // plain text for a new check-in rather than reusing the component.
+    const bareCheckIns = [...source.matchAll(/^(?!.*<CheckIn).*Check-in:/gm)];
+    expect(bareCheckIns.map((m) => m[0]), `${name} has a non-componentised check-in`).toEqual([]);
+  });
+
+  it.each(deckFiles)("$name carries a dedicated reflection-prompt slide", ({ name, source }) => {
+    expect(source, `${name} has no "This week's reflection" slide`).toMatch(
+      /^## This week's reflection$/m,
+    );
+  });
+
+  it.each(deckFiles)("$name gives its signposting its own slide", ({ name, source }) => {
+    expect(source, `${name} has no "What's ahead" slide`).toMatch(/^## What's ahead$/m);
   });
 });
