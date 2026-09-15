@@ -1,0 +1,32 @@
+---
+import BaseLayout from "astro-theme-university/layouts/BaseLayout.astro";
+import { getPublishedCollection } from "astro-course-university/content";
+import { siteConfig } from "../../site-config";
+
+interface Citation {
+  text: string;
+  note?: string;
+}
+
+const lectures = await getPublishedCollection("lectures");
+const citations = lectures.flatMap((lecture) => lecture.data.citations as Citation[]);
+const uniqueCitations = [...new Map(citations.map((citation) => [citation.text, citation])).values()];
+
+const description =
+  "Every citation referenced across the twelve lectures, in one bibliography.";
+---
+
+<BaseLayout title={`References — ${siteConfig.name}`} description={description} {...siteConfig}>
+  <h1>References</h1>
+  <p class="lead">{description}</p>
+  <ul class="course-list course-references">
+    {
+      uniqueCitations.map((citation) => (
+        <li>
+          {citation.text}
+          {citation.note && <span class="course-citation-note"> {citation.note}</span>}
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
