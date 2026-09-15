@@ -21,4 +21,13 @@ describe("structured content — lecture components", () => {
     const html = renderedPage("lectures/week-01");
     expect(html).toMatch(/class="course-activity"/);
   });
+
+  it("renders week 1's references section from its citations", () => {
+    const html = renderedPage("lectures/week-01");
+    const heading = html.match(/<h[1-6][^>]*>References</);
+    expect(heading, "no References heading found").not.toBeNull();
+    const listStart = heading!.index! + heading![0].length;
+    const rest = html.slice(listStart);
+    expect(rest).toMatch(/<li>[\s\S]*?Lally[\s\S]*?<\/li>/);
+  });
 });
