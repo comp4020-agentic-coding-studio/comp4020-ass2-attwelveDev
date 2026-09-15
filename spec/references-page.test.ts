@@ -13,7 +13,7 @@ describe("references — course-wide bibliography page", () => {
 
   it("lists every unique citation across all 12 lectures", () => {
     const html = renderedPage("references");
-    const list = html.match(/<ul class="course-references">([\s\S]*?)<\/ul>/);
+    const list = html.match(/<ul class="[^"]*\bcourse-references\b[^"]*">([\s\S]*?)<\/ul>/);
     expect(list, "no course-references list found").not.toBeNull();
     const items = [...(list?.[1] ?? "").matchAll(/<li>/g)];
     // 14 citations authored across the 12 lectures once the migration
