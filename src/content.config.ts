@@ -71,6 +71,9 @@ export const collections = {
           .string()
           .regex(/^\/decks\/[a-z0-9-]+\/$/)
           .optional(),
+        citations: z
+          .array(z.object({ text: z.string(), note: z.string().optional() }))
+          .default([]),
       })
       .loose(),
   }),
