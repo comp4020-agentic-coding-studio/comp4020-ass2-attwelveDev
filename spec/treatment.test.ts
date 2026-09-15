@@ -317,6 +317,9 @@ describe("treatment — topics", () => {
     expect(week01Row).toMatch(/rel="noopener noreferrer"/);
     expect(week01Row).toMatch(/aria-label="Open slides for Week 1"/);
     expect(week01Row).toMatch(/data-icon="iconoir:presentation"/);
+    const week02Row = findRowByWeek(rows, 2);
+    expect(week02Row, "no row found for week 2").toBeDefined();
+    expect(week02Row).toMatch(/class="at-icon-button"/);
   });
 });
 
