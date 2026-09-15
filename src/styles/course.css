@@ -131,6 +131,70 @@ h6 {
   }
 }
 
+.course-definitions {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--at-spacing-sm) var(--at-spacing-lg);
+  margin: 0 0 var(--at-spacing-xl);
+  padding: var(--at-spacing-lg);
+  border: 1px solid var(--at-divider);
+  border-radius: var(--at-border-radius);
+  background: var(--at-bg-alt);
+}
+
+.course-definitions dt {
+  color: var(--at-text-secondary);
+}
+
+.course-definitions-pos {
+  font-size: var(--at-font-size-xs);
+}
+
+.course-definitions dd {
+  margin: 0;
+}
+
+@media (width < 640px) {
+  .course-definitions {
+    grid-template-columns: 1fr;
+    gap: var(--at-spacing-xs);
+  }
+
+  .course-definitions dd {
+    margin-block-end: var(--at-spacing-sm);
+  }
+}
+
+.course-check-in {
+  margin-block: var(--at-spacing-md) var(--at-spacing-xl);
+  padding: var(--at-spacing-md) var(--at-spacing-lg);
+  border-inline-start: 3px solid var(--at-accent);
+  border-radius: var(--at-border-radius);
+  background: var(--at-accent-soft);
+}
+
+.course-check-in-label {
+  color: var(--at-accent);
+  font-weight: 600;
+}
+
+.course-activity {
+  margin-block: var(--at-spacing-lg) var(--at-spacing-xl);
+  padding: var(--at-spacing-lg);
+  border: 1px solid var(--at-divider);
+  border-radius: var(--at-border-radius);
+  box-shadow: var(--at-shadow-sm);
+}
+
+.course-activity-label {
+  margin-block: 0 var(--at-spacing-sm);
+  color: var(--at-text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: var(--at-font-size-xs);
+  letter-spacing: 0.04em;
+}
+
 /* No entrance animation runs on any page (F3.11) — components.css:683,694.
    The theme's own keyframes stay in the bundle; only the two selectors that
    apply them are neutralised here. */

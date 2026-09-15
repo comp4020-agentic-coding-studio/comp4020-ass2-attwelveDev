@@ -1,0 +1,27 @@
+---
+interface Definition {
+  term: string;
+  partOfSpeech?: string;
+  body: string;
+}
+
+interface Props {
+  definitions: Definition[];
+}
+
+const { definitions } = Astro.props;
+---
+
+<dl class="course-definitions">
+  {
+    definitions.map((definition) => (
+      <>
+        <dt>
+          <em>{definition.term}</em>
+          {definition.partOfSpeech && <span class="course-definitions-pos"> ({definition.partOfSpeech})</span>}
+        </dt>
+        <dd>{definition.body}</dd>
+      </>
+    ))
+  }
+</dl>

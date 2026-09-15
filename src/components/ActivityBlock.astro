@@ -1,0 +1,12 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="course-activity">
+  <p class="course-activity-label">{title ?? "In-lecture activity"}</p>
+  <slot />
+</div>
