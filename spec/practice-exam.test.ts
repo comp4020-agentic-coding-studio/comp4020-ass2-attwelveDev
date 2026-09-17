@@ -73,9 +73,47 @@ describe("practice exam archive", () => {
 });
 
 describe("station 1: hygiene and health", () => {
-  it("gives a sample logged schedule", () => {
-    expect(html).toMatch(/walk to vending machine/);
-    expect(html).toMatch(/visible from the doorway/);
+  it("asks the candidate to fill in their own schedule, not analyse a given one", () => {
+    const section = html.slice(html.indexOf("<h2>Station 1"), html.indexOf("<h2>Station 2"));
+    expect(section).toMatch(/fill in the schedule below with your own/i);
+    const openTable = section.slice(0, section.indexOf("<details"));
+    expect(openTable).toMatch(/<td><\/td>/);
+  });
+
+  it("has the candidate state their own semester intent before logging it", () => {
+    const section = html.slice(html.indexOf("<h2>Station 1"), html.indexOf("<h2>Station 2"));
+    expect(section).toMatch(/state your own semester intent/i);
+    expect(section).toMatch(/Shower:/);
+    expect(section).toMatch(/Bedtime:/);
+    expect(section).toMatch(/Laundry:/);
+    expect(section).toMatch(/Exercise:/);
+    const intentIndex = section.search(/state your own semester intent/i);
+    const tableIndex = section.indexOf("<table>");
+    expect(tableIndex).toBeGreaterThan(intentIndex);
+  });
+
+  it("keeps the old failing example inside the reveal, as the worked Poor solution", () => {
+    const section = html.slice(html.indexOf("<h2>Station 1"), html.indexOf("<h2>Station 2"));
+    const poorIndex = section.indexOf("Poor solution");
+    const exampleIndex = section.indexOf("walk to vending machine");
+    expect(poorIndex).toBeGreaterThan(-1);
+    expect(exampleIndex).toBeGreaterThan(poorIndex);
+    expect(section).toMatch(/visible from the doorway/);
+  });
+
+  it("gives the poor example its own stated intent to check the schedule against", () => {
+    const section = html.slice(html.indexOf("<h2>Station 1"), html.indexOf("<h2>Station 2"));
+    const poorIndex = section.indexOf("Poor solution");
+    const poorSection = section.slice(poorIndex);
+    expect(poorSection).toMatch(/Stated intent/i);
+    const intentIndex = poorSection.search(/Stated intent/i);
+    const tableIndex = poorSection.indexOf("<table>");
+    expect(tableIndex).toBeGreaterThan(intentIndex);
+  });
+
+  it("grades checking a real schedule against the definitions, not spotting failures in a fixed example", () => {
+    const section = html.slice(html.indexOf("<h2>Station 1"), html.indexOf("<h2>Station 2"));
+    expect(section).toMatch(/not whether the result happens to be a pass or a fail/i);
   });
 
   it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
