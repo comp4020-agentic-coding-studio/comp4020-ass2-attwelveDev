@@ -202,7 +202,7 @@ describe("assignment 2 touch grass", () => {
 describe("assignment 3 adulting", () => {
   const html = readFileSync(resolve("dist/assessments/assignment-3-adulting/index.html"), "utf8");
 
-  it("requires all seven plan components", () => {
+  it("requires all eleven named plan components", () => {
     for (const term of [
       /daily routine/i,
       /laundry/i,
@@ -211,6 +211,10 @@ describe("assignment 3 adulting", () => {
       /date/i,
       /hangout|close friends/i,
       /interview/i,
+      /cleaning schedule/i,
+      /skincare/i,
+      /hygiene routine/i,
+      /sleep schedule/i,
     ]) {
       expect(html, `missing ${term}`).toMatch(term);
     }

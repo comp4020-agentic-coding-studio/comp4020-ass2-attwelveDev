@@ -362,6 +362,6 @@ describe("treatment — shared surfaces and motion budget", () => {
       "utf8",
     );
     expect(html).toMatch(/<table/);
-    expect(tbodyRows(html).length).toBe(12);
+    expect(tbodyRows(html).length).toBe(13);
   });
 });

@@ -1,20 +1,22 @@
 ---
 title: "Assignment 3: Time to be an Adult"
 description:
-  A week-long plan across nine components of independent living, submitted
-  in full and interviewed against on the Wednesday
+  A week-long plan across thirteen components of independent living,
+  submitted in full and interviewed against on the Wednesday
 week: 12
 due: 2027-05-28T12:00:00+10:00
 weight: 20
 marking:
   mode: weighted
   criteria:
+    - name: "Daily routine: coherence and a stated fallback"
+      weight: 10
     - name: "Hygiene routine: scheduling and adherence"
-      weight: 14
-    - name: "Meal plan: nutritional coverage and repetition"
-      weight: 14
+      weight: 10
+    - name: "Meal plan: food-group variety and repetition"
+      weight: 10
     - name: "Budget: category coverage and plausibility against stated income"
-      weight: 12
+      weight: 10
     - name: "Sleep schedule: viability and a stated fallback"
       weight: 10
     - name: "Exercise: frequency and specificity"
@@ -34,7 +36,7 @@ marking:
     - name: Skincare
       weight: 4
 spec:
-  - all nine plan components are submitted
+  - all thirteen plan components are submitted
   - the daily routine states a fallback for the night sleep slips
   - the Wednesday interview time is confirmed by email in advance
   - the plan stands on its own without you there to narrate it
@@ -42,16 +44,21 @@ spec:
 
 ## The plan
 
-Submit a single week-long plan covering nine components:
+Submit a single week-long plan covering thirteen components:
 
 - **Daily routine** — an hour-by-hour schedule for the week, covering wake,
   sleep and meals, with a stated fallback for the night sleep slips.
+- **Hygiene routine** — a written schedule naming a frequency for every
+  routine task (shower, deodorant, haircut), not "when needed."
+- **Sleep schedule** — a target bedtime and a stated fallback for the
+  night it slips, distinct from the daily routine's hour-by-hour shape.
 - **Exercise** — a stated frequency and a named activity for the week, not
   "more."
 - **Laundry** — a wash schedule stating a frequency and colour separation,
   not "as needed."
-- **Meal plan** — every meal for the week, with nutritional coverage stated
-  and repetition kept within reason.
+- **Meal plan** — every meal for the week, each with a stated protein,
+  starch, and vegetable per Week 10's cooking method, and repetition kept
+  within reason.
 - **Budget** — every planned expense for the week against a stated income,
   itemised by category.
 - **Grocery logistics** — a one-week grocery list against an explicit
@@ -61,6 +68,10 @@ Submit a single week-long plan covering nine components:
   repeated more than twice, plus a standing schedule for at least three
   household items showing when each is due to run out and a recurring
   order or trip timed to avoid a rush purchase.
+- **Cleaning schedule** — a fixed day or interval for each recurring task
+  (bins, floors, bathroom, surfaces), not "when it looks dirty."
+- **Skincare** — a stated routine (cleanse, moisturise, SPF) with a
+  frequency for each step, not just a list of products owned.
 - **The date** — an activity booked, at a stated time, with attire decided
   in advance.
 - **The hangout** — time negotiated with close friends outside the course,
@@ -90,8 +101,8 @@ wrote it:
   survive a week of actual use without an unplanned change.
 - **D** — every component is present and mostly consistent; one or two
   would need an unplanned change mid-week.
-- **C** — all nine components are present, but several show scheduling
-  conflicts a real week would surface immediately.
+- **C** — all thirteen components are present, but several show
+  scheduling conflicts a real week would surface immediately.
 - **P** — most components are present, but coverage is thin enough that
   the plan reads as an outline rather than something runnable.
 - **N** — one or more components are missing, or the plan does not
