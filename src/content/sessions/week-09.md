@@ -6,6 +6,7 @@ week: 9
 date: 2027-05-06
 teachers:
   - noor-kalantari
+caseStudies: ["600-word-message"]
 spec:
   - a drafted opening message is cut to one clear, answerable question
   - the edited version is tested against a peer's honest reaction, not just read aloud
