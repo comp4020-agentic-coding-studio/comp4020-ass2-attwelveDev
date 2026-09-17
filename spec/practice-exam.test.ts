@@ -162,3 +162,36 @@ describe("station 4: reading the room", () => {
     expect(section).toMatch(/out of 20/);
   });
 });
+
+describe("station 5: daily survival", () => {
+  it("gives a pantry and a stated budget", () => {
+    expect(html).toMatch(/chicken thighs/);
+    expect(html).toMatch(/\$12/);
+  });
+
+  it("makes cooking the plan part of the question, not just planning it", () => {
+    const section = html.slice(html.indexOf("Station 5"));
+    expect(section).toMatch(/use this plan to actually cook it/i);
+  });
+
+  it("notes that cooking materials and a kitchen area are provided", () => {
+    const section = html.slice(html.indexOf("Station 5"));
+    expect(section).toMatch(/cookware/i);
+    expect(section).toMatch(/kitchen area/i);
+  });
+
+  it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
+    const section = html.slice(html.indexOf("Station 5"));
+    expect(section).toMatch(/Model solution/);
+    expect(section).toMatch(/Poor solution/);
+    expect(section).toMatch(/Examiner's notes/);
+    expect(section).toMatch(/Rubric/);
+  });
+
+  it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+    const section = html.slice(html.indexOf("Station 5"));
+    expect(section).toMatch(/\bHD\b/);
+    expect(section).toMatch(/\bN\b/);
+    expect(section).toMatch(/out of 30/);
+  });
+});

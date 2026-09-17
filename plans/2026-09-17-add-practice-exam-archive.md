@@ -896,7 +896,10 @@ rendered markdown, not a station-by-station component tree).
 ### Task 6: Station 5 content — pantry/budget, worked meal plan, solutions, rubric
 
 - **Description:** Add the pantry/budget data and the `<details>`
-  disclosure to Station 5.
+  disclosure to Station 5. Per user feedback during Task 6 review on
+  2026-09-18, the question itself (not a separate boxed note) must make
+  cooking part of the task: after planning and reasoning through the
+  cook order, the student then uses that plan to actually cook the meal.
 - **Files touched:** `src/pages/assessments/final-exam/practice-exam.astro`,
   `spec/practice-exam.test.ts`.
 - **Tests first (red):** Add:
@@ -905,6 +908,17 @@ rendered markdown, not a station-by-station component tree).
     it("gives a pantry and a stated budget", () => {
       expect(html).toMatch(/chicken thighs/);
       expect(html).toMatch(/\$12/);
+    });
+
+    it("makes cooking the plan part of the question, not just planning it", () => {
+      const section = html.slice(html.indexOf("Station 5"));
+      expect(section).toMatch(/use this plan to actually cook it/i);
+    });
+
+    it("notes that cooking materials and a kitchen area are provided", () => {
+      const section = html.slice(html.indexOf("Station 5"));
+      expect(section).toMatch(/cookware/i);
+      expect(section).toMatch(/kitchen area/i);
     });
 
     it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
@@ -923,8 +937,15 @@ rendered markdown, not a station-by-station component tree).
     });
   });
   ```
-- **Implementation (green):** Insert after Station 5's question paragraph:
+- **Implementation (green):** Reword Station 5's question paragraph, then
+  insert the pantry table and `<details>` after it:
   ```astro
+  <p>
+    Using the pantry and budget below, plan one complete meal, cooked in
+    the correct order, show your reasoning, and then use this plan to
+    actually cook it within the station's time.
+  </p>
+  <p>All cooking materials — cookware, a stove, and a kitchen area — are provided at the station.</p>
   <table class="course-schedule">
     <thead><tr><th>Pantry</th><th>Budget</th></tr></thead>
     <tbody>
@@ -979,9 +1000,12 @@ rendered markdown, not a station-by-station component tree).
   </details>
   ```
 - **Refactor:** None expected.
-- **Acceptance criteria:** `pnpm test` passes, including all three new Station 5 `it` blocks.
+- **Acceptance criteria:** `pnpm test` passes, including all four new Station 5 `it` blocks.
 - **Human review:** Same bar as Task 2.
 - **Depends on:** Task 1.
+- [x] Done — human review accepted after two rounds of feedback on
+  2026-09-18 (cooking made explicit in the question itself, then a note
+  added that cooking materials and a kitchen area are provided).
 
 ### Task 7: Link the practice paper from the real final exam page
 
