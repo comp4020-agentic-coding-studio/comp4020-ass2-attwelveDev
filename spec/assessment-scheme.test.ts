@@ -289,9 +289,16 @@ describe("final exam", () => {
     expect(html).toMatch(/compulsory/i);
   });
 
-  it("issues an answer booklet for Stations 1 to 4 and marks Station 5 by observation", () => {
+  it("issues an answer booklet for written answers and marks Station 5 partly by observation", () => {
     expect(html).toMatch(/answer booklet/i);
+    expect(html).not.toMatch(/Stations 1 to 4/i);
+    expect(html).not.toMatch(/not written up/i);
     expect(html).toMatch(/observation/i);
+  });
+
+  it("plans as well as cooks the Station 5 meal", () => {
+    expect(html).toMatch(/Plan a complete/i);
+    expect(html).toMatch(/edible meal/i);
   });
 
   it("treats broken exam rules as academic misconduct", () => {

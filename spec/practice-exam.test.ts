@@ -32,6 +32,44 @@ describe("practice exam archive", () => {
     expect(html).toMatch(/Reading the Room/);
     expect(html).toMatch(/Daily Survival/);
   });
+
+  it("headlines itself as SLOP1521's 2026 final exam", () => {
+    expect(html).toMatch(/<h1[^>]*>SLOP1521: 2026 Final Exam<\/h1>/);
+  });
+
+  it("names the course code and title", () => {
+    expect(html).toMatch(/SLOP1521/);
+    expect(html).toMatch(/Introduction to Life: Foundations of Being a Person/);
+  });
+
+  it("states the exam date, weight, and total marks", () => {
+    expect(html).toMatch(/12:00, 10 June 2026/);
+    expect(html).toMatch(/30% of final grade/);
+    expect(html).toMatch(/Total marks/i);
+    expect(html).toMatch(/\b100\b/);
+  });
+
+  it("gives candidate name and student ID fields", () => {
+    expect(html).toMatch(/Candidate name/i);
+    expect(html).toMatch(/Student ID/i);
+  });
+
+  it("repeats the real exam's conditions before the stations begin", () => {
+    const conditionsIndex = html.indexOf("Exam conditions");
+    const station1Index = html.indexOf("<h2>Station 1");
+    expect(conditionsIndex).toBeGreaterThan(-1);
+    expect(station1Index).toBeGreaterThan(conditionsIndex);
+    expect(html).toMatch(/black or blue pen/i);
+    expect(html).toMatch(/closed book/i);
+    expect(html).toMatch(/Station 3 makes talking compulsory/i);
+    expect(html).toMatch(/academic misconduct/i);
+  });
+
+  it("issues the answer booklet for written answers without excluding Station 5", () => {
+    expect(html).toMatch(/answer booklet is issued for your written answers/i);
+    expect(html).not.toMatch(/Stations 1 to 4/i);
+    expect(html).not.toMatch(/not written up/i);
+  });
 });
 
 describe("station 1: hygiene and health", () => {
@@ -49,7 +87,7 @@ describe("station 1: hygiene and health", () => {
   });
 
   it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
-    const section = html.slice(html.indexOf("Station 1"), html.indexOf("Station 2"));
+    const section = html.slice(html.indexOf("<h2>Station 1"), html.indexOf("<h2>Station 2"));
     expect(section).toMatch(/\bHD\b/);
     expect(section).toMatch(/\bN\b/);
     expect(section).toMatch(/out of 15/);
@@ -67,7 +105,7 @@ describe("station 2: fashion", () => {
   });
 
   it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
-    const section = html.slice(html.indexOf("Station 2"), html.indexOf("Station 3"));
+    const section = html.slice(html.indexOf("<h2>Station 2"), html.indexOf("<h2>Station 3"));
     expect(section).toMatch(/Model solution/);
     expect(section).toMatch(/Poor solution/);
     expect(section).toMatch(/Examiner's notes/);
@@ -75,7 +113,7 @@ describe("station 2: fashion", () => {
   });
 
   it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
-    const section = html.slice(html.indexOf("Station 2"), html.indexOf("Station 3"));
+    const section = html.slice(html.indexOf("<h2>Station 2"), html.indexOf("<h2>Station 3"));
     expect(section).toMatch(/\bHD\b/);
     expect(section).toMatch(/\bN\b/);
     expect(section).toMatch(/out of 15/);
@@ -105,7 +143,7 @@ describe("station 3: small talk", () => {
   });
 
   it("keeps the failed example inside the reveal, as the worked Poor solution", () => {
-    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    const section = html.slice(html.indexOf("<h2>Station 3"), html.indexOf("<h2>Station 4"));
     const poorIndex = section.indexOf("Poor solution");
     const exampleIndex = section.indexOf("weekend at the coast");
     expect(poorIndex).toBeGreaterThan(-1);
@@ -114,7 +152,7 @@ describe("station 3: small talk", () => {
   });
 
   it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
-    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    const section = html.slice(html.indexOf("<h2>Station 3"), html.indexOf("<h2>Station 4"));
     expect(section).toMatch(/Model solution/);
     expect(section).toMatch(/Poor solution/);
     expect(section).toMatch(/Examiner's notes/);
@@ -122,13 +160,13 @@ describe("station 3: small talk", () => {
   });
 
   it("grades the real live conversation, not the written rehearsal", () => {
-    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    const section = html.slice(html.indexOf("<h2>Station 3"), html.indexOf("<h2>Station 4"));
     expect(section).toMatch(/as marked live/i);
     expect(section).toMatch(/completes the exchange within the ten-minute window/i);
   });
 
   it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
-    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    const section = html.slice(html.indexOf("<h2>Station 3"), html.indexOf("<h2>Station 4"));
     expect(section).toMatch(/\bHD\b/);
     expect(section).toMatch(/\bN\b/);
     expect(section).toMatch(/out of 20/);
@@ -142,13 +180,13 @@ describe("station 4: reading the room", () => {
   });
 
   it("notes the real exam scenario plays out live, and the transcript is for the practice paper", () => {
-    const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+    const section = html.slice(html.indexOf("<h2>Station 4"), html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/plays out live in front of you/i);
     expect(section).toMatch(/provided for the purpose of this practice exam/i);
   });
 
   it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
-    const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+    const section = html.slice(html.indexOf("<h2>Station 4"), html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/Model solution/);
     expect(section).toMatch(/Poor solution/);
     expect(section).toMatch(/Examiner's notes/);
@@ -156,7 +194,7 @@ describe("station 4: reading the room", () => {
   });
 
   it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
-    const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+    const section = html.slice(html.indexOf("<h2>Station 4"), html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/\bHD\b/);
     expect(section).toMatch(/\bN\b/);
     expect(section).toMatch(/out of 20/);
@@ -169,19 +207,25 @@ describe("station 5: daily survival", () => {
     expect(html).toMatch(/\$12/);
   });
 
+  it("notes the cooking itself is marked by observation, alongside the written plan", () => {
+    const section = html.slice(html.indexOf("<h2>Station 5"));
+    expect(section).toMatch(/answer booklet/i);
+    expect(section).toMatch(/mark the cooking itself by observation/i);
+  });
+
   it("makes cooking the plan part of the question, not just planning it", () => {
-    const section = html.slice(html.indexOf("Station 5"));
+    const section = html.slice(html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/use this plan to actually cook it/i);
   });
 
   it("notes that cooking materials and a kitchen area are provided", () => {
-    const section = html.slice(html.indexOf("Station 5"));
+    const section = html.slice(html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/cookware/i);
     expect(section).toMatch(/kitchen area/i);
   });
 
   it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
-    const section = html.slice(html.indexOf("Station 5"));
+    const section = html.slice(html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/Model solution/);
     expect(section).toMatch(/Poor solution/);
     expect(section).toMatch(/Examiner's notes/);
@@ -189,7 +233,7 @@ describe("station 5: daily survival", () => {
   });
 
   it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
-    const section = html.slice(html.indexOf("Station 5"));
+    const section = html.slice(html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/\bHD\b/);
     expect(section).toMatch(/\bN\b/);
     expect(section).toMatch(/out of 30/);

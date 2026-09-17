@@ -42,9 +42,10 @@ Each station runs back to back on exam day, in order:
 4. **Station 4: Reading the Room (10 minutes).** Diagnose a friend-group
    or workplace scenario that plays out in front of you, and propose a
    reason and a fix.
-5. **Station 5: Daily Survival (2 hours 10 minutes).** Cook a complete,
+5. **Station 5: Daily Survival (2 hours 10 minutes).** Plan a complete,
    edible meal from a provided pantry, on a budget stated at the door,
-   within the station's time.
+   then cook it within the station's time; examiners mark by observation
+   as it happens.
 
 Total examined time is 2 hours 50 minutes, of which the four short
 stations combined are worth more than double the long cooking station —
@@ -62,9 +63,7 @@ No talking is permitted at any station, with one exception: Station 3
 makes talking compulsory, and a silent conversation fails the station on
 its own terms.
 
-An official exam answer booklet is issued for your written answers
-across Stations 1 to 4. Station 5 is not written up; examiners mark it
-by observation as it happens.
+An official exam answer booklet is issued for your written answers.
 
 Breaking any of the above is academic misconduct.
 
