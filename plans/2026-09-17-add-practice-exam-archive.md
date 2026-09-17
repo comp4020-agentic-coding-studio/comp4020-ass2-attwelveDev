@@ -1040,6 +1040,7 @@ rendered markdown, not a station-by-station component tree).
   - `grep -c "chicken thighs\|Model solution\|Poor solution" src/content/assessments/final-exam.md`
     returns `0` (confirms no scenario/solution content leaked onto the real
     exam page).
+- [x] Done — `pnpm check` green; grep confirms no leaked content.
 - **Human review:** None needed — the added line is a single factual
   pointer sentence, mechanically checkable via the link-presence and
   content-absence assertions above.

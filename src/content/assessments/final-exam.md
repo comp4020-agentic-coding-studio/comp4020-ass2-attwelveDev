@@ -67,3 +67,6 @@ across Stations 1 to 4. Station 5 is not written up; examiners mark it
 by observation as it happens.
 
 Breaking any of the above is academic misconduct.
+
+An archived practice paper from a previous sitting is available for
+revision: [the archived practice paper](/assessments/final-exam/practice-exam/).
