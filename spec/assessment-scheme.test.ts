@@ -256,6 +256,11 @@ describe("final exam", () => {
     expect(html).toMatch(/2 hours/);
   });
 
+  it("states the short-stations-vs-cooking-station weight relationship correctly", () => {
+    expect(html).not.toMatch(/worth as much combined as the long cooking station alone/);
+    expect(html).toMatch(/worth more than double the long cooking station/);
+  });
+
   it("warns that the examiner may leave", () => {
     expect(html).toMatch(/leave/i);
   });
