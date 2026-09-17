@@ -287,7 +287,7 @@ describe("treatment — topics", () => {
     const week04Row = findRowByWeek(tbodyRows(html), 4);
     expect(week04Row, "no row found for week 4").toBeDefined();
     const chips = [...(week04Row ?? "").matchAll(/<li class="course-topic">/g)];
-    expect(chips.length, "week 4 has 4 Body key points").toBe(4);
+    expect(chips.length, "week 4 has 5 Body key points").toBe(5);
   });
 
   it("gives the Labs table a Topics column", () => {
