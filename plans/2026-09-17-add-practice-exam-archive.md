@@ -49,8 +49,12 @@ seriousness applied to mundane specifics, never a technical metaphor.
    mark total in parentheses (e.g. "Station 1: Hygiene and Health (15
    marks)"), per user feedback on Task 2's re-review the same day.
 6. The real final exam page (`final-exam.md`) shall gain exactly one new
-   line linking to the practice paper; it shall not gain any scenario,
-   transcript, sample data, or worked-answer content.
+   line linking to the practice paper (Task 7); it shall not gain any
+   scenario, transcript, sample data, or worked-answer content. (Revised
+   2026-09-18, approved by the user during Task 5 review: Task 5 may also
+   reword the single existing sentence describing Station 4 — from
+   "read to you" to "plays out in front of you" — since that is a
+   correction to an existing line, not new scenario/transcript content.)
 7. The practice-exam page shall not be added to the `assessments` content
    collection and shall not alter any `EXPECTED_WEIGHTS`/`EXPECTED_COVERAGE`
    entry or the "exactly five assessment items" invariant in
@@ -749,18 +753,36 @@ rendered markdown, not a station-by-station component tree).
   live-marking rubric not a written-rehearsal rubric, real-vs-practice
   note quoted and boxed in a blockquote, redundant lead-in removed).
 
-### Task 5: Station 4 content — scenario, worked diagnosis, solutions, rubric
+### Task 5: Station 4 content — live-scenario transcript, solutions, rubric
 
-- **Description:** Add the scenario and the `<details>` disclosure to
-  Station 4.
+- **Description:** Per user feedback on 2026-09-18, reframe Station 4's
+  scenario as a transcript of a group project meeting that plays out live
+  in front of the student (matching how the real station actually runs),
+  rather than a bare bullet-point description of the stall cues. Add a
+  boxed note (mirroring Station 3's pattern) explaining that the real
+  exam presents this scenario live, and the written transcript is only
+  for the practice paper's purposes. This also requires widening this
+  plan's scope, with explicit user sign-off: `final-exam.md`'s Station 4
+  line currently reads "Diagnose a friend-group or workplace scenario
+  read to you, and propose a reason and a fix," which undersells the
+  station as narration rather than a live scene — reword that one
+  existing sentence to say the scenario "plays out in front of you."
+  This is a wording correction to an existing sentence, not new content,
+  and requirement 2.1.6 is revised accordingly (§2.1.6, below).
 - **Files touched:** `src/pages/assessments/final-exam/practice-exam.astro`,
-  `spec/practice-exam.test.ts`.
+  `src/content/assessments/final-exam.md`, `spec/practice-exam.test.ts`.
 - **Tests first (red):** Add:
   ```ts
   describe("station 4: reading the room", () => {
-    it("gives a full scenario to diagnose", () => {
+    it("gives a transcript with the stall cues embedded in dialogue", () => {
       expect(html).toMatch(/one-word answers/);
       expect(html).toMatch(/checked their watch/);
+    });
+
+    it("notes the real exam scenario plays out live, and the transcript is for the practice paper", () => {
+      const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+      expect(section).toMatch(/plays out live in front of you/i);
+      expect(section).toMatch(/provided for the purpose of this practice exam/i);
     });
 
     it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
@@ -779,34 +801,55 @@ rendered markdown, not a station-by-station component tree).
     });
   });
   ```
-- **Implementation (green):** Insert after Station 4's question paragraph:
+  Also add, to `spec/assessment-scheme.test.ts`'s existing `describe("final
+  exam", ...)` block, a check that the reworded sentence sticks:
+  ```ts
+  it("presents Station 4's scenario as live, not narrated", () => {
+    expect(html).toMatch(/plays out in front of you/i);
+  });
+  ```
+- **Implementation (green):** Reword Station 4's question paragraph, then
+  insert the boxed note, the transcript, and `<details>` after it:
   ```astro
   <p>
-    <strong>Scenario.</strong> In a group project meeting, one member has
-    given one-word answers to your last three questions, checked their
-    watch twice, and glanced at the door once, all within about a minute.
+    Diagnose the exchange below, from a group project meeting, against
+    the stall cues, then propose the response the lecture recommends.
   </p>
+  <blockquote>
+    <p>
+      In the real exam, this scenario plays out live in front of you; the
+      transcript below is provided for the purpose of this practice exam.
+    </p>
+  </blockquote>
+  <blockquote>
+    <p><strong>You:</strong> "Do you think we should split the slides between the three of us?"</p>
+    <p><strong>Group member:</strong> "Sure." <em>(checked their watch)</em></p>
+    <p><strong>You:</strong> "Want to take the intro section, or the methodology?"</p>
+    <p><strong>Group member:</strong> "Either." <em>(glanced at the door)</em></p>
+    <p><strong>You:</strong> "We could meet again Thursday to run through it — does that work?"</p>
+    <p><strong>Group member:</strong> "Fine." <em>(checked their watch again)</em></p>
+  </blockquote>
   <details>
     <summary>Reveal solutions and rubric</summary>
     <h3>Model solution</h3>
     <p>
       Two of the three named stall cues are present and repeated within a
-      short span: one-word answers (three times) and watch-checking (twice),
-      plus one door glance. This is enough to diagnose a stalled
-      conversation, not merely a paused one. The recommended response is not
-      another question — it is an exit: thank them for their time, name a
-      reason to go, and leave, ending the conversation rather than trying to
-      revive it.
+      short span: one-word answers (three times — "Sure.", "Either.",
+      "Fine.") and watch-checking (twice), plus one door glance. This is
+      enough to diagnose a stalled conversation, not merely a paused one.
+      The recommended response is not another question — it is an exit:
+      thank them for their time, name a reason to go, and leave, ending
+      the conversation rather than trying to revive it.
     </p>
     <h3>Poor solution</h3>
     <p>Ask them if everything's okay, since they seem distracted.</p>
     <h3>Examiner's notes</h3>
     <p>
-      This scenario deliberately baits the "ask if they're okay" response,
+      This exchange deliberately baits the "ask if they're okay" response,
       which is the specifically named mistake — treating a stalled
       conversation as one that needs more effort, rather than an ending.
-      Full marks require citing the specific cues counted, not just noticing
-      that something is off.
+      Full marks require citing the specific cues counted, not just
+      noticing that something is off.
     </p>
     <h3>Rubric — out of 20</h3>
     <table class="course-schedule">
@@ -830,10 +873,25 @@ rendered markdown, not a station-by-station component tree).
     </table>
   </details>
   ```
+  In `src/content/assessments/final-exam.md`, reword the existing Station 4
+  bullet (no other line changes):
+  ```md
+  4. **Station 4: Reading the Room (10 minutes).** Diagnose a friend-group
+     or workplace scenario that plays out in front of you, and propose a
+     reason and a fix.
+  ```
 - **Refactor:** None expected.
-- **Acceptance criteria:** `pnpm test` passes, including all three new Station 4 `it` blocks.
-- **Human review:** Same bar as Task 2.
+- **Acceptance criteria:** `pnpm test` passes, including all four new
+  Station 4 `it` blocks in `spec/practice-exam.test.ts` and the new
+  `spec/assessment-scheme.test.ts` assertion.
+- **Human review:** Same bar as Task 2, plus: confirm the reworded
+  `final-exam.md` sentence still reads as a plausible real-exam-paper
+  line, not a practice-paper aside.
 - **Depends on:** Task 1.
+- [x] Done — human review accepted (reworked as a live-dialogue
+  transcript with a boxed real-vs-practice note, per user feedback during
+  review on 2026-09-18; also rewords `final-exam.md`'s Station 4 line
+  with the user's explicit sign-off to widen this plan's scope).
 
 ### Task 6: Station 5 content — pantry/budget, worked meal plan, solutions, rubric
 

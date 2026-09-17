@@ -40,7 +40,8 @@ Each station runs back to back on exam day, in order:
    may leave early if the conversation stalls past recovery, and will
    leave at the ten-minute mark regardless.
 4. **Station 4: Reading the Room (10 minutes).** Diagnose a friend-group
-   or workplace scenario read to you, and propose a reason and a fix.
+   or workplace scenario that plays out in front of you, and propose a
+   reason and a fix.
 5. **Station 5: Daily Survival (2 hours 10 minutes).** Cook a complete,
    edible meal from a provided pantry, on a budget stated at the door,
    within the station's time.

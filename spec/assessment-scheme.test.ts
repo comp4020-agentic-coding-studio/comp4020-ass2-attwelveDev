@@ -302,4 +302,8 @@ describe("final exam", () => {
     const finalExam = assessments.find((node) => node.id === "assessments/final-exam");
     expect(finalExam?.spec?.some((line) => /pen|materials/i.test(line))).toBe(true);
   });
+
+  it("presents Station 4's scenario as live, not narrated", () => {
+    expect(html).toMatch(/plays out in front of you/i);
+  });
 });

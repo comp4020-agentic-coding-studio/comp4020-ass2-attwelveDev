@@ -134,3 +134,31 @@ describe("station 3: small talk", () => {
     expect(section).toMatch(/out of 20/);
   });
 });
+
+describe("station 4: reading the room", () => {
+  it("gives a transcript with the stall cues embedded in dialogue", () => {
+    expect(html).toMatch(/one-word answers/);
+    expect(html).toMatch(/checked their watch/);
+  });
+
+  it("notes the real exam scenario plays out live, and the transcript is for the practice paper", () => {
+    const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+    expect(section).toMatch(/plays out live in front of you/i);
+    expect(section).toMatch(/provided for the purpose of this practice exam/i);
+  });
+
+  it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
+    const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+    expect(section).toMatch(/Model solution/);
+    expect(section).toMatch(/Poor solution/);
+    expect(section).toMatch(/Examiner's notes/);
+    expect(section).toMatch(/Rubric/);
+  });
+
+  it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+    const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+    expect(section).toMatch(/\bHD\b/);
+    expect(section).toMatch(/\bN\b/);
+    expect(section).toMatch(/out of 20/);
+  });
+});
