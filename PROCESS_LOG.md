@@ -101,6 +101,81 @@ own note" test.
 
 **Commit:** [`9c56911`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/9c56911)
 
+## 2026-09-17 — "How, not just what/why" was under-scoped in the plan itself, not just in the content
+
+**Obvious approach:** Follow the plan's Task 9 exactly as written — add one
+procedural "how" per week, to the single gap each week's task named (Week 2's
+skincare, Week 5's attention-restoration procedure, and so on), leaving
+Weeks 1/4/7/10/12 untouched as "already adequate."
+
+**What I decided instead, and why:** After Week 2's human review, the
+reviewer pointed out that showering, deodorant, and haircuts were still bare
+definitions with no procedure — the plan's Task 9 had only fixed skincare,
+the one gap it happened to name, even though `CLAUDE.md`'s own standing rule
+already said "a how for every concept it teaches," not "a how for one
+concept per week." The plan had quietly under-implemented its own rule. Since
+the rule already existed and was correctly worded, the fix wasn't a new rule
+— it was refusing to let a plan task's narrower phrasing override the
+standing rule it was supposed to satisfy. I updated the plan file in place to
+require full per-concept coverage going forward, then went back through
+every already-committed week auditing every Definitions entry, not just the
+one flagged gap.
+
+**How I knew it was right:** The same gap kept recurring even after the
+scope was declared "fixed" — Week 8's "Listening to someone" was defined with
+zero procedure and slipped through an entire review cycle before the
+reviewer caught it a second time. That repetition is what confirmed the
+narrow, one-gap-per-week reading was the actual bug, not a one-off miss — and
+it's why the fix is now recorded as a standing audit step (walk every
+Definitions entry, not just Body bullets) rather than trusted to memory
+again.
+
+**Landed in the harness as:** `plans/2026-09-17-lecture-consistency-pass.md`
+requirement 9, expanded in place; the corresponding rule in `CLAUDE.md` was
+already correct and needed no change — the bug was in the plan's narrower
+implementation of it, not the rule's own wording.
+
+**Commit:** [`27c4170`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/27c4170), [`6d58742`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/6d58742)
+
+## 2026-09-17 — A graded rubric asked for content the course never taught, and a load-bearing component had no weight at all
+
+**Obvious approach:** Do exactly what Task 21 asked — add "Cleaning schedule"
+and "Skincare" bullets to Assignment 3's "## The plan" section, since those
+were the two components the plan named as missing against the marking table,
+and move on.
+
+**What I decided instead, and why:** A full read of the marking table against
+"## The plan" during Phase 1 review showed the gap was four components, not
+two — "Hygiene routine" (14%, the single largest criterion) and "Sleep
+schedule" (10%) were also missing bullets. Separately, during human review,
+the reviewer caught two more real bugs the plan never named: "Daily routine"
+— the first, most load-bearing bullet in the whole plan — had no marking
+criterion at all, and the "Meal plan" criterion graded "nutritional
+coverage," content Week 4's lecture explicitly puts out of scope. Both are
+worse than a missing bullet: a rubric that grades content nobody taught, or
+that leaves the plan's foundational component unweighted, breaks the same
+introduce-before-reference principle the whole plan exists to fix — just in
+the assessment file instead of a lecture. I added a real "Daily routine"
+criterion rather than leaving it implicit, and reworded "nutritional
+coverage" to "food-group variety," grounded in what Week 2/4's Balanced meal
+definition and Week 10's cooking method actually taught.
+
+**How I knew it was right:** The weights had to keep summing to exactly 100
+— `spec/assessment-scheme.test.ts`'s "marks every item with weighted criteria
+summing to 100" test enforces this on every assessment already, so I couldn't
+just add a criterion without deciding where its weight came from. Redistributed
+2% from Budget into Daily routine per the reviewer's explicit direction (equal-
+highest weighting, not a new total), then let that existing test confirm the
+arithmetic rather than trusting my own addition.
+
+**Landed in the harness as:** `src/content/assessments/assignment-3-adulting.md`'s
+marking `criteria` array (13 criteria, still summing to 100) and "## The plan"
+(13 bullets matching them 1:1); verified by the pre-existing
+`spec/assessment-scheme.test.ts` weight-sum check plus updated component-count
+assertions in the same file and `spec/treatment.test.ts`.
+
+**Commit:** [`c8b5280`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/c8b5280)
+
 **How I knew it was right:** The contradiction was demonstrated against my own
 draft before I chose, not argued in the abstract. And the rule is no longer
 something an agent can quietly drift from: it is asserted over rendered HTML,
