@@ -39,6 +39,7 @@ export const collections = {
         week: weekSchema,
         date: z.coerce.date(),
         teachers: teacherRefs.optional(),
+        caseStudies: z.array(z.string().trim().min(1)).default([]),
       })
       .loose(),
   }),
@@ -74,6 +75,7 @@ export const collections = {
         citations: z
           .array(z.object({ text: z.string(), note: z.string().optional() }))
           .default([]),
+        caseStudies: z.array(z.string().trim().min(1)).default([]),
       })
       .loose(),
   }),

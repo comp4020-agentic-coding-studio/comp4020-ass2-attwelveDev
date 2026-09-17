@@ -33,4 +33,15 @@ describe("course data integrity", () => {
       expect(date <= api.course.endDate, `${node.id} falls after teaching ends`).toBe(true);
     }
   });
+
+  it("accepts an optional caseStudies array on lectures and sessions", () => {
+    const nodes = api.nodes.filter((node) => ["lectures", "sessions"].includes(node.type));
+    for (const node of nodes) {
+      const value = node.meta?.caseStudies;
+      expect(
+        value === undefined || Array.isArray(value),
+        `${node.id}'s caseStudies is neither absent nor an array`,
+      ).toBe(true);
+    }
+  });
 });
