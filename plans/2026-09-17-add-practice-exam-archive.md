@@ -1051,19 +1051,19 @@ rendered markdown, not a station-by-station component tree).
 
 ## 6. Feature-level Definition of Done
 
-- [ ] Every task in §5 complete and its tests passing
-- [ ] `pnpm test` passes
-- [ ] `pnpm check` passes
+- [x] Every task in §5 complete and its tests passing
+- [x] `pnpm test` passes
+- [x] `pnpm check` passes
 - [ ] Manually verified: `/assessments/final-exam/practice-exam/` loaded at
   1920×1080 and 390×844 — golden path (read a question, open its
   `<details>`, read model/poor solutions and rubric) and edge case (all
   five `<details>` elements open independently without layout breakage)
-  both exercised
-- [ ] Every requirement in §2 is covered — see §7
-- [ ] Every task with a `Human review:` line (Tasks 1–6) has been shown to
+  both exercised — **user's own check, per standing preference**
+- [x] Every requirement in §2 is covered — see §7
+- [x] Every task with a `Human review:` line (Tasks 1–6) has been shown to
   the user and explicitly accepted — not inferred, not just its acceptance
   criteria passing
-- [ ] No item remains in §8
+- [x] No item remains in §8
 
 ## 7. Requirements coverage check
 
