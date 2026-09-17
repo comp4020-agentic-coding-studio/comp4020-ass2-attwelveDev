@@ -7,6 +7,7 @@ week: 7
 date: 2027-04-22
 teachers:
   - noor-kalantari
+caseStudies: ["reading-the-room"]
 spec:
   - three stalled exchanges are each given a working follow-up line
   - one follow-up is tested in a real conversation before the next Lab
