@@ -7,6 +7,7 @@ week: 8
 date: 2027-04-29
 teachers:
   - noor-kalantari
+caseStudies: ["incident-report"]
 spec:
   - an incident report names a specific friendship mix-up
   - the report identifies an underlying cause rather than assigning blame to a person
