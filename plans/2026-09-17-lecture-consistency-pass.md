@@ -43,7 +43,20 @@ Summarized here for the task breakdown:
 7. Week 1 — add real desk/clutter content (grounds Week 12's callback).
 8. Week 2 — add laundry colour-separation; elaborate skincare into a real
    "how" key point.
-9. Weeks 2/3/5/6/8/9/11 — add a procedural "how" to lecture body + deck.
+9. **(Expanded 2026-09-17, mid-execution, per user feedback on Week 2's
+   review):** every named concept taught in every lecture (all 12 weeks)
+   gets its own procedural "how" in both lecture body and deck — not just
+   one gap closed per week. The standing CLAUDE.md rule already said "a
+   how for every concept it teaches"; this corrects Task 9 as originally
+   scoped (one identified gap per week, Weeks 1/4/7/10/12 exempted) to
+   actually match that rule. Concretely: for every week's Definitions/Body
+   concepts, walk each one and add a concrete how wherever it's missing —
+   Week 1 needs none beyond what Task 4 already added (Week 1 is
+   diagnostic-only; it doesn't teach hygiene/dress/etc. as concepts, only
+   names them), Week 2 additionally needs shower, deodorant, and haircut
+   hows (laundry and skincare already covered by the original Task 7),
+   and Weeks 3/4/5/6/7/8/9/10/11/12 each need a full per-concept audit
+   during their own task rather than the single gap originally named.
 10. Week 3 — add *Job interview* definition; soften the hook; add a
     weather-mismatch example; bring worked occasion-reading examples into
     the lecture.
@@ -82,9 +95,10 @@ visual changes verified with `agent-browser` at 1920×1080 and 390×844.
   manually, not part of this plan.
 - A full semantic check of every concept/terminology forward-reference —
   the mechanical check only covers named case-study identifiers.
-- Rewriting decks that already contain an adequate "how" (Weeks 1, 4, 7,
-  10, 12 are exempt from requirement 9 — 1 and 4 are covered by their own
-  requirements, 7/10/12 were audited and found adequate/exempt).
+- Rewriting decks that already contain an adequate "how" for a concept
+  they've already got one for — requirement 9 (as expanded) still means
+  auditing every concept per week, but a concept that already has a real
+  procedure is left alone.
 - A per-prompt due-date field for the Week 12 reflection — the existing
   recurring "due every Tuesday" mechanism already covers it.
 
@@ -454,16 +468,19 @@ like, per this repo's own `CLAUDE.md` register rules and `spec/voice.test.ts`.
   the same file, so should be done in the same sitting to avoid merge
   conflicts).
 
-### Task 7: Week 2 — colour separation + a real skincare "how"
+### Task 7: Week 2 — colour separation + a real "how" for every concept
 
-- **Description:** `week-02.mdx`/`week-02.deck.mdx`'s laundry content has
-  no colour-separation guidance (needed to ground Assignment 3's "Laundry:
-  frequency and colour separation" rubric line, and Task 22 will add the
-  matching Assignment 3 plan bullet). Skincare currently exists only as a
-  Definitions entry (`week-02.deck.mdx:44`, mirrored in the lecture) with
-  no procedure — elaborate it into a real "how" key point (cleanse,
-  moisturise, SPF, frequency), satisfying both requirement 9's how-gap and
-  Assignment 3's "Skincare" marking-table line.
+- **Description (expanded 2026-09-17 per user feedback):** `week-02.mdx`/
+  `week-02.deck.mdx`'s laundry content has no colour-separation guidance
+  (needed to ground Assignment 3's "Laundry: frequency and colour
+  separation" rubric line, and Task 22 will add the matching Assignment 3
+  plan bullet). Skincare currently exists only as a Definitions entry
+  (`week-02.deck.mdx:44`, mirrored in the lecture) with no procedure —
+  elaborate it into a real "how" key point (cleanse, moisturise, SPF,
+  frequency). Per the expanded requirement 9, the same treatment now
+  applies to the week's other three concepts that were originally left
+  as bare definitions with no procedure: shower, deodorant, and haircut
+  (Definitions entries only, `week-02.mdx:36-53`/`week-02.deck.mdx:43-46`).
 - **Files touched:** `src/content/lectures/week-02.mdx`,
   `src/decks/week-02.deck.mdx`.
 - **Tests first (red):** None automated beyond re-running
@@ -477,14 +494,22 @@ like, per this repo's own `CLAUDE.md` register rules and `spec/voice.test.ts`.
   - Add a new key point (lecture body + deck) walking through an actual
     skincare routine at a level assuming zero prior familiarity: order of
     steps (cleanse, moisturise, SPF), and roughly how often each is done.
+  - Add concrete hows for shower (frequency, when in the day, tied to an
+    existing routine anchor), deodorant (applied to dry skin right after
+    showering, before getting dressed), and haircut (booking the next cut
+    on the day of the last one, or a standing calendar reminder, rather
+    than waiting until it feels overdue) — in both lecture body and deck,
+    split across additional deck slides as needed to avoid the overflow
+    found in Week 1's review.
 - **Refactor:** None expected.
 - **Acceptance criteria:**
   - `spec/weekly-structure.test.ts` and `spec/voice.test.ts` still pass.
-  - Colour separation is mentioned in the laundry content; a skincare
-    procedure (not just a definition) exists in both lecture and deck.
+  - Colour separation is mentioned in the laundry content; a concrete
+    procedure (not just a definition) exists for shower, deodorant,
+    laundry, haircut, and skincare, in both lecture and deck.
 - **Human review:** Render `lectures/week-02` and `decks/week-02`. Pass =
-  both additions are procedural (a student with zero skincare/laundry
-  routine could follow them) and in-voice.
+  every procedure is followable by someone with zero existing routine,
+  no deck slide overflows, and everything reads in-voice.
 - **Depends on:** None.
 
 ### Task 8: Week 2 — replace the bare Assignment 1 rubric pointer
