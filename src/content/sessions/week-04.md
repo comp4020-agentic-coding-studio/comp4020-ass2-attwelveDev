@@ -7,6 +7,7 @@ week: 4
 date: 2027-03-18
 teachers:
   - petra-lindqvist
+caseStudies: ["jordans-week"]
 spec:
   - a sleep schedule states a target bedtime and a fallback for a late night
   - an exercise plan names a frequency and a specific activity, not "more"
