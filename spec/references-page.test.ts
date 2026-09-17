@@ -16,11 +16,12 @@ describe("references — course-wide bibliography page", () => {
     const list = html.match(/<ul class="[^"]*\bcourse-references\b[^"]*">([\s\S]*?)<\/ul>/);
     expect(list, "no course-references list found").not.toBeNull();
     const items = [...(list?.[1] ?? "").matchAll(/<li>/g)];
-    // 14 citations authored across the 12 lectures once the migration
-    // cluster (plan Tasks 5-16) completes, deduped to 12 uniques: Lally et
-    // al. (2010) is cited in both Week 1 and Week 12, and Kruger et al.
-    // (2005) is cited in both Week 9 and Week 11.
-    expect(items.length).toBe(12);
+    // 15 citations authored across the 12 lectures once the migration
+    // cluster (plan Tasks 5-16) completes, deduped to 13 uniques: Lally et
+    // al. (2010) is cited in both Week 1 and Week 12, Kruger et al. (2005)
+    // is cited in both Week 9 and Week 11, and Gollwitzer (1999) is a new,
+    // non-duplicated citation added in Week 1 (plan Task 4).
+    expect(items.length).toBe(13);
   });
 
   it("marks Warren & Warren Tyagi (2005) as a trade book, not a peer-reviewed paper", () => {
