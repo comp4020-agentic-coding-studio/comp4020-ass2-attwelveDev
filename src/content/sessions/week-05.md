@@ -45,7 +45,8 @@ small.
 observations into a short "field guide to outside" — three tips for
 someone who has never been outdoors before.
 
-**Plan your outing (pairs).** Plan one outing beyond your usual radius: a
+**Plan your outing (pairs).** Plan one outing beyond your usual 400-metre
+radius: a
 stated activity, a stated date and time, and at least two non-CS people
 invited to attend. Show the plan to your pair; they check the date,
 time, and activity are all specific, and that the invited people are
