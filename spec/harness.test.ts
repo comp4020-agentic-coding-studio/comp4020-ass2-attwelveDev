@@ -34,4 +34,13 @@ describe("harness", () => {
     expect(claudeMd).toMatch(/12:00/);
     expect(claudeMd).toMatch(/UTC/);
   });
+
+  it("requires case studies to be introduced in the lecture first", () => {
+    expect(claudeMd).toMatch(/introduced in a lecture/i);
+    expect(claudeMd).toMatch(/never introduce it first/i);
+  });
+
+  it("requires a how, not just a what and why", () => {
+    expect(claudeMd).toMatch(/how.{0,20}not just.{0,20}what.{0,10}why/is);
+  });
 });

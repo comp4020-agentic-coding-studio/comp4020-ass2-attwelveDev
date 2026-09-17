@@ -85,3 +85,22 @@ label at all. Use `convenor` or `tutor`; put a person's specialism in
 `src/lib/dates.ts` formats dates in **UTC**, so a deadline earlier than
 roughly 10:00 local renders one calendar day early. Every assessment's `due`
 time must be `12:00` local — verified correct at both `+11:00` and `+10:00`.
+
+## Core rule
+
+Every concept, named example, or case study must be introduced in a lecture
+— its Definitions or Body section, not just the deck — before it appears in
+that week's lab, a later week, or any assessment. A lab may reference or
+extend what the lecture already covered, but never introduce it first. This
+extends to two common failure shapes:
+
+- An assignment mention in a lecture must show the actual relevant rubric
+  content, not a bare pointer.
+- A lecture's handoff to its own lab must describe what the lab actually
+  does and how it builds on the lecture, not treat the lab as a black box.
+
+## How, not just what/why
+
+Every lecture needs a "how" for every concept it teaches — stated briefly
+on the lecture page, and in real procedural detail (zero prior familiarity)
+in the deck.
