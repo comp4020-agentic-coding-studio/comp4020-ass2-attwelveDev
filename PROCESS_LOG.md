@@ -39,6 +39,68 @@ brief's own named failure mode is "twelve weeks that repeat one another", and a
 rule with exceptions is exactly how twelve weeks drift into twelve differently
 shaped pages.
 
+## 2026-09-17 — A prose rule ("introduce before you reference") became a mechanical check, not just a CLAUDE.md line
+
+**Obvious approach:** Add the rule to `CLAUDE.md` — "a case study must be
+introduced in a lecture before a lab or later week references it" — and rely on
+whoever writes each week's content to remember to check the earlier weeks by
+hand.
+
+**What I decided instead, and why:** The same failure mode as the weekly-
+structure rule: a prose-only rule survives exactly as long as no one is tired
+or in a hurry. Labs and assessments in this course already named case studies
+(Jordan's Week, the 600-word message, "reading the room") that no lecture had
+actually taught first — the violation the rule exists to prevent had already
+happened, repeatedly, before the rule was even written. So instead of trusting
+memory, `caseStudies` became a typed frontmatter field on both `lectures` and
+`sessions` (`src/content.config.ts`), and `spec/case-study-provenance.test.ts`
+asserts every lab's tagged case study appears on that week's lecture first —
+`pnpm test` now fails the build if a future week violates the rule, rather
+than relying on a future re-read of `CLAUDE.md`.
+
+**How I knew it was right:** Before writing the real check, I set a temporary
+`caseStudies: ["red-check"]` on a lab with no matching lecture tag and
+confirmed the test failed with the exact message naming the mismatch — then
+removed it. That's the difference between "I wrote a test" and "I wrote a
+test that actually catches the bug it's for."
+
+**Landed in the harness as:** `src/content.config.ts`'s `caseStudies` field,
+`spec/case-study-provenance.test.ts`.
+
+**Commit:** [`00930a1`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/00930a1), [`482cc21`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/482cc21)
+
+## 2026-09-17 — A silent data-loss bug in citation deduplication, found by asking "what happens to X" rather than by a failing test
+
+**Obvious approach:** Ship the citation-note styling fix (Task 22) and move on
+to the references/lectures cross-linking (Task 24) as two independent,
+already-scoped tasks — `pnpm check` was green after each, and nothing in the
+plan flagged a data problem in `references/index.astro`.
+
+**What I decided instead, and why:** When I asked what should happen to a
+citation referenced by more than one lecture, checking the actual rendered
+output showed the references page displayed "Callback to Week 1." for Lally
+et al. (2010) — silently dropping the real "Average 66 days..." note. The
+existing dedup (`new Map(citations.map(c => [c.text, c])).values()`) kept
+whichever lecture's citation object was processed *last*, so a later week's
+throwaway callback note clobbered the original substantive one, with no error
+anywhere: `pnpm check` was green the whole time because nothing asserted what
+the note's *content* should be, only that a `.course-citation-note` span
+existed. Fixing it required restructuring the dedup to carry every
+contributing lecture's own note through (not picking one "winner"), which is
+also exactly what Task 24's back-linking needed anyway.
+
+**How I knew it was right:** Added `spec/references-page.test.ts` assertions
+that the Lally citation's rendered `<li>` contains *both* "66 days" and
+"Callback to Week 1" — a test that would have caught the original bug, and
+now prevents the dedup logic from regressing to last-write-wins again.
+
+**Landed in the harness as:** `src/pages/references/index.astro`'s
+`byText` dedup (keeps every contributing lecture's `{note, lectureId}`, not
+one), `spec/references-page.test.ts`'s "shows every contributing lecture's
+own note" test.
+
+**Commit:** [`9c56911`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/9c56911)
+
 **How I knew it was right:** The contradiction was demonstrated against my own
 draft before I chose, not argued in the abstract. And the rule is no longer
 something an agent can quietly drift from: it is asserted over rendered HTML,
