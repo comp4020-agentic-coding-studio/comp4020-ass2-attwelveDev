@@ -1,0 +1,64 @@
+---
+import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import { siteConfig } from "../../../site-config";
+
+const title = "Practice Paper (Archived) — Final Exam";
+const description =
+  "An archived past sitting of the final exam, with practice questions, sample solutions, and rubrics for each station.";
+---
+
+<ContentLayout title={title} description={description} {...siteConfig}>
+  <h1>Practice Paper</h1>
+  <section class="course-specsheet" aria-label="Paper details">
+    <dl>
+      <dt>Session</dt>
+      <dd>Semester 1, 2026</dd>
+      <dt>Reading time</dt>
+      <dd>10 minutes</dd>
+      <dt>Writing time</dt>
+      <dd>2 hours 50 minutes</dd>
+    </dl>
+  </section>
+  <p>
+    Do not turn this page until instructed to do so. This paper remains the
+    property of the university and must be returned at the end of the
+    examination.
+  </p>
+
+  <h2>Station 1: Hygiene and Health</h2>
+  <p>
+    Attached is one student's logged hygiene, bedtime, and exercise entries
+    for the seven days immediately before the exam, alongside their stated
+    semester intent (shower daily, bedtime 11:00pm, laundry before the pile
+    is visible from the doorway). List every entry that fails its
+    definition, name which definition it fails, and say why.
+  </p>
+
+  <h2>Station 2: Fashion</h2>
+  <p>
+    You are given the following occasion: a cousin's engagement dinner —
+    indoor, seated, in July, described on the invitation as semi-formal.
+    Assemble one outfit from the four provided below, and justify your
+    choice against the definitions of Dress code and Occasion.
+  </p>
+
+  <h2>Station 3: Small Talk</h2>
+  <p>
+    Annotate the transcript below against the small-talk formula (name, one
+    hobby, one recent trip) and the eye-contact research, noting each slot
+    the student fills, each slot they miss, and whether the pause length
+    was appropriate.
+  </p>
+
+  <h2>Station 4: Reading the Room</h2>
+  <p>
+    Diagnose the scenario below against the stall cues, then propose the
+    response the lecture recommends.
+  </p>
+
+  <h2>Station 5: Daily Survival</h2>
+  <p>
+    Using the pantry and budget below, plan one complete meal, cooked in
+    the correct order, and show your reasoning.
+  </p>
+</ContentLayout>
