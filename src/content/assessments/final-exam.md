@@ -68,5 +68,7 @@ by observation as it happens.
 
 Breaking any of the above is academic misconduct.
 
-An archived practice paper from a previous sitting is available for
-revision: [the archived practice paper](/assessments/final-exam/practice-exam/).
+## Practice paper
+
+An archived past paper from the Semester 1, 2026 sitting of this exam is
+available for revision: [the archived practice paper](/assessments/final-exam/practice-exam/).

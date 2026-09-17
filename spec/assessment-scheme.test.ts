@@ -312,4 +312,8 @@ describe("final exam", () => {
     expect(html).not.toMatch(/Model solution/);
     expect(html).not.toMatch(/chicken thighs/);
   });
+
+  it("names the practice paper's sitting explicitly as Semester 1, 2026", () => {
+    expect(html).toMatch(/Semester 1, 2026/);
+  });
 });

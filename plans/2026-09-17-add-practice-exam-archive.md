@@ -48,13 +48,17 @@ seriousness applied to mundane specifics, never a technical metaphor.
    alone. Each station's `<h2>` heading (set in Task 1) also gained its
    mark total in parentheses (e.g. "Station 1: Hygiene and Health (15
    marks)"), per user feedback on Task 2's re-review the same day.
-6. The real final exam page (`final-exam.md`) shall gain exactly one new
-   line linking to the practice paper (Task 7); it shall not gain any
-   scenario, transcript, sample data, or worked-answer content. (Revised
-   2026-09-18, approved by the user during Task 5 review: Task 5 may also
-   reword the single existing sentence describing Station 4 — from
-   "read to you" to "plays out in front of you" — since that is a
-   correction to an existing line, not new scenario/transcript content.)
+6. The real final exam page (`final-exam.md`) shall gain a pointer to the
+   practice paper (Task 7); it shall not gain any scenario, transcript,
+   sample data, or worked-answer content. (Revised twice, 2026-09-18: (a)
+   approved by the user during Task 5 review, Task 5 also reworded the
+   single existing sentence describing Station 4 — from "read to you" to
+   "plays out in front of you" — a correction to an existing line, not
+   new scenario/transcript content; (b) approved by the user after all
+   tasks completed, the Task 7 pointer became its own "## Practice paper"
+   section naming the sitting explicitly as "the Semester 1, 2026
+   sitting," rather than a single bare sentence — still no scenario,
+   transcript, sample data, or worked-answer content added.)
 7. The practice-exam page shall not be added to the `assessments` content
    collection and shall not alter any `EXPECTED_WEIGHTS`/`EXPECTED_COVERAGE`
    entry or the "exactly five assessment items" invariant in
@@ -1044,6 +1048,15 @@ rendered markdown, not a station-by-station component tree).
 - **Human review:** None needed — the added line is a single factual
   pointer sentence, mechanically checkable via the link-presence and
   content-absence assertions above.
+- **Post-completion amendment (2026-09-18, user request):** Widened
+  `final-exam.md`'s scope a second time (see requirement 2.1.6's revision
+  history) — the single pointer sentence became its own `## Practice
+  paper` heading, and the sentence now explicitly names the sitting as
+  "the Semester 1, 2026 sitting," matching the practice page's own
+  "Semester 1, 2026" dating. Added
+  `it("names the practice paper's sitting explicitly as Semester 1,
+  2026", ...)` to `spec/assessment-scheme.test.ts`'s `describe("final
+  exam", ...)` block. `pnpm check` re-verified green (362 tests).
 - **Depends on:** Task 1 (the link target must exist for the href to be
   meaningful, though the test only checks the `href` string, not that the
   target 200s — build-time link checking, if any, is out of scope for this
