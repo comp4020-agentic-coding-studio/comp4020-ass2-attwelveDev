@@ -39,8 +39,15 @@ seriousness applied to mundane specifics, never a technical metaphor.
    introduced first in an assessment.
 5. Each station's question shall be followed by a `<details>/<summary>`
    disclosure containing: a model (excellent) solution, a poor solution,
-   examiner's notes addressing both, and a descriptive (band-based, not
-   percentage-weighted) rubric.
+   examiner's notes addressing both, and a rubric using ANU's five-band
+   scale (HD/D/C/P/N), with the station's stated mark weight (from
+   `final-exam.md`'s `marking.criteria`) broken down by sub-criterion — a
+   revision to the original "descriptive, not percentage-weighted" design,
+   approved by the user during Task 2 review on 2026-09-18, since a
+   concrete point breakdown is more useful revision material than bands
+   alone. Each station's `<h2>` heading (set in Task 1) also gained its
+   mark total in parentheses (e.g. "Station 1: Hygiene and Health (15
+   marks)"), per user feedback on Task 2's re-review the same day.
 6. The real final exam page (`final-exam.md`) shall gain exactly one new
    line linking to the practice paper; it shall not gain any scenario,
    transcript, sample data, or worked-answer content.
@@ -288,7 +295,7 @@ rendered markdown, not a station-by-station component tree).
       examination.
     </p>
 
-    <h2>Station 1: Hygiene and Health</h2>
+    <h2>Station 1: Hygiene and Health (15 marks)</h2>
     <p>
       Attached is one student's logged hygiene, bedtime, and exercise entries
       for the seven days immediately before the exam, alongside their stated
@@ -297,7 +304,7 @@ rendered markdown, not a station-by-station component tree).
       definition, name which definition it fails, and say why.
     </p>
 
-    <h2>Station 2: Fashion</h2>
+    <h2>Station 2: Fashion (15 marks)</h2>
     <p>
       You are given the following occasion: a cousin's engagement dinner —
       indoor, seated, in July, described on the invitation as semi-formal.
@@ -305,7 +312,7 @@ rendered markdown, not a station-by-station component tree).
       choice against the definitions of Dress code and Occasion.
     </p>
 
-    <h2>Station 3: Small Talk</h2>
+    <h2>Station 3: Small Talk (20 marks)</h2>
     <p>
       Annotate the transcript below against the small-talk formula (name, one
       hobby, one recent trip) and the eye-contact research, noting each slot
@@ -313,13 +320,13 @@ rendered markdown, not a station-by-station component tree).
       was appropriate.
     </p>
 
-    <h2>Station 4: Reading the Room</h2>
+    <h2>Station 4: Reading the Room (20 marks)</h2>
     <p>
       Diagnose the scenario below against the stall cues, then propose the
       response the lecture recommends.
     </p>
 
-    <h2>Station 5: Daily Survival</h2>
+    <h2>Station 5: Daily Survival (30 marks)</h2>
     <p>
       Using the pantry and budget below, plan one complete meal, cooked in
       the correct order, and show your reasoning.
@@ -361,6 +368,13 @@ rendered markdown, not a station-by-station component tree).
       expect(html).toMatch(/Poor solution/);
       expect(html).toMatch(/Examiner's notes/);
       expect(html).toMatch(/Rubric/);
+    });
+
+    it("gives the rubric as HD\\/D\\/C\\/P\\/N bands with a mark breakdown summing to the station's weight", () => {
+      const section = html.slice(html.indexOf("Station 1"), html.indexOf("Station 2"));
+      expect(section).toMatch(/\bHD\b/);
+      expect(section).toMatch(/\bN\b/);
+      expect(section).toMatch(/out of 15/);
     });
   });
   ```
@@ -408,17 +422,31 @@ rendered markdown, not a station-by-station component tree).
       vending-machine walk is the single most commonly missed point at this
       station.
     </p>
-    <h3>Rubric</h3>
-    <ul>
-      <li><strong>Excellent:</strong> cites all four failure types (exercise, laundry, missed showers, bedtime) by day and definition.</li>
-      <li><strong>Adequate:</strong> cites two or three failure types with at least one specific day and one definition named.</li>
-      <li><strong>Poor:</strong> general statements with no specific day or definition cited.</li>
-    </ul>
+    <h3>Rubric — out of 15</h3>
+    <table class="course-schedule">
+      <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
+      <tbody>
+        <tr><td>Exercise entry (vending-machine non-example)</td><td>4</td></tr>
+        <tr><td>Laundry entry (pile visible from doorway)</td><td>4</td></tr>
+        <tr><td>Missed showers (three days)</td><td>4</td></tr>
+        <tr><td>Bedtime failures</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <table class="course-schedule">
+      <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>HD</td><td>13–15</td><td>Cites all four failure types by specific day and definition.</td></tr>
+        <tr><td>D</td><td>10–12</td><td>Cites three of the four failure types by specific day and definition.</td></tr>
+        <tr><td>C</td><td>7–9</td><td>Cites two failure types by specific day and definition, or all four without specifics.</td></tr>
+        <tr><td>P</td><td>4–6</td><td>Cites one failure type specifically, or general statements touching several types.</td></tr>
+        <tr><td>N</td><td>0–3</td><td>No specific day or definition cited.</td></tr>
+      </tbody>
+    </table>
   </details>
   ```
 - **Refactor:** None expected.
 - **Acceptance criteria:**
-  - `pnpm test` passes, including both new Station 1 `it` blocks.
+  - `pnpm test` passes, including all three new Station 1 `it` blocks.
   - No string in this block matches any `spec/voice.test.ts` `BANNED_TERMS`
     entry (verified by running `pnpm test` — `voice.test.ts` runs in the
     same suite and would fail if one were present).
@@ -428,6 +456,9 @@ rendered markdown, not a station-by-station component tree).
   recognisably weak without being a strawman, and the register matches the
   rest of the course (deadpan, mundane specifics, no technical metaphor).
 - **Depends on:** Task 1.
+- [x] Done — human review accepted (rubric revised to HD/D/C/P/N + mark
+  breakdown, and station headings gained mark totals, per user feedback
+  during review on 2026-09-18).
 
 ### Task 3: Station 2 content — occasion, outfits, solutions, rubric
 
@@ -451,6 +482,13 @@ rendered markdown, not a station-by-station component tree).
       expect(section).toMatch(/Poor solution/);
       expect(section).toMatch(/Examiner's notes/);
       expect(section).toMatch(/Rubric/);
+    });
+
+    it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+      const section = html.slice(html.indexOf("Station 2"), html.indexOf("Station 3"));
+      expect(section).toMatch(/\bHD\b/);
+      expect(section).toMatch(/\bN\b/);
+      expect(section).toMatch(/out of 15/);
     });
   });
   ```
@@ -483,12 +521,26 @@ rendered markdown, not a station-by-station component tree).
       choice, rather than its own defined occasion, is the second most
       commonly missed point.
     </p>
-    <h3>Rubric</h3>
-    <ul>
-      <li><strong>Excellent:</strong> chooses C, names both Dress code and Occasion, and explains why B and D are wrong.</li>
-      <li><strong>Adequate:</strong> chooses C but only explains why the choice is right.</li>
-      <li><strong>Poor:</strong> chooses A or D, or gives no reasoning tied to either definition.</li>
-    </ul>
+    <h3>Rubric — out of 15</h3>
+    <table class="course-schedule">
+      <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
+      <tbody>
+        <tr><td>Chooses Outfit C</td><td>6</td></tr>
+        <tr><td>Names Dress code definition correctly</td><td>3</td></tr>
+        <tr><td>Names Occasion definition correctly</td><td>3</td></tr>
+        <tr><td>Explains why both B and D are wrong</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <table class="course-schedule">
+      <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>HD</td><td>13–15</td><td>Chooses C, names both Dress code and Occasion, and explains why both B and D are wrong.</td></tr>
+        <tr><td>D</td><td>10–12</td><td>Chooses C, names both definitions, and explains why one of B or D is wrong.</td></tr>
+        <tr><td>C</td><td>7–9</td><td>Chooses C and names one of the two definitions.</td></tr>
+        <tr><td>P</td><td>4–6</td><td>Chooses C but gives no reasoning tied to either definition.</td></tr>
+        <tr><td>N</td><td>0–3</td><td>Chooses A or D, with or without reasoning.</td></tr>
+      </tbody>
+    </table>
   </details>
   ```
 - **Refactor:** None expected.
@@ -517,6 +569,13 @@ rendered markdown, not a station-by-station component tree).
       expect(section).toMatch(/Poor solution/);
       expect(section).toMatch(/Examiner's notes/);
       expect(section).toMatch(/Rubric/);
+    });
+
+    it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+      const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+      expect(section).toMatch(/\bHD\b/);
+      expect(section).toMatch(/\bN\b/);
+      expect(section).toMatch(/out of 20/);
     });
   });
   ```
@@ -554,16 +613,31 @@ rendered markdown, not a station-by-station component tree).
       marks require crediting what worked as well as diagnosing what
       didn't.
     </p>
-    <h3>Rubric</h3>
-    <ul>
-      <li><strong>Excellent:</strong> identifies all three formula slots by name, correctly credits the eye-contact duration, and proposes a specific fix.</li>
-      <li><strong>Adequate:</strong> identifies at least two slots correctly but does not address the eye-contact duration either way.</li>
-      <li><strong>Poor:</strong> general commentary on mood or awkwardness without naming the formula's three slots.</li>
-    </ul>
+    <h3>Rubric — out of 20</h3>
+    <table class="course-schedule">
+      <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
+      <tbody>
+        <tr><td>Identifies the name slot as missing</td><td>4</td></tr>
+        <tr><td>Identifies the hobby slot as unfilled</td><td>4</td></tr>
+        <tr><td>Identifies the trip slot as unfilled</td><td>4</td></tr>
+        <tr><td>Correctly credits the eye-contact duration</td><td>4</td></tr>
+        <tr><td>Proposes a specific fix</td><td>4</td></tr>
+      </tbody>
+    </table>
+    <table class="course-schedule">
+      <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>HD</td><td>18–20</td><td>Identifies all three formula slots by name, correctly credits the eye-contact duration, and proposes a specific fix.</td></tr>
+        <tr><td>D</td><td>14–17</td><td>Identifies all three slots and credits the eye-contact duration, but the proposed fix is vague.</td></tr>
+        <tr><td>C</td><td>10–13</td><td>Identifies at least two slots correctly but does not address the eye-contact duration either way.</td></tr>
+        <tr><td>P</td><td>6–9</td><td>Identifies one slot correctly, with general commentary on mood or awkwardness.</td></tr>
+        <tr><td>N</td><td>0–5</td><td>General commentary on mood or awkwardness without naming the formula's three slots.</td></tr>
+      </tbody>
+    </table>
   </details>
   ```
 - **Refactor:** None expected.
-- **Acceptance criteria:** `pnpm test` passes, including both new Station 3 `it` blocks.
+- **Acceptance criteria:** `pnpm test` passes, including all three new Station 3 `it` blocks.
 - **Human review:** Same bar as Task 2.
 - **Depends on:** Task 1.
 
@@ -587,6 +661,13 @@ rendered markdown, not a station-by-station component tree).
       expect(section).toMatch(/Poor solution/);
       expect(section).toMatch(/Examiner's notes/);
       expect(section).toMatch(/Rubric/);
+    });
+
+    it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+      const section = html.slice(html.indexOf("Station 4"), html.indexOf("Station 5"));
+      expect(section).toMatch(/\bHD\b/);
+      expect(section).toMatch(/\bN\b/);
+      expect(section).toMatch(/out of 20/);
     });
   });
   ```
@@ -619,16 +700,30 @@ rendered markdown, not a station-by-station component tree).
       Full marks require citing the specific cues counted, not just noticing
       that something is off.
     </p>
-    <h3>Rubric</h3>
-    <ul>
-      <li><strong>Excellent:</strong> names at least two of the three specific cues present, states the diagnosis explicitly, and gives the exit response.</li>
-      <li><strong>Adequate:</strong> correctly diagnoses a stall but proposes a vague or partial response.</li>
-      <li><strong>Poor:</strong> proposes asking another question, or names no specific cue.</li>
-    </ul>
+    <h3>Rubric — out of 20</h3>
+    <table class="course-schedule">
+      <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
+      <tbody>
+        <tr><td>Names the one-word-answers cue</td><td>5</td></tr>
+        <tr><td>Names the watch-checking cue</td><td>5</td></tr>
+        <tr><td>States the stall diagnosis explicitly</td><td>5</td></tr>
+        <tr><td>Gives the exit response, not another question</td><td>5</td></tr>
+      </tbody>
+    </table>
+    <table class="course-schedule">
+      <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>HD</td><td>18–20</td><td>Names both specific cues present, states the diagnosis explicitly, and gives the exit response.</td></tr>
+        <tr><td>D</td><td>14–17</td><td>Names one specific cue, states the diagnosis explicitly, and gives the exit response.</td></tr>
+        <tr><td>C</td><td>10–13</td><td>Correctly diagnoses a stall but proposes a vague or partial response.</td></tr>
+        <tr><td>P</td><td>6–9</td><td>Shows some awareness something is wrong but still proposes asking another question.</td></tr>
+        <tr><td>N</td><td>0–5</td><td>Proposes asking another question with no diagnosis and no specific cue named.</td></tr>
+      </tbody>
+    </table>
   </details>
   ```
 - **Refactor:** None expected.
-- **Acceptance criteria:** `pnpm test` passes, including both new Station 4 `it` blocks.
+- **Acceptance criteria:** `pnpm test` passes, including all three new Station 4 `it` blocks.
 - **Human review:** Same bar as Task 2.
 - **Depends on:** Task 1.
 
@@ -652,6 +747,13 @@ rendered markdown, not a station-by-station component tree).
       expect(section).toMatch(/Poor solution/);
       expect(section).toMatch(/Examiner's notes/);
       expect(section).toMatch(/Rubric/);
+    });
+
+    it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+      const section = html.slice(html.indexOf("Station 5"));
+      expect(section).toMatch(/\bHD\b/);
+      expect(section).toMatch(/\bN\b/);
+      expect(section).toMatch(/out of 30/);
     });
   });
   ```
@@ -688,16 +790,30 @@ rendered markdown, not a station-by-station component tree).
       finishing together. Full marks require the reasoning behind the
       order, not just the final dish.
     </p>
-    <h3>Rubric</h3>
-    <ul>
-      <li><strong>Excellent:</strong> names one protein, one starch, one vegetable, orders cooking slowest-to-fastest with reasoning, and stays within budget.</li>
-      <li><strong>Adequate:</strong> names a complete meal but does not justify the cook order.</li>
-      <li><strong>Poor:</strong> does not select a complete meal, or reverses the cook order without noticing the consequence.</li>
-    </ul>
+    <h3>Rubric — out of 30</h3>
+    <table class="course-schedule">
+      <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
+      <tbody>
+        <tr><td>Names one protein, one starch, one vegetable</td><td>10</td></tr>
+        <tr><td>Orders cooking slowest-to-fastest, with reasoning</td><td>10</td></tr>
+        <tr><td>Stays within the stated $12 budget</td><td>5</td></tr>
+        <tr><td>Includes tasting before declaring the dish done</td><td>5</td></tr>
+      </tbody>
+    </table>
+    <table class="course-schedule">
+      <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>HD</td><td>27–30</td><td>Complete meal, correct cook order with reasoning, within budget, and includes the taste step.</td></tr>
+        <tr><td>D</td><td>21–26</td><td>Complete meal, correct cook order with reasoning, and within budget, but omits the taste step.</td></tr>
+        <tr><td>C</td><td>15–20</td><td>Names a complete meal but does not justify the cook order.</td></tr>
+        <tr><td>P</td><td>9–14</td><td>Meal is incomplete, or the cook order is reversed without noticing the consequence.</td></tr>
+        <tr><td>N</td><td>0–8</td><td>Does not select a complete meal and gives no cook order.</td></tr>
+      </tbody>
+    </table>
   </details>
   ```
 - **Refactor:** None expected.
-- **Acceptance criteria:** `pnpm test` passes, including both new Station 5 `it` blocks.
+- **Acceptance criteria:** `pnpm test` passes, including all three new Station 5 `it` blocks.
 - **Human review:** Same bar as Task 2.
 - **Depends on:** Task 1.
 

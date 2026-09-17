@@ -25,7 +25,7 @@ const description =
     examination.
   </p>
 
-  <h2>Station 1: Hygiene and Health</h2>
+  <h2>Station 1: Hygiene and Health (15 marks)</h2>
   <p>
     Attached is one student's logged hygiene, bedtime, and exercise entries
     for the seven days immediately before the exam, alongside their stated
@@ -33,8 +33,69 @@ const description =
     is visible from the doorway). List every entry that fails its
     definition, name which definition it fails, and say why.
   </p>
+  <table class="course-schedule">
+    <thead>
+      <tr><th>Day</th><th>Shower</th><th>Actual sleep time</th><th>Laundry</th><th>Exercise logged</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Mon</td><td>Yes, 7:40am</td><td>1:15am</td><td>—</td><td>—</td></tr>
+      <tr><td>Tue</td><td>No</td><td>12:40am</td><td>—</td><td>"walk to vending machine"</td></tr>
+      <tr><td>Wed</td><td>Yes</td><td>11:50pm</td><td>—</td><td>—</td></tr>
+      <tr><td>Thu</td><td>No</td><td>2:05am</td><td>—</td><td>—</td></tr>
+      <tr><td>Fri</td><td>Yes</td><td>11:40pm</td><td>Started, not finished</td><td>—</td></tr>
+      <tr><td>Sat</td><td>Yes</td><td>3:20am</td><td>—</td><td>—</td></tr>
+      <tr><td>Sun</td><td>No</td><td>1:00am</td><td>Pile now visible from the doorway</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <details>
+    <summary>Reveal solutions and rubric</summary>
+    <h3>Model solution</h3>
+    <p>
+      Tuesday's exercise entry fails the definition of Exercise — a walk to
+      the vending machine is the definition's own named non-example, not a
+      substitute for it. Sunday's laundry entry fails the definition of
+      Laundry directly: the pile has become visible from the doorway, which
+      the definition names as the threshold to stay ahead of. Tuesday,
+      Thursday, and Sunday's missing showers fail the "typically once per
+      calendar day" definition on three of seven days. Every night's actual
+      sleep time misses the stated 11:00pm bedtime by at least forty
+      minutes, and by over three hours on Wednesday, Saturday, and Sunday,
+      failing the definition of Bedtime as a specific, named clock time, not
+      merely "later."
+    </p>
+    <h3>Poor solution</h3>
+    <p>This student's hygiene was pretty bad this week and they should go to bed earlier and shower more.</p>
+    <h3>Examiner's notes</h3>
+    <p>
+      Full marks require naming the specific failing entry, the specific
+      definition it fails, and closely paraphrasing that definition's own
+      wording — "pretty bad" and "more" are not definitions. The
+      vending-machine walk is the single most commonly missed point at this
+      station.
+    </p>
+    <h3>Rubric — out of 15</h3>
+    <table class="course-schedule">
+      <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
+      <tbody>
+        <tr><td>Exercise entry (vending-machine non-example)</td><td>4</td></tr>
+        <tr><td>Laundry entry (pile visible from doorway)</td><td>4</td></tr>
+        <tr><td>Missed showers (three days)</td><td>4</td></tr>
+        <tr><td>Bedtime failures</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <table class="course-schedule">
+      <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>HD</td><td>13–15</td><td>Cites all four failure types by specific day and definition.</td></tr>
+        <tr><td>D</td><td>10–12</td><td>Cites three of the four failure types by specific day and definition.</td></tr>
+        <tr><td>C</td><td>7–9</td><td>Cites two failure types by specific day and definition, or all four without specifics.</td></tr>
+        <tr><td>P</td><td>4–6</td><td>Cites one failure type specifically, or general statements touching several types.</td></tr>
+        <tr><td>N</td><td>0–3</td><td>No specific day or definition cited.</td></tr>
+      </tbody>
+    </table>
+  </details>
 
-  <h2>Station 2: Fashion</h2>
+  <h2>Station 2: Fashion (15 marks)</h2>
   <p>
     You are given the following occasion: a cousin's engagement dinner —
     indoor, seated, in July, described on the invitation as semi-formal.
@@ -42,7 +103,7 @@ const description =
     choice against the definitions of Dress code and Occasion.
   </p>
 
-  <h2>Station 3: Small Talk</h2>
+  <h2>Station 3: Small Talk (20 marks)</h2>
   <p>
     Annotate the transcript below against the small-talk formula (name, one
     hobby, one recent trip) and the eye-contact research, noting each slot
@@ -50,13 +111,13 @@ const description =
     was appropriate.
   </p>
 
-  <h2>Station 4: Reading the Room</h2>
+  <h2>Station 4: Reading the Room (20 marks)</h2>
   <p>
     Diagnose the scenario below against the stall cues, then propose the
     response the lecture recommends.
   </p>
 
-  <h2>Station 5: Daily Survival</h2>
+  <h2>Station 5: Daily Survival (30 marks)</h2>
   <p>
     Using the pantry and budget below, plan one complete meal, cooked in
     the correct order, and show your reasoning.
