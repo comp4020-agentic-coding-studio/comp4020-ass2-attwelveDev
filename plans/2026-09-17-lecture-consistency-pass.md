@@ -1111,15 +1111,17 @@ like, per this repo's own `CLAUDE.md` register rules and `spec/voice.test.ts`.
 
 ## 6. Feature-level Definition of Done
 
-- [ ] Every task in §5 complete and its tests passing
-- [ ] `pnpm test` passes
-- [ ] `pnpm check` passes
-- [ ] Manually verified with `agent-browser` at `1920 1080` and `390 844`
-      for every task carrying a Human review line
-- [ ] Every requirement in §2.1 is covered — see §7
-- [ ] Every task with a `Human review:` line has been shown to the user and
+- [x] Every task in §5 complete and its tests passing
+- [x] `pnpm test` passes
+- [x] `pnpm check` passes
+- [x] Manually verified in the browser at `1920x1080` and `390x844` for
+      every task carrying a Human review line (the user reviewed pages
+      themselves via the dev server rather than via `agent-browser`,
+      per their explicit preference stated mid-execution)
+- [x] Every requirement in §2.1 is covered — see §7
+- [x] Every task with a `Human review:` line has been shown to the user and
       explicitly accepted
-- [ ] No item remains in §8
+- [x] No item remains in §8
 
 ## 7. Requirements coverage check
 
