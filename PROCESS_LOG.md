@@ -176,6 +176,41 @@ assertions in the same file and `spec/treatment.test.ts`.
 
 **Commit:** [`c8b5280`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/c8b5280)
 
+## 2026-09-17 — The same stale rule was duplicated into a component, one layer down from where the task said to look
+
+**Obvious approach:** Task 19 named exactly two files — `week-12.mdx` and
+`week-12.deck.mdx` — as the places describing the reflection drop rule that
+needed to change. Fix the prose in those two files, confirm `pnpm check` is
+green, call the task done.
+
+**What I decided instead, and why:** After the content fix, the reviewer
+pointed out the Week 12 lecture page still showed "(ungraded)" and Week 11
+still showed "(last graded)" next to the Reflection-due date — text that
+wasn't in either `.mdx`/`.deck.mdx` file I'd just edited. Rather than assume
+this was some other content file the task missed, I grepped the actual
+rendered `dist/` HTML for the literal strings and traced them to a hardcoded
+conditional in `src/components/WeekMeta.astro` (`week === 11 ? " (last
+graded)" : week === 12 ? " (ungraded)" : ""`) — a second, independent
+encoding of the same "week 12 is ungraded" fact the task was already fixing
+in prose. Deleted it rather than patch it to a new week number, since the
+new rule (all twelve prompts graded identically) means the note has no
+correct value to hold anymore.
+
+**How I knew it was right:** Grepping `dist/` for the exact rendered strings,
+not just re-reading source files, is what surfaced this — a source-only
+review would have missed a fact re-derived by a component at build time
+rather than typed by hand. Confirmed fixed by rebuilding and checking the
+same `dist/` output no longer contained either string.
+
+**Landed in the harness as:** removal of the stale `reflectionNote` logic
+from `src/components/WeekMeta.astro` — no new test was added here (a gap:
+nothing in `spec/` currently pins the Reflection-due row's exact text), which
+is why this moment is weaker than the others above and a candidate to skip
+for the final `PROCESS.md` cut unless space allows explaining the pattern
+(the same fact, encoded in more than one place) rather than just the fix.
+
+**Commit:** [`71d8450`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/71d8450)
+
 **How I knew it was right:** The contradiction was demonstrated against my own
 draft before I chose, not argued in the abstract. And the rule is no longer
 something an agent can quietly drift from: it is asserted over rendered HTML,
