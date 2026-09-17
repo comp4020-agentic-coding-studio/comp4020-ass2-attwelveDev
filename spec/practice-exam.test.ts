@@ -65,8 +65,8 @@ describe("practice exam archive", () => {
     expect(html).toMatch(/academic misconduct/i);
   });
 
-  it("issues the answer booklet for written answers without excluding Station 5", () => {
-    expect(html).toMatch(/answer booklet is issued for your written answers/i);
+  it("frames this paper itself as the official answer booklet, since the fill-in tables are inline", () => {
+    expect(html).toMatch(/this booklet is the official exam answer booklet issued for your written answers/i);
     expect(html).not.toMatch(/Stations 1 to 4/i);
     expect(html).not.toMatch(/not written up/i);
   });
