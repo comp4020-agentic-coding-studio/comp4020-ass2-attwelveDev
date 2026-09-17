@@ -45,8 +45,8 @@ Each station runs back to back on exam day, in order:
    edible meal from a provided pantry, on a budget stated at the door,
    within the station's time.
 
-Total examined time is 2 hours 50 minutes, of which the four ten-minute
-stations are worth as much combined as the long cooking station alone —
+Total examined time is 2 hours 50 minutes, of which the four short
+stations combined are worth more than double the long cooking station —
 duration is not difficulty.
 
 ## Exam conditions
