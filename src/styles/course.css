@@ -102,6 +102,13 @@ h6 {
   margin-block: 0 var(--at-spacing-xs);
 }
 
+.course-citation-note {
+  display: block;
+  margin-block-start: var(--at-spacing-xs);
+  color: var(--at-text-secondary);
+  font-size: 0.9em;
+}
+
 .course-specsheet dl {
   display: grid;
   grid-template-columns: max-content 1fr;

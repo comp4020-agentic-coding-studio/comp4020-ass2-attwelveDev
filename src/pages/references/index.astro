@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "astro-theme-university/layouts/BaseLayout.astro";
 import { getPublishedCollection } from "astro-course-university/content";
+import { withBase } from "astro-theme-university/url";
 import { siteConfig } from "../../site-config";
 
 interface Citation {
@@ -8,9 +9,37 @@ interface Citation {
   note?: string;
 }
 
+interface Source {
+  lectureId: string;
+  week: number;
+  note?: string;
+}
+
+interface CitationWithSources {
+  text: string;
+  sources: Source[];
+}
+
 const lectures = await getPublishedCollection("lectures");
-const citations = lectures.flatMap((lecture) => lecture.data.citations as Citation[]);
-const uniqueCitations = [...new Map(citations.map((citation) => [citation.text, citation])).values()];
+const byWeek = [...lectures].sort((a, b) => a.data.week - b.data.week);
+
+// Dedupe by citation text, but keep every contributing lecture's own note
+// (not just the first) — a lecture cited more than once often carries a
+// different note each time (e.g. the original finding in Week 1, "Callback
+// to Week 1" in Week 12), and collapsing to one note silently drops the rest.
+const byText = new Map<string, CitationWithSources>();
+for (const lecture of byWeek) {
+  for (const citation of lecture.data.citations as Citation[]) {
+    const source: Source = { lectureId: lecture.id, week: lecture.data.week, note: citation.note };
+    const existing = byText.get(citation.text);
+    if (existing) {
+      existing.sources.push(source);
+    } else {
+      byText.set(citation.text, { text: citation.text, sources: [source] });
+    }
+  }
+}
+const uniqueCitations = [...byText.values()];
 
 const description =
   "Every citation referenced across the twelve lectures, in one bibliography.";
@@ -24,7 +53,12 @@ const description =
       uniqueCitations.map((citation) => (
         <li>
           {citation.text}
-          {citation.note && <span class="course-citation-note"> {citation.note}</span>}
+          {citation.sources.map((source) => (
+            <span class="course-citation-note">
+              {source.note && <>{source.note} </>}
+              <a href={withBase(`/lectures/${source.lectureId}/`)}>Week {source.week}</a>
+            </span>
+          ))}
         </li>
       ))
     }

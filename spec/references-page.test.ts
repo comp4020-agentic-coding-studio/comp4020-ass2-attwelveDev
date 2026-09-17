@@ -28,4 +28,24 @@ describe("references — course-wide bibliography page", () => {
     const html = renderedPage("references");
     expect(html).toMatch(/trade book/i);
   });
+
+  it("links each citation back to the lecture(s) that introduced it", () => {
+    const html = renderedPage("references");
+    expect(html).toMatch(/href="[^"]*\/lectures\/week-01\/"/);
+    expect(html).toMatch(/href="[^"]*\/lectures\/week-12\/"/);
+  });
+
+  it("shows every contributing lecture's own note for a citation used twice", () => {
+    const html = renderedPage("references");
+    const list = html.match(/<ul class="[^"]*\bcourse-references\b[^"]*">([\s\S]*?)<\/ul>/)?.[1] ?? "";
+    const lallyItem = list.match(/<li>Lally[\s\S]*?<\/li>/)?.[0] ?? "";
+    expect(lallyItem, "Lally et al. citation not found").not.toBe("");
+    expect(lallyItem).toMatch(/66 days/);
+    expect(lallyItem).toMatch(/Callback to Week 1/);
+  });
+
+  it("links the lectures overview page to references", () => {
+    const html = renderedPage("lectures");
+    expect(html).toMatch(/href="[^"]*\/references\/"/);
+  });
 });
