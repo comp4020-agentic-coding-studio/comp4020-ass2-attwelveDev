@@ -26,10 +26,6 @@ const lectureDate = kind === "lecture" ? date : lectures.find((e) => e.data.week
 const reflectionDue = lectureDate
   ? new Date(lectureDate.getTime() + 7 * 24 * 60 * 60 * 1000)
   : undefined;
-// The prompt set in week 11 is the last graded reflection (Weekly
-// Reflections covers weeks 1-11); week 12 sets a twelfth prompt on the same
-// schedule, but it is not graded on its own — see weekly-reflections.md.
-const reflectionNote = week === 11 ? " (last graded)" : week === 12 ? " (ungraded)" : "";
 ---
 
 <section class="course-specsheet" aria-label="Week details">
@@ -49,6 +45,6 @@ const reflectionNote = week === 11 ? " (last graded)" : week === 12 ? " (ungrade
       }
     </dd>
     <dt>Reflection due</dt>
-    <dd>{reflectionDue ? `${formatCourseDate(reflectionDue)}${reflectionNote}` : "—"}</dd>
+    <dd>{reflectionDue ? formatCourseDate(reflectionDue) : "—"}</dd>
   </dl>
 </section>
