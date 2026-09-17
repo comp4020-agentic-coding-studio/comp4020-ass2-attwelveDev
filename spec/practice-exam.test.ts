@@ -26,6 +26,13 @@ describe("practice exam archive", () => {
     expect(html).toMatch(/Stations may be completed in any order/i);
   });
 
+  it("wraps every course-schedule table in its div, so it can scroll on mobile", () => {
+    // A class on <table> directly doesn't reliably scroll on narrow
+    // viewports; the site's own convention (LecturesGrid.astro,
+    // SessionsGrid.astro) wraps a bare <table> in a `.course-schedule` div.
+    expect(html).not.toMatch(/<table class="course-schedule">/);
+  });
+
   it("runs the same five stations as the final exam, in order", () => {
     for (let station = 1; station <= 5; station++) {
       expect(html, `missing Station ${station}`).toMatch(new RegExp(`Station ${station}\\b`));
