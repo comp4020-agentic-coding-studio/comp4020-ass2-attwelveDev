@@ -245,6 +245,27 @@ describe("station 5: daily survival", () => {
     expect(html).toMatch(/\$12/);
   });
 
+  it("prices every pantry item so the budget can actually be checked", () => {
+    const section = html.slice(html.indexOf("<h2>Station 5"));
+    expect(section).toMatch(/Chicken thighs/);
+    expect(section).toMatch(/\$6\.00/);
+    expect(section).toMatch(/Frozen mixed vegetables/i);
+    expect(section).toMatch(/\$3\.00/);
+    expect(section).toMatch(/One dried spice mix/i);
+    expect(section).toMatch(/\$1\.50/);
+  });
+
+  it("shows the model solution's chosen items actually add up within budget", () => {
+    const section = html.slice(html.indexOf("<h2>Station 5"));
+    expect(section).toMatch(/\$11\.00/);
+    expect(section).toMatch(/within the stated \$12 budget/i);
+  });
+
+  it("warns that the full pantry, taken together, exceeds the budget", () => {
+    const section = html.slice(html.indexOf("<h2>Station 5"));
+    expect(section).toMatch(/\$13\.30/);
+  });
+
   it("notes the cooking itself is marked by observation, alongside the written plan", () => {
     const section = html.slice(html.indexOf("<h2>Station 5"));
     expect(section).toMatch(/answer booklet/i);
