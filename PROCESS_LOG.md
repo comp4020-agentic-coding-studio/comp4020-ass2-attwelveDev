@@ -461,3 +461,92 @@ retires the open question the 2026-09-10 `4e0dcf5` entry left, using
 the evidence.
 
 **Commit:** [`9e9b814...b450bcf`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/compare/9e9b814...b450bcf)
+
+## 2026-09-18 — A stated exam budget with nothing to check it against
+
+**Obvious approach:** Leave the $12 budget on Station 5's pantry as flavour
+text — the user's question ("should each item have a price stated?") reads
+like a minor formatting ask, easy to answer with a plain yes and a price
+column.
+
+**What I decided instead, and why:** I answered with a recommendation and
+its tradeoff rather than just implementing what was asked: without per-item
+prices, nothing let a student verify their chosen meal actually fit the
+stated budget, which made the constraint decorative rather than testable —
+exactly the kind of practical-skill gap this course's "adulting" stations
+exist to examine. Once the user agreed, I priced all eleven pantry items,
+reworked the model solution to total its three chosen items ($11.00, under
+budget, with change left over), and added a worked over-budget combination
+($13.30) to the examiner's notes, showing the check has to run as a running
+total, not item by item.
+
+**How I knew it was right:** `spec/practice-exam.test.ts` asserts the
+specific dollar figures ($6.00, $3.00, $11.00, $13.30), so the arithmetic
+itself is pinned, not just the presence of a price column; `pnpm check` was
+green before the change was presented for review, and the user accepted the
+worked example on the first pass.
+
+**Landed in the harness as:** new `it` blocks in `spec/practice-exam.test.ts`
+asserting the priced pantry and the model/over-budget totals.
+
+**Commit:** [`e2ced79`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/e2ced791e6746b6716c6a05d95dedeea1f5da599)
+
+## 2026-09-18 — A table class that doesn't scroll, copied thirteen times
+
+**Obvious approach:** The user flagged that Station 1's two tables overflowed
+at 390px; the obvious fix is to wrap just those two tables in a scroll
+container and move on.
+
+**What I decided instead, and why:** `.course-schedule` was applied directly
+to `<table>` elements throughout the practice exam page, but the site's own
+established pattern (`LecturesGrid.astro`, `SessionsGrid.astro`) puts that
+class on a wrapping `<div>` around a bare `<table>` — `overflow-x: auto` on
+the table element itself doesn't reliably scroll it on narrow viewports.
+That is a structural bug, not a Station-1-specific one, and it was present
+in all thirteen `<table class="course-schedule">` instances on the page
+(rubric tables included), even where it had not yet been visibly reported.
+I rewrapped all thirteen to match the existing convention instead of
+patching only the two that were flagged.
+
+**How I knew it was right:** `pnpm check` stayed green across all 21 spec
+files after the rewrap (no test asserted on the old markup shape), and the
+user accepted the fix at both viewports on the next review round. A later
+pass added a standing regression test asserting no
+`<table class="course-schedule">` remains anywhere on the page, since
+nothing had caught the original bug and a future edit that reintroduces a
+bare classed table would otherwise look identical to the working version in
+a source diff.
+
+**Landed in the harness as:**
+`it("wraps every course-schedule table in its div, so it can scroll on
+mobile", ...)` in `spec/practice-exam.test.ts`.
+
+**Commit:** [`94e5fbb`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/94e5fbb3161466de2363661506a9c11488394285) (the fix), [`1f0cd74`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/1f0cd74cda8873335b6b9ef00a830a7aec7e82bf) (the regression test)
+
+## 2026-09-18 — The same false-red test failure, three times, before it became a documented rule
+
+**Obvious approach:** Fix each `toMatch` assertion as it fails for a
+confusing reason and move on — each individual fix (loosening a phrase into
+two shorter assertions, or inserting `\s+`) took under a minute.
+
+**What I decided instead, and why:** By the third time this session a
+multi-word `toMatch` regex failed against text that read correctly on the
+rendered page, I recognised the pattern: this markdown renderer preserves a
+soft line break inside a paragraph as a literal `\n` in the built HTML
+rather than collapsing it to a space, so any assertion spanning a phrase
+that happened to wrap in the source fails for a reason that has nothing to
+do with content correctness. That is exactly the kind of thing
+`spec/README.md` exists to hand to whoever writes the next
+`spec/*.test.ts` file, so instead of leaving it as three scattered fixes I
+wrote it down once as a documented convention.
+
+**How I knew it was right:** every prior red-for-the-wrong-reason failure
+this session traced back to this same cause once the raw HTML was checked
+byte-for-byte (`python3 -c "... repr(data[i:i+150])"`), confirming the
+mechanism rather than guessing at it; `pnpm check` was unaffected by the
+documentation-only change.
+
+**Landed in the harness as:** a new "A rendering gotcha: soft line breaks"
+section in `spec/README.md`.
+
+**Commit:** [`32949a6`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/32949a6766ca0250a3bfd6c248c1fbcc918ff9e6)
