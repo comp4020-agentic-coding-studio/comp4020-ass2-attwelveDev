@@ -55,3 +55,29 @@ describe("station 1: hygiene and health", () => {
     expect(section).toMatch(/out of 15/);
   });
 });
+
+describe("station 2: fashion", () => {
+  it("gives a rack of individual items to assemble an outfit from", () => {
+    expect(html).toMatch(/rack/i);
+    expect(html).toMatch(/hoodie with a hole/);
+    expect(html).toMatch(/full suit with tie/);
+    expect(html).toMatch(/collared shirt/);
+    expect(html).toMatch(/\bchinos\b/);
+    expect(html).toMatch(/bow-tie graphic/);
+  });
+
+  it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
+    const section = html.slice(html.indexOf("Station 2"), html.indexOf("Station 3"));
+    expect(section).toMatch(/Model solution/);
+    expect(section).toMatch(/Poor solution/);
+    expect(section).toMatch(/Examiner's notes/);
+    expect(section).toMatch(/Rubric/);
+  });
+
+  it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+    const section = html.slice(html.indexOf("Station 2"), html.indexOf("Station 3"));
+    expect(section).toMatch(/\bHD\b/);
+    expect(section).toMatch(/\bN\b/);
+    expect(section).toMatch(/out of 15/);
+  });
+});

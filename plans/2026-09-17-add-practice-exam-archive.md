@@ -460,19 +460,26 @@ rendered markdown, not a station-by-station component tree).
   breakdown, and station headings gained mark totals, per user feedback
   during review on 2026-09-18).
 
-### Task 3: Station 2 content — occasion, outfits, solutions, rubric
+### Task 3: Station 2 content — rack of items, solutions, rubric
 
-- **Description:** Add the four candidate outfits and the `<details>`
-  disclosure to Station 2.
+- **Description:** Add a rack of individual clothing items (not
+  pre-assembled outfits — matching the real final exam's own "from a rack
+  of provided items" mechanic) and the `<details>` disclosure to Station 2.
+  Revised from the original pre-assembled-outfit design per user feedback
+  during Task 3 review on 2026-09-18: the real station requires the
+  student to assemble an outfit themselves, not just pick from finished
+  options.
 - **Files touched:** `src/pages/assessments/final-exam/practice-exam.astro`,
   `spec/practice-exam.test.ts`.
 - **Tests first (red):** Add:
   ```ts
   describe("station 2: fashion", () => {
-    it("gives four concrete candidate outfits", () => {
+    it("gives a rack of individual items to assemble an outfit from", () => {
+      expect(html).toMatch(/rack/i);
       expect(html).toMatch(/hoodie with a hole/);
       expect(html).toMatch(/full suit with tie/);
-      expect(html).toMatch(/collared shirt tucked into chinos/);
+      expect(html).toMatch(/collared shirt/);
+      expect(html).toMatch(/\bchinos\b/);
       expect(html).toMatch(/bow-tie graphic/);
     });
 
@@ -492,62 +499,83 @@ rendered markdown, not a station-by-station component tree).
     });
   });
   ```
-- **Implementation (green):** Insert after Station 2's question paragraph:
+- **Implementation (green):** Reword Station 2's question paragraph to
+  describe a rack rather than pre-built options, then insert the rack list
+  and `<details>` after it:
   ```astro
+  <p>
+    At this station, a rack of clothing items is provided for the
+    following occasion: a cousin's engagement dinner — indoor, seated, in
+    July, described on the invitation as semi-formal. Select the items
+    from the rack below that assemble one complete outfit, and justify
+    your choices against the definitions of Dress code and Occasion.
+  </p>
   <ul class="course-list">
-    <li>A. Gym shorts, a hoodie with a hole in one cuff, and thongs</li>
-    <li>B. A full suit with tie and dress shoes</li>
-    <li>C. A collared shirt tucked into chinos, a belt, and loafers</li>
-    <li>D. A t-shirt printed with a bow-tie graphic, jeans, and sneakers</li>
+    <li>Gym shorts</li>
+    <li>A hoodie with a hole in one cuff</li>
+    <li>Thongs</li>
+    <li>A full suit with tie</li>
+    <li>Dress shoes</li>
+    <li>A collared shirt</li>
+    <li>Chinos</li>
+    <li>A belt</li>
+    <li>Loafers</li>
+    <li>A t-shirt printed with a bow-tie graphic</li>
+    <li>Jeans</li>
+    <li>Sneakers</li>
   </ul>
   <details>
     <summary>Reveal solutions and rubric</summary>
     <h3>Model solution</h3>
     <p>
-      Outfit C. "Semi-formal" is the Dress code, and a seated indoor
-      engagement dinner is the Occasion setting it. Outfit B overshoots: a
-      full suit and tie is reserved for a Job interview, not this occasion.
-      Outfits A and D undershoot: A ignores the dress code outright, and D's
-      printed bow tie is a graphic, not a garment — it does not meet the
+      The collared shirt, chinos, belt, and loafers together meet the
+      "semi-formal" Dress code for this seated indoor Occasion. The full
+      suit and tie overshoots: it is reserved for a Job interview, not this
+      occasion. Gym shorts, the hoodie with a hole, and thongs ignore the
+      dress code outright. The bow-tie-printed t-shirt is a graphic, not a
+      garment — pairing it with jeans and sneakers does not meet the
       expectation it visually references.
     </p>
     <h3>Poor solution</h3>
-    <p>Outfit D, because it has a bow tie on it so it counts as formal.</p>
+    <p>The t-shirt with the bow-tie graphic, jeans, and sneakers, because it has a bow tie on it so it counts as formal.</p>
     <h3>Examiner's notes</h3>
     <p>
-      The printed-bow-tie confusion in Outfit D is the most commonly chosen
-      wrong answer — full marks require noticing it is a graphic, not an
-      actual garment. Treating the suit (Outfit B) as always the safe
-      choice, rather than its own defined occasion, is the second most
-      commonly missed point.
+      The printed-bow-tie confusion is the most commonly chosen wrong
+      answer — full marks require noticing it is a graphic, not an actual
+      garment. Treating the full suit as always the safe choice, rather
+      than its own defined occasion, is the second most commonly missed
+      point.
     </p>
     <h3>Rubric — out of 15</h3>
     <table class="course-schedule">
       <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
       <tbody>
-        <tr><td>Chooses Outfit C</td><td>6</td></tr>
+        <tr><td>Selects the collared shirt, chinos, belt, and loafers</td><td>6</td></tr>
         <tr><td>Names Dress code definition correctly</td><td>3</td></tr>
         <tr><td>Names Occasion definition correctly</td><td>3</td></tr>
-        <tr><td>Explains why both B and D are wrong</td><td>3</td></tr>
+        <tr><td>Explains why both the suit and the bow-tie tee are wrong</td><td>3</td></tr>
       </tbody>
     </table>
     <table class="course-schedule">
       <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>HD</td><td>13–15</td><td>Chooses C, names both Dress code and Occasion, and explains why both B and D are wrong.</td></tr>
-        <tr><td>D</td><td>10–12</td><td>Chooses C, names both definitions, and explains why one of B or D is wrong.</td></tr>
-        <tr><td>C</td><td>7–9</td><td>Chooses C and names one of the two definitions.</td></tr>
-        <tr><td>P</td><td>4–6</td><td>Chooses C but gives no reasoning tied to either definition.</td></tr>
-        <tr><td>N</td><td>0–3</td><td>Chooses A or D, with or without reasoning.</td></tr>
+        <tr><td>HD</td><td>13–15</td><td>Selects all four correct items, names both Dress code and Occasion, and explains why both decoys are wrong.</td></tr>
+        <tr><td>D</td><td>10–12</td><td>Selects all four correct items, names both definitions, and explains only one decoy.</td></tr>
+        <tr><td>C</td><td>7–9</td><td>Selects all four correct items and names one of the two definitions.</td></tr>
+        <tr><td>P</td><td>4–6</td><td>Selects all four correct items but gives no reasoning tied to either definition.</td></tr>
+        <tr><td>N</td><td>0–3</td><td>Selects items that fail the dress code, with or without reasoning.</td></tr>
       </tbody>
     </table>
   </details>
   ```
 - **Refactor:** None expected.
-- **Acceptance criteria:** `pnpm test` passes, including both new Station 2 `it` blocks.
+- **Acceptance criteria:** `pnpm test` passes, including all three new Station 2 `it` blocks.
 - **Human review:** Same bar as Task 2 — read the model/poor pair for
   usefulness and voice.
 - **Depends on:** Task 1.
+- [x] Done — human review accepted (reworked from pre-built outfit options
+  to an individual-item rack, per user feedback during review on
+  2026-09-18).
 
 ### Task 4: Station 3 content — annotated transcript, solutions, rubric
 
