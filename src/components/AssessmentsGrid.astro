@@ -1,6 +1,6 @@
 ---
 import { withBase } from "astro-theme-university/url";
-import { formatCourseDate } from "../lib/dates";
+import { formatCourseDateTime } from "../lib/dates";
 import { sortedAssessments } from "../lib/entry-order";
 
 const visible = await sortedAssessments();
@@ -17,7 +17,8 @@ const visible = await sortedAssessments();
         {assessment.data.weight != null && (
           <p>
             <small>
-              Due {formatCourseDate(assessment.data.due)} · Weight: {assessment.data.weight}%
+              Due {assessment.data.dueDisplay ?? formatCourseDateTime(assessment.data.due)} ·
+              Weight: {assessment.data.weight}%
               {assessment.data.draft && " · Draft"}
             </small>
           </p>
