@@ -22,6 +22,10 @@ describe("practice exam archive", () => {
     expect(html).toMatch(/do not turn this page until instructed/i);
   });
 
+  it("notes stations may be completed in any order", () => {
+    expect(html).toMatch(/Stations may be completed in any order/i);
+  });
+
   it("runs the same five stations as the final exam, in order", () => {
     for (let station = 1; station <= 5; station++) {
       expect(html, `missing Station ${station}`).toMatch(new RegExp(`Station ${station}\\b`));

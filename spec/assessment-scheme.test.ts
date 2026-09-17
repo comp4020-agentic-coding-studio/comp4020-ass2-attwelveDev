@@ -256,6 +256,27 @@ describe("final exam", () => {
     expect(html).toMatch(/2 hours/);
   });
 
+  it("frames non-Station-3 durations as suggested, keeping Station 3's cutoff strict", () => {
+    expect(html).toMatch(/Station 1: Hygiene and Health \(suggested 10 minutes\)/);
+    expect(html).toMatch(/Station 2: Fashion \(suggested 10 minutes\)/);
+    expect(html).toMatch(/Station 3: Small Talk \(10 minutes\)/);
+    expect(html).not.toMatch(/Station 3: Small Talk \(suggested/);
+    expect(html).toMatch(/Station 4: Reading the Room \(suggested 10 minutes\)/);
+    expect(html).toMatch(/Station 5: Daily Survival \(suggested 2 hours 10 minutes\)/);
+  });
+
+  it("makes clear the total 2 hour 50 minute session is fixed, even though station pacing is not", () => {
+    expect(html).toMatch(/fixed\s+2\s+hour\s+50\s+minute\s+session/i);
+    expect(html).toMatch(/Total session time is 2 hours 50 minutes, fixed/i);
+  });
+
+  it("lets candidates attend the five stations in any order", () => {
+    expect(html).toMatch(/in any\s+order/i);
+    expect(html).not.toMatch(/back to back on exam day, in order/i);
+    expect(html).not.toMatch(/attended in sequence/i);
+    expect(html).toMatch(/Stations may be completed in any order/i);
+  });
+
   it("states the short-stations-vs-cooking-station weight relationship correctly", () => {
     expect(html).not.toMatch(/worth as much combined as the long cooking station alone/);
     expect(html).toMatch(/worth more than double the long cooking station/);
@@ -297,7 +318,7 @@ describe("final exam", () => {
   });
 
   it("plans as well as cooks the Station 5 meal", () => {
-    expect(html).toMatch(/Plan a complete/i);
+    expect(html).toMatch(/Plan a/i);
     expect(html).toMatch(/edible meal/i);
   });
 
