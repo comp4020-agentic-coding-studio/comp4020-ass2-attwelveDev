@@ -29,3 +29,13 @@ survive a change of approach, or of stack.
 A green suite here is backpressure, not a mark: your tutor verifies what you
 deployed against the published spec at the crit, and keeping your own tests
 green is how you arrive with no surprises.
+
+## A rendering gotcha: soft line breaks
+
+A single newline inside a Markdown/MDX paragraph (a "soft" line break) is
+preserved as a literal `\n` character in the built HTML — it is not collapsed
+to a space. A `toMatch` regex asserting a multi-word phrase (e.g.
+`/plays out in front of you/i`) fails silently whenever the source happened to
+wrap mid-phrase, even though the words are correct and read as one sentence.
+Prefer `\s+` between words in a multi-word assertion, or split the phrase
+across two shorter `toMatch` calls, rather than assuming single-line output.
