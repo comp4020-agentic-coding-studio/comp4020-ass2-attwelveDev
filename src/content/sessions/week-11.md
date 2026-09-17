@@ -6,6 +6,7 @@ week: 11
 date: 2027-05-20
 teachers:
   - cosima-adjei
+caseStudies: ["bad-email"]
 spec:
   - a professional email is drafted at least twice before being finalised
   - the final draft states the situation in one paragraph or less
