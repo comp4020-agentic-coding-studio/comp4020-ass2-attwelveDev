@@ -577,18 +577,62 @@ rendered markdown, not a station-by-station component tree).
   to an individual-item rack, per user feedback during review on
   2026-09-18).
 
-### Task 4: Station 3 content — annotated transcript, solutions, rubric
+### Task 4: Station 3 content — written dialogue, live-marking rubric
 
-- **Description:** Add the transcript and the `<details>` disclosure to
-  Station 3.
+- **Description:** Reframe Station 3's practice content per four rounds
+  of user feedback on 2026-09-18: (1) the real station is a live,
+  unscripted conversation, so a fixed transcript to annotate misrepresents
+  it; (2) the student's job is to draw the stranger's (examiner's) name,
+  hobby, and trip out of them; (3) the question asks the student to write
+  the actual lines/questions they would use, as rehearsal, rather than
+  describe a strategy in the abstract; (4) the practice-paper-only
+  explanation of how marking works ("the examiner marks by taking notes
+  live during the exchange, not by grading a transcript afterwards") is
+  quoted and explicitly flagged as not appearing on the real exam paper —
+  unlike the leave-early/ten-minute clause, which is quoted verbatim from
+  `final-exam.md` because it genuinely does; (5) the sample failed attempt
+  moves into the `<details>` as the worked "Poor solution", rather than
+  being shown openly before the reveal; (6) most importantly, the
+  disclosed rubric is the real exam's own live-marking scheme — it grades
+  what a candidate does in the actual spoken conversation (drew out the
+  name, followed up on a volunteered detail, held eye contact, finished
+  within the ten-minute window), not how well the student's written
+  rehearsal reads; (7) the practice-paper-only note plus the written-
+  rehearsal instruction are set in a `<blockquote>`, visually separate
+  from the exam-paper-style question prose above it.
 - **Files touched:** `src/pages/assessments/final-exam/practice-exam.astro`,
   `spec/practice-exam.test.ts`.
 - **Tests first (red):** Add:
   ```ts
   describe("station 3: small talk", () => {
-    it("gives a short transcript to annotate", () => {
-      expect(html).toMatch(/mostly stayed local/);
-      expect(html).toMatch(/watching some shows/);
+    it("notes the real station is a live conversation, not a script", () => {
+      expect(html).toMatch(/live conversation/i);
+      expect(html).toMatch(/written practice paper/i);
+    });
+
+    it("carries the exam's own leave-early and ten-minute risk", () => {
+      expect(html).toMatch(/leave early if the conversation stalls past recovery/i);
+      expect(html).toMatch(/ten-minute mark/i);
+    });
+
+    it("quotes the notes-marking mechanic and flags it as absent from the real paper", () => {
+      expect(html).toMatch(
+        /"The examiner marks by taking notes live during the exchange, not by grading a transcript afterwards"/,
+      );
+      expect(html).toMatch(/does not appear on the real exam paper/i);
+    });
+
+    it("asks the student to write actual dialogue, not describe a strategy", () => {
+      expect(html).toMatch(/write the (lines|questions) you would (use|ask)/i);
+    });
+
+    it("keeps the failed example inside the reveal, as the worked Poor solution", () => {
+      const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+      const poorIndex = section.indexOf("Poor solution");
+      const exampleIndex = section.indexOf("weekend at the coast");
+      expect(poorIndex).toBeGreaterThan(-1);
+      expect(exampleIndex).toBeGreaterThan(poorIndex);
+      expect(section).toMatch(/getting into pottery/i);
     });
 
     it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
@@ -599,6 +643,12 @@ rendered markdown, not a station-by-station component tree).
       expect(section).toMatch(/Rubric/);
     });
 
+    it("grades the real live conversation, not the written rehearsal", () => {
+      const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+      expect(section).toMatch(/as marked live/i);
+      expect(section).toMatch(/completes the exchange within the ten-minute window/i);
+    });
+
     it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
       const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
       expect(section).toMatch(/\bHD\b/);
@@ -607,67 +657,97 @@ rendered markdown, not a station-by-station component tree).
     });
   });
   ```
-- **Implementation (green):** Insert after Station 3's question paragraph:
+- **Implementation (green):** Reword Station 3's question paragraph
+  (dropping the visible failed-example list), then insert the
+  `<details>`:
   ```astro
+  <p>
+    This station is a live conversation in which you meet an examiner
+    playing a stranger at a low-stakes social event — the examiner may
+    leave early if the conversation stalls past recovery, and will leave
+    at the ten-minute mark regardless. You are marked on how well you
+    draw out the stranger's name, one hobby, and one recent trip using
+    the small-talk formula within that window, while holding appropriate
+    eye contact.
+  </p>
   <blockquote>
-    <p><strong>Examiner:</strong> "Have you had a chance to get away anywhere this year?"</p>
-    <p><strong>Student:</strong> "Not really, mostly stayed local."</p>
-    <p><strong>Examiner:</strong> "Fair enough — anything you've been doing to unwind?"</p>
-    <p><strong>Student:</strong> "Watching some shows, I guess."</p>
-    <p><strong>Examiner:</strong> "Which ones?"</p>
-    <p><strong>Student:</strong> [pause, roughly three seconds, holding eye contact] "Uh, a few different ones."</p>
+    <p>
+      "The examiner marks by taking notes live during the exchange, not
+      by grading a transcript afterwards" — a note added for this
+      practice paper; it does not appear on the real exam paper. Because
+      this is a written practice paper, write the lines you would use to
+      open the conversation and the questions you would ask to draw out
+      all three targets, as rehearsal for the live exchange.
+    </p>
   </blockquote>
   <details>
     <summary>Reveal solutions and rubric</summary>
     <h3>Model solution</h3>
     <p>
-      The trip slot is opened by the examiner and left unanswered with any
-      specific content — "mostly stayed local" declines the slot rather than
-      filling it. The hobby slot is opened twice and only vaguely filled
-      ("watching some shows") without naming a specific show, so it remains
-      effectively empty. The name slot is never introduced by either party.
-      The three-second pause before the final answer sits inside the
-      research range of roughly 3.2–3.3 seconds for comfortable mutual gaze,
-      so the eye contact itself is correctly executed — the fix needed is
-      content, not delivery: name one specific show, then return a trip or
-      hobby question to the examiner.
+      A strong live attempt opens by asking directly for the stranger's
+      name — for example, "I don't think we've met — I'm [name], what's
+      yours?" — rather than volunteering only your own and hoping for one
+      back. When the stranger volunteers a detail unprompted, the
+      candidate follows it immediately with a specific question, such as
+      "What was that like?" or "What got you into that?", rather than
+      moving on. If neither the hobby nor the trip has come up unprompted
+      by the halfway mark, the candidate asks directly: "Have you been
+      anywhere good recently?" or "What do you get up to outside of this
+      event?" Before answering any question put back to them, the
+      candidate holds a pause of roughly 3.2–3.3 seconds with eye contact,
+      rather than answering instantly or looking away, completing the
+      exchange within the ten-minute window without the conversation
+      stalling.
     </p>
     <h3>Poor solution</h3>
-    <p>The student seemed nervous and the conversation was awkward.</p>
+    <p>One candidate's examiner's notes from an actual attempt that went wrong:</p>
+    <ul class="course-list">
+      <li>0:05 — Candidate opened with their own name. Did not ask for mine.</li>
+      <li>0:20 — I mentioned, unprompted, that I'd just got back from a weekend at the coast. Candidate said "nice" and moved on.</li>
+      <li>0:40 — I mentioned, unprompted, that I've been getting into pottery lately. Candidate said "oh cool" and moved on.</li>
+      <li>1:05 — Candidate held a comfortable pause, roughly three seconds, before answering my question about their week.</li>
+    </ul>
     <h3>Examiner's notes</h3>
     <p>
-      Students consistently notice the conversation is uncomfortable but
-      fail to credit the one element that was, in fact, correct — full
-      marks require crediting what worked as well as diagnosing what
-      didn't.
+      Against the rubric below, this attempt scores in the lowest bands:
+      the name is never asked for, and the hobby and trip are both
+      volunteered by the stranger and immediately dropped rather than
+      drawn out — only the eye-contact criterion is met. Full marks
+      require the candidate to actively elicit all three, not benefit
+      from what the stranger happens to offer.
     </p>
-    <h3>Rubric — out of 20</h3>
+    <h3>Rubric — out of 20, as marked live</h3>
     <table class="course-schedule">
       <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
       <tbody>
-        <tr><td>Identifies the name slot as missing</td><td>4</td></tr>
-        <tr><td>Identifies the hobby slot as unfilled</td><td>4</td></tr>
-        <tr><td>Identifies the trip slot as unfilled</td><td>4</td></tr>
-        <tr><td>Correctly credits the eye-contact duration</td><td>4</td></tr>
-        <tr><td>Proposes a specific fix</td><td>4</td></tr>
+        <tr><td>Draws out the stranger's name by asking directly</td><td>4</td></tr>
+        <tr><td>Follows up a volunteered detail with a specific question</td><td>4</td></tr>
+        <tr><td>Asks directly for any target not volunteered by the halfway mark</td><td>4</td></tr>
+        <tr><td>Holds eye contact for roughly 3.2–3.3 seconds before answering</td><td>4</td></tr>
+        <tr><td>Completes the exchange within the ten-minute window without stalling</td><td>4</td></tr>
       </tbody>
     </table>
     <table class="course-schedule">
       <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>HD</td><td>18–20</td><td>Identifies all three formula slots by name, correctly credits the eye-contact duration, and proposes a specific fix.</td></tr>
-        <tr><td>D</td><td>14–17</td><td>Identifies all three slots and credits the eye-contact duration, but the proposed fix is vague.</td></tr>
-        <tr><td>C</td><td>10–13</td><td>Identifies at least two slots correctly but does not address the eye-contact duration either way.</td></tr>
-        <tr><td>P</td><td>6–9</td><td>Identifies one slot correctly, with general commentary on mood or awkwardness.</td></tr>
-        <tr><td>N</td><td>0–5</td><td>General commentary on mood or awkwardness without naming the formula's three slots.</td></tr>
+        <tr><td>HD</td><td>18–20</td><td>Actively draws out all three targets, holds the eye-contact pause correctly, and completes the exchange within the ten-minute window without stalling.</td></tr>
+        <tr><td>D</td><td>14–17</td><td>Actively draws out two of the three targets, and meets both the eye-contact and timing criteria.</td></tr>
+        <tr><td>C</td><td>10–13</td><td>Actively draws out one of the three targets, or draws out two but misses eye contact or timing.</td></tr>
+        <tr><td>P</td><td>6–9</td><td>No targets are actively drawn out — any that appear are only volunteered and dropped — but the conversation continues without stalling.</td></tr>
+        <tr><td>N</td><td>0–5</td><td>The conversation stalls before the ten-minute mark and the examiner leaves early.</td></tr>
       </tbody>
     </table>
   </details>
   ```
 - **Refactor:** None expected.
-- **Acceptance criteria:** `pnpm test` passes, including all three new Station 3 `it` blocks.
+- **Acceptance criteria:** `pnpm test` passes, including all seven new Station 3 `it` blocks.
 - **Human review:** Same bar as Task 2.
 - **Depends on:** Task 1.
+- [x] Done — human review accepted after eight rounds of feedback on
+  2026-09-18 (see description for the full list of reframes: live
+  conversation not a script, student draws info out of the examiner,
+  live-marking rubric not a written-rehearsal rubric, real-vs-practice
+  note quoted and boxed in a blockquote, redundant lead-in removed).
 
 ### Task 5: Station 4 content — scenario, worked diagnosis, solutions, rubric
 

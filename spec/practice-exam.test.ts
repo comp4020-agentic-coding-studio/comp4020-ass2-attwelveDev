@@ -81,3 +81,56 @@ describe("station 2: fashion", () => {
     expect(section).toMatch(/out of 15/);
   });
 });
+
+describe("station 3: small talk", () => {
+  it("notes the real station is a live conversation, not a script", () => {
+    expect(html).toMatch(/live conversation/i);
+    expect(html).toMatch(/written practice paper/i);
+  });
+
+  it("carries the exam's own leave-early and ten-minute risk", () => {
+    expect(html).toMatch(/leave early if the conversation stalls past recovery/i);
+    expect(html).toMatch(/ten-minute mark/i);
+  });
+
+  it("quotes the notes-marking mechanic and flags it as absent from the real paper", () => {
+    expect(html).toMatch(
+      /"The examiner marks by taking notes live during the exchange, not by grading a transcript afterwards"/,
+    );
+    expect(html).toMatch(/does not appear on the real exam paper/i);
+  });
+
+  it("asks the student to write actual dialogue, not describe a strategy", () => {
+    expect(html).toMatch(/write the (lines|questions) you would (use|ask)/i);
+  });
+
+  it("keeps the failed example inside the reveal, as the worked Poor solution", () => {
+    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    const poorIndex = section.indexOf("Poor solution");
+    const exampleIndex = section.indexOf("weekend at the coast");
+    expect(poorIndex).toBeGreaterThan(-1);
+    expect(exampleIndex).toBeGreaterThan(poorIndex);
+    expect(section).toMatch(/getting into pottery/i);
+  });
+
+  it("reveals model solution, poor solution, examiner's notes, and a rubric", () => {
+    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    expect(section).toMatch(/Model solution/);
+    expect(section).toMatch(/Poor solution/);
+    expect(section).toMatch(/Examiner's notes/);
+    expect(section).toMatch(/Rubric/);
+  });
+
+  it("grades the real live conversation, not the written rehearsal", () => {
+    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    expect(section).toMatch(/as marked live/i);
+    expect(section).toMatch(/completes the exchange within the ten-minute window/i);
+  });
+
+  it("gives the rubric as HD/D/C/P/N bands with a mark breakdown summing to the station's weight", () => {
+    const section = html.slice(html.indexOf("Station 3"), html.indexOf("Station 4"));
+    expect(section).toMatch(/\bHD\b/);
+    expect(section).toMatch(/\bN\b/);
+    expect(section).toMatch(/out of 20/);
+  });
+});
