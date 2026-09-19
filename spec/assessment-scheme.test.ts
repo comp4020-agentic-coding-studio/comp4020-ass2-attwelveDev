@@ -174,6 +174,31 @@ describe("content scope specsheet row", () => {
   });
 });
 
+describe("learning outcomes specsheet row", () => {
+  it("lists A1's two outcomes individually, each linked to its homepage anchor with its outcome text as a tooltip", () => {
+    const html = readFileSync(
+      resolve("dist/assessments/assignment-1-makeover/index.html"),
+      "utf8",
+    );
+    expect(html).toContain("Learning outcomes");
+    expect(html).toMatch(
+      /<a[^>]*href="[^"]*\/#lo-1"[^>]*title="[^"]*hygiene and daily routines[^"]*"[^>]*>\s*1\s*<\/a>.{0,10}<a[^>]*href="[^"]*\/#lo-2"[^>]*title="[^"]*occasion-appropriate attire[^"]*"[^>]*>\s*2\s*<\/a>/s,
+    );
+  });
+
+  it("lists A3's non-contiguous outcomes individually, not collapsed into ranges", () => {
+    const html = readFileSync(
+      resolve("dist/assessments/assignment-3-adulting/index.html"),
+      "utf8",
+    );
+    for (const n of [1, 2, 3, 4, 7, 8, 9]) {
+      expect(html).toMatch(new RegExp(`href="[^"]*/#lo-${n}"`));
+    }
+    expect(html).not.toMatch(/href="[^"]*\/#lo-5"/);
+    expect(html).not.toMatch(/href="[^"]*\/#lo-6"/);
+  });
+});
+
 describe("weekly reflections", () => {
   const html = readFileSync(resolve("dist/assessments/weekly-reflections/index.html"), "utf8");
 

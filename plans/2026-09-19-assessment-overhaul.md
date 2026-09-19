@@ -451,7 +451,16 @@ after the fix.
     lecture week in its scope (spot-checked via `dist/assessments/<slug>/index.html` containing an `<a>` to each `lectures/week-NN/`).
 - **Depends on:** Task 1 (needs `contentScope.weeks` to exist).
 
-### Task 3: `toOutcomeRanges` pure helper and its unit test [x]
+### Task 3: `toOutcomeRanges` pure helper and its unit test [x] — superseded, see Task 7
+
+**Execution note (2026-09-19):** built and committed as specified, but
+Task 7's Human review rejected the range-based display it existed to
+support (see that task's note). With no other caller, `src/lib/learning-
+outcomes.ts` and `spec/learning-outcomes.test.ts` were deleted in the
+same pass as Task 7's redesign, per `CLAUDE.md`'s "if you are certain
+something is unused, you can delete it completely" — confirmed with the
+user rather than assumed. Requirement 2.1.29 is no longer satisfied;
+see the requirements-coverage table in §7.
 
 - **Description:** A dependency-free function collapsing a list of 1-
   indexed outcome numbers into contiguous ranges, for both display and
@@ -644,7 +653,20 @@ after the fix.
 - **Acceptance criteria:** All 5 cases pass.
 - **Depends on:** Task 1.
 
-### Task 7: "Learning outcomes" specsheet row, linked to homepage anchors
+### Task 7: "Learning outcomes" specsheet row, linked to homepage anchors [x] (human review: accepted, after redesign — see note)
+
+**Execution note (2026-09-19):** Human review of the originally-specified
+range display (e.g. "LO 1–4, 7–9" with the endpoints as links) was
+rejected: collapsing to a range visually implied the in-between numbers
+were clickable when they weren't. Redesigned through several rounds with
+the user to the final form: every outcome number is listed individually
+(no ranges — `toOutcomeRanges`/Task 3 is unused as a result, see that
+task's note), each as `<a href="/#lo-N" title="{full outcome text}">`,
+styled to inherit body text colour with a dotted underline (solid on
+hover/focus) rather than link-blue — hover previews the outcome text
+without navigating; the link itself is a mobile/keyboard fallback, since
+`title` tooltips don't fire on tap. Requirement 2.1.7's "LO N–M" range
+wording no longer matches the built behaviour; see §7's coverage table.
 
 - **Description:** Render `learningOutcomes` as "LO" plus linked ranges.
 - **Files touched:** `src/pages/assessments/[slug].astro`.
@@ -1130,7 +1152,7 @@ after the fix.
 | 2.1.4 (concrete field values, all 5 files) | Task 1 |
 | 2.1.5 (Due row appends week label) | Task 5 |
 | 2.1.6 (Content scope row) | Task 6 |
-| 2.1.7 (Learning outcomes row + links) | Task 7 |
+| 2.1.7 (Learning outcomes row + links) | Task 7 — behaviour changed after Human review: individually-listed, tooltip + link, not a collapsed range display (still confirmed with user) |
 | 2.1.8 (homepage LO reorder) | Task 4 |
 | 2.1.9 (homepage `<ol>` + anchors) | Task 4 |
 | 2.1.10 (assessment index overview) | Task 8 |
@@ -1152,7 +1174,7 @@ after the fix.
 | 2.1.26 (LO index range assertion) | Task 1 |
 | 2.1.27 (FAQ ≥2 Q&A assertion) | Task 19 |
 | 2.1.28 (band-descriptor test extended to A1/A2/exam) | Tasks 9, 10, 11 |
-| 2.1.29 (`toOutcomeRanges` helper + unit test) | Task 3 |
+| 2.1.29 (`toOutcomeRanges` helper + unit test) | Task 3 — built, then removed as dead code once Task 7's Human review rejected range display; requirement no longer satisfied (confirmed with user) |
 | 2.2 (non-functional: voice/register, visual check) | Tasks 4, 7, 8, 9, 10, 11, 16, 19 (Human review lines) |
 
 ## 8. Risks / open questions
