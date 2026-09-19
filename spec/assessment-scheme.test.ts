@@ -259,6 +259,12 @@ describe("assignment 1 makeover", () => {
     expect(html).toMatch(/paper/i);
     expect(html).toMatch(/printed/i);
   });
+
+  it("publishes five band descriptors", () => {
+    for (const band of ["HD", "D", "C", "P", "N"]) {
+      expect(html, `missing band ${band}`).toMatch(new RegExp(`\\b${band}\\b`));
+    }
+  });
 });
 
 describe("assignment 2 touch grass", () => {

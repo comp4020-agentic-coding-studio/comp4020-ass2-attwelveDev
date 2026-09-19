@@ -760,7 +760,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   boilerplate.
 - **Depends on:** None.
 
-### Task 9: A1 grade bands
+### Task 9: A1 grade bands [x] (human review: accepted)
 
 - **Description:** Add a holistic HD/D/C/P/N table to
   `assignment-1-makeover.md`, A3-style.

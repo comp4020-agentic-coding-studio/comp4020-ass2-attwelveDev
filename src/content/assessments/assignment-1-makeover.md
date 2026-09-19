@@ -54,3 +54,21 @@ The selection and justifications are submitted on paper; the three
 outfit pictures are printed and attached to the same submission. See
 [Policies](/policies/) for where to hand it in and the
 extenuating-circumstances exception.
+
+## How each band reads
+
+The bands describe the state of the submission, not the person who
+wrote it:
+
+- **HD** — every product choice has a specific, non-generic rationale,
+  and all three outfits are clearly matched to their occasion with a
+  justification that references the actual garment, not just the
+  occasion's name.
+- **D** — every product and outfit is present and justified, but one
+  justification is generic enough it could apply to a different
+  product or occasion without changing.
+- **C** — all products and outfits are present, but two or more
+  justifications are generic.
+- **P** — a product or outfit is present without any justification, or
+  a justification doesn't actually reference the item it's for.
+- **N** — a product, outfit, or justification is missing.
