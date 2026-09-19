@@ -23,9 +23,17 @@ const counterpart = (kind === "lecture" ? sessions : lectures).find((e) => e.dat
 // Lab schedule, so the reflection-due calculation always anchors on the
 // week's lecture date regardless of which page this is rendered on.
 const lectureDate = kind === "lecture" ? date : lectures.find((e) => e.data.week === week)?.data.date;
-const reflectionDue = lectureDate
-  ? new Date(lectureDate.getTime() + 7 * 24 * 60 * 60 * 1000)
-  : undefined;
+
+// Weeks are normally 7 days apart, but not across the teaching break, so
+// the actual next lecture's date is looked up instead of assumed; only
+// the final week (12, with no week 13 lecture) falls back to the +7 days
+// estimate.
+const nextLecture = lectures.find((e) => e.data.week === week + 1);
+const reflectionDue = nextLecture
+  ? nextLecture.data.date
+  : lectureDate
+    ? new Date(lectureDate.getTime() + 7 * 24 * 60 * 60 * 1000)
+    : undefined;
 ---
 
 <section class="course-specsheet" aria-label="Week details">

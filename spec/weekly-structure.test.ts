@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { formatCourseDate } from "../src/lib/dates";
 
 interface ApiNode {
   id: string;
@@ -200,5 +201,60 @@ describe("weekly structure — scheduling", () => {
     const html = renderedPage("lectures/week-12");
     expect(html).toMatch(/desk/i);
     expect(html).toMatch(/sock/i);
+  });
+});
+
+describe("weekly structure — reflection due dates", () => {
+  function addDays(iso: string, days: number): string {
+    const date = new Date(`${iso}T00:00:00Z`);
+    date.setUTCDate(date.getUTCDate() + days);
+    return date.toISOString().slice(0, 10);
+  }
+
+  function reflectionDueOn(id: string): string | undefined {
+    const html = renderedPage(id);
+    return html.match(/<dt>Reflection due<\/dt>\s*<dd>([^<]*)<\/dd>/)?.[1];
+  }
+
+  it("shows each lecture's and Lab's reflection due on week N+1's actual lecture date", () => {
+    for (let week = 1; week <= 12; week++) {
+      const nextWeek = TEACHING_DATES[week + 1];
+      const expected = formatCourseDate(
+        nextWeek ? nextWeek.lecture : addDays(TEACHING_DATES[week].lecture, 7),
+      );
+      const weekLabel = String(week).padStart(2, "0");
+      expect(
+        reflectionDueOn(`lectures/week-${weekLabel}`),
+        `lectures/week-${weekLabel}'s reflection due date is wrong`,
+      ).toBe(expected);
+      expect(
+        reflectionDueOn(`sessions/week-${weekLabel}`),
+        `sessions/week-${weekLabel}'s reflection due date is wrong`,
+      ).toBe(expected);
+    }
+  });
+
+  it("does not land week 6's reflection inside the teaching break", () => {
+    const expected = formatCourseDate("2027-04-20");
+    expect(reflectionDueOn("lectures/week-06")).toBe(expected);
+    expect(reflectionDueOn("sessions/week-06")).toBe(expected);
+  });
+
+  it("tells week 6 students their reflection isn't due during the break", () => {
+    const html = renderedPage("lectures/week-06");
+    const paragraph = html.match(/<strong>This week.s reflection<\/strong>[\s\S]*?<\/p>/)?.[0];
+    expect(paragraph, "week 6's reflection paragraph is missing").toBeTruthy();
+    expect(paragraph).toMatch(/break/i);
+    expect(paragraph).toMatch(/due 12:00 Tuesday of week 7/);
+  });
+
+  it("documents week 6's reflection as the exception to the weekly-Tuesday rule", () => {
+    const html = renderedPage("assessments/weekly-reflections");
+    const { start, end } = findHeading(html, "How the totals work");
+    expect(start, "weekly-reflections is missing the \"How the totals work\" heading").toBeGreaterThan(-1);
+    const sectionEnd = nextHeadingIndex(html, end);
+    const section = html.slice(end, sectionEnd);
+    expect(section).toMatch(/Week 6/);
+    expect(section).toMatch(/break/i);
   });
 });
