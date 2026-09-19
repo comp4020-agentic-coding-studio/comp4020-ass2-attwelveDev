@@ -848,7 +848,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   overall description, not a restatement of the per-station percentages.
 - **Depends on:** None.
 
-### Task 12: A1 enclothed-cognition tie-in
+### Task 12: A1 enclothed-cognition tie-in [x]
 
 - **Description:** Connect A1's Justification criterion to Week 3's
   research.

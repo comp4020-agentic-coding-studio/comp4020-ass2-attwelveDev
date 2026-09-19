@@ -47,6 +47,9 @@ of each — the outfit as worn, not a description of it.
 - three outfit pictures, one per occasion: lecture, birthday party, gym
 - a written justification for each outfit against its occasion
 
+Your justification may draw on why clothing affects more than appearance,
+not just occasion-matching.
+
 An outfit without its picture is not evidence; a picture without its
 justification is not an argument.
 

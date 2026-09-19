@@ -255,6 +255,10 @@ describe("assignment 1 makeover", () => {
     expect(html).toMatch(/justif/i);
   });
 
+  it("connects the justification criterion to enclothed cognition", () => {
+    expect(html).toMatch(/more than (its |your |their )?appearance/i);
+  });
+
   it("prints and attaches the outfit photos for paper submission", () => {
     expect(html).toMatch(/paper/i);
     expect(html).toMatch(/printed/i);
