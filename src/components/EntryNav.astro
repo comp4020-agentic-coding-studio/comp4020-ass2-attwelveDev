@@ -165,37 +165,78 @@ const { previous, next, currentLabel } = Astro.props;
     }
 
     /* On mobile the center label is always in the DOM (only opacity
-       toggles), so if it were allowed to wrap it would occupy however
-       many lines its *current* available width forces — and that width
-       shrinks whenever the side "Week N" labels are showing (below).
-       That made the whole footer resize across the scroll boundary even
-       though the center label is invisible half the time. Pinning it to
-       one line with an ellipsis makes its box height constant regardless
-       of how much width the sides are claiming, which is what actually
-       fixes the footer's height. */
+       toggles), and once revealed it should show its full text rather
+       than being cut to one line — but it's also squeezed to a much
+       narrower box while the side "Week N" labels are still showing
+       (below) than once they collapse, and that squeeze happens whether
+       or not the label is currently visible. Left to wrap freely, that
+       would mean a different number of lines — and a different footer
+       height — depending on which state the header is in.
+       A flat "always reserve two lines" fixed height would solve that,
+       but it wastes visible footer space on the many titles ("Assignment
+       1: Makeover") that only need one. Instead the script below measures
+       this page's *specific* label once, at the width it will actually
+       have once revealed, and writes that exact pixel value into
+       --week-nav-current-height — so the reserved height matches this
+       page's real content and, because it's fixed rather than
+       recalculated on scroll, never changes between states. The
+       calc(2 * 1.4em) here only covers the brief window before that
+       script runs (or a no-JS fallback); -webkit-line-clamp is a safety
+       net for the rare title too long even at full width, not the
+       primary sizing mechanism. line-height is set explicitly (rather
+       than left to the page default) so both the fallback and the
+       script's own measurement agree on what "a line" is. */
     .week-nav-current {
+      /* flex-grow stays 0 (inherited from the base rule) so this never
+         competes with the sides' own flex-grow: 1 for space — it was
+         briefly set to grow here, which let it claim enough of the row
+         that the arrow icons (flex-shrink: 0 on the icon itself doesn't
+         help if the icon's own flex container is squeezed away from
+         under it) lost their space and rendered shrunk. max-width is
+         still overridden, from the base rule's 50% up to nearly the
+         full row — reserving just 5rem for the two arrow icons, their
+         icon-to-text gaps, and the row's own two gaps (a fixed cost
+         whether or not "Week N" text is currently showing next to the
+         icon), so the label actually gets to use the room freed up once
+         "Week N" collapses instead of still being capped at half the
+         row. */
+      max-width: calc(100% - 5rem);
+      line-height: 1.4;
+      height: var(--week-nav-current-height, calc(2 * 1.4em));
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-box-pack: center;
+      -webkit-line-clamp: 2;
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
 
-    /* Now that the center label can no longer be pushed into extra
-       wrapped lines by a narrower box (above), "Week N" is free to keep
-       enough width to show labels like "Assignment 2" in full instead of
-       being clipped mid-word — the old 5rem budget was sized for short
-       "Week N" labels and truncated anything longer. Ellipsis is still
-       here as a fallback for the rare longer title ("Weekly
-       Reflections") that doesn't fit even this wider budget. */
+    /* Because the center label's height is now fixed regardless of how
+       squeezed it gets (above), "Week N" is free to keep enough width to
+       show labels like "Assignment 2" in full instead of being clipped
+       mid-word — the old 5rem budget was sized for short "Week N" labels
+       and truncated anything longer. Ellipsis is still here as a
+       fallback for the rare longer title ("Weekly Reflections") that
+       doesn't fit even this wider budget. */
     .week-nav-title {
-      max-width: 8rem;
+      max-width: 9.5rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      /* Only opacity is transitioned — max-width itself still snaps
-         instantly (see the comment above), since animating it is what
-         caused the earlier reflow jank.
-         The 200ms *delay* here (not on the reverse rule below) matters:
-         a same-duration, undelayed opacity fade on both this and the
+      /* max-width's own transition is 0s (an instant snap, not an
+         animation) — width is deliberately never eased, since animating
+         it is what caused the earlier reflow jank — but it still carries
+         the same 200ms *delay* as opacity below, and that delay is load-
+         bearing: .week-nav-side sizes itself to this element's actual
+         content (flex: 0 0 auto, see below), so the instant this snaps
+         back to 9.5rem, the side box claims that width too, squeezing
+         the still-fading-out center label into a narrower box mid-fade —
+         visually, its text visibly shrinking a beat before it finishes
+         disappearing. Delaying the snap until the center label's own
+         200ms fade-out has fully finished (at which point the center is
+         invisible anyway) removes that squeeze entirely instead of just
+         timing it to be less noticeable.
+         The delay on opacity itself is a separate, cosmetic concern: a
+         same-duration, undelayed opacity fade on both this and the
          center label crossfades correctly in principle, but for a good
          chunk of that shared 200ms both are simultaneously at a high,
          clearly-legible opacity — which reads as "both visible at once"
@@ -204,10 +245,13 @@ const { previous, next, currentLabel } = Astro.props;
          200ms fade-out has fully finished means at most one of the two
          is ever meaningfully visible at a time — sequenced, not
          overlapped. (The other direction — becoming hidden, below —
-         needs no delay: it starts alongside the center label's fade-in,
-         and nobody reported an issue with that direction.) */
+         needs no delay on either property: freeing the width and
+         starting the fade-in both begin immediately, and nobody reported
+         an issue with that direction.) */
       opacity: 1;
-      transition: opacity 200ms ease 200ms;
+      transition:
+        opacity 200ms ease 200ms,
+        max-width 0s linear 200ms;
     }
 
     .week-nav.is-scrolled .week-nav-title {
@@ -216,38 +260,24 @@ const { previous, next, currentLabel } = Astro.props;
       transition: opacity 200ms ease;
     }
 
-    /* Guarantees each side its full icon + title width while "Week N" is
-       showing, matching the icon/title's own natural requirement (8rem
-       title budget + icon + gap), not an arbitrary round number. Relaxes
-       to 0 the moment "Week N" collapses, since the icon (flex-shrink: 0,
-       above) needs no floor of its own to stay full size. Because the
-       icon sits at the row's own outer edge (first child for the
-       previous link, last for the next, already pinned there by
-       .week-nav-inner's space-between) rather than the inner edge next
-       to the center label, its on-screen position is the same before and
-       after this — only the *boundary* between this side and the center
-       label moves. */
+    /* A fixed min-width sized to the longest realistic title (as this
+       used to be) reserves that width on *both* sides unconditionally,
+       even for a short neighbor like "Assignment 3" that only needs a
+       fraction of it — with two of those floors plus the row's own gaps,
+       the total could exceed the viewport outright, pushing the far side
+       clean off-screen (its arrow included) rather than just wasting
+       space. flex: 0 0 auto instead sizes each side to *its own* actual
+       content — icon + gap + however wide this page's specific "Week N"
+       text is, up to .week-nav-title's own max-width — so the two sides
+       together only ever claim what they actually need. flex-shrink: 0
+       is the part that matters most: it's what stops the center label's
+       max-width (above) from squeezing this box (and clipping its title
+       text) even before the title's own max-width has finished collapsing
+       to 0, so the icon — anchored to the row's own outer edge by
+       .week-nav-inner's space-between regardless of this box's width —
+       never has less room than it needs and never has to move. */
     .week-nav-side {
-      min-width: 9.5rem;
-      /* Delayed 200ms, same as .week-nav-title's own reappearance and
-         for the same reason: restoring this floor reclaims room from the
-         center label's box, and if that happens the instant scrolling-up
-         crosses the boundary — before the center label has actually
-         finished its own 200ms fade-out — the center label's still-
-         *visible* text gets its ellipsis truncation point yanked inward
-         mid-fade (visibly re-truncating while still on screen, not
-         merely while invisible like "Week N"'s own resize is). This is
-         mobile-only (this whole block lives under the narrow-viewport
-         query) — there's no equivalent min-width tug-of-war at wide
-         viewports, since nothing there needs the center label's room
-         back. Restoring only after the center label has had its full
-         200ms to disappear removes the tug entirely. */
-      transition: min-width 0s linear 200ms;
-    }
-
-    .week-nav.is-scrolled .week-nav-side {
-      min-width: 0;
-      transition: min-width 0s;
+      flex: 0 0 auto;
     }
   }
 </style>
@@ -261,9 +291,40 @@ const { previous, next, currentLabel } = Astro.props;
   // watching that page's now-detached <h1> after navigating elsewhere, and
   // the new page's label would never get its own observer.
   let observer: IntersectionObserver | undefined;
+  let resizeHandler: (() => void) | undefined;
+
+  // The center label's box height is pinned (--week-nav-current-height,
+  // consumed by .week-nav-current in the mobile media query) so it can't
+  // change across the scroll boundary — see that rule's own comment for
+  // why. This measures what that height actually needs to be for *this
+  // page's* label text, at the width it will have once revealed (sides
+  // collapsed), regardless of how squeezed it is right now. Taking it out
+  // of flow with position: fixed (rather than measuring it in place) means
+  // the current, possibly-narrower flex-squeezed width has no influence on
+  // the measurement, and reverting the inline style before anything else
+  // reads layout means the browser never has a reason to paint the
+  // in-between state.
+  function measureCurrentLabelHeight(currentLabel: HTMLElement): number {
+    const originalStyle = currentLabel.getAttribute("style");
+    Object.assign(currentLabel.style, {
+      position: "fixed",
+      visibility: "hidden",
+      height: "auto",
+      width: "calc(100% - 5rem)",
+      webkitLineClamp: "unset",
+    });
+    const measured = currentLabel.scrollHeight;
+    if (originalStyle === null) {
+      currentLabel.removeAttribute("style");
+    } else {
+      currentLabel.setAttribute("style", originalStyle);
+    }
+    return measured;
+  }
 
   function setupWeekNav() {
     observer?.disconnect();
+    if (resizeHandler) window.removeEventListener("resize", resizeHandler);
 
     const weekNav = document.querySelector<HTMLElement>(".week-nav");
     const currentLabel = document.querySelector<HTMLElement>("[data-week-nav-current]");
@@ -279,6 +340,20 @@ const { previous, next, currentLabel } = Astro.props;
     // previous page can otherwise survive onto the new page's markup.
     currentLabel.classList.remove("is-visible");
     weekNav.classList.remove("is-scrolled");
+
+    // Re-measured on resize too: rotating a phone or resizing dev tools
+    // changes how many words fit per line, and the *fallback* two-line
+    // height in the CSS could otherwise persist as stale, wrong sizing
+    // caught mid-way between two real content heights.
+    const applyHeight = () => {
+      weekNav.style.setProperty(
+        "--week-nav-current-height",
+        `${measureCurrentLabelHeight(currentLabel)}px`,
+      );
+    };
+    applyHeight();
+    resizeHandler = applyHeight;
+    window.addEventListener("resize", resizeHandler);
 
     // .week-nav is a fixed footer now, always on screen — the center label
     // only needs to repeat the page's own title once that title (<h1>) has
