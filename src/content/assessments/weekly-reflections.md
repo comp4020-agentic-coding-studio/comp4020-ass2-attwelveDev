@@ -25,10 +25,13 @@ spec:
 
 The semester runs twelve weekly prompts, covering weeks 1–12, each due at
 12:00 the following Tuesday — Week 1's prompt due in week 2, Week 12's in
-week 13. The two lowest-scoring reflections are dropped before the running
-total is calculated; the remaining ten are counted at 1.5% each — 10 ×
-1.5% = 15% of the course total. The drop absorbs two bad weeks without a
-separate extension process.
+week 13. Week 6 is the one exception to that one-week rule: the teaching
+break sits between weeks 6 and 7, so that prompt is due in week 7 instead
+of the following Tuesday — a longer window, not a missed one. The two
+lowest-scoring reflections are dropped before the running total is
+calculated; the remaining ten are counted at 1.5% each — 10 × 1.5% = 15%
+of the course total. The drop absorbs two bad weeks without a separate
+extension process.
 
 ## What each criterion checks
 
