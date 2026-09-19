@@ -8,6 +8,10 @@ week: 1
 due: 2027-03-02T12:00:00+11:00
 dueDisplay: 12:00, Every Tuesday, Weeks 2-13
 weight: 15
+contentScope:
+  display: "Weeks 1-12"
+  weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+learningOutcomes: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 marking:
   mode: weighted
   criteria:

@@ -6,6 +6,11 @@ description:
 week: 4
 due: 2027-03-19T12:00:00+11:00
 weight: 15
+contentScope:
+  display: "Weeks 1-4"
+  weeks: [1, 2, 3, 4]
+learningOutcomes: [1, 2]
+dueWeekLabel: "Week 4"
 marking:
   mode: weighted
   criteria:

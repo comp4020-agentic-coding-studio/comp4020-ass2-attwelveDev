@@ -109,6 +109,26 @@ describe("assessment scheme", () => {
   });
 });
 
+describe("content scope and learning outcomes", () => {
+  it("gives every assessment a content-scope display and weeks array", () => {
+    for (const node of assessments) {
+      const contentScope = node.meta?.contentScope as { display?: unknown; weeks?: unknown };
+      expect(Array.isArray(contentScope?.weeks), `${node.id} has no weeks array`).toBe(true);
+      expect(typeof contentScope?.display, `${node.id} has no scope display`).toBe("string");
+    }
+  });
+
+  it("keeps every learningOutcomes index within 1 and 9", () => {
+    for (const node of assessments) {
+      const learningOutcomes = node.meta?.learningOutcomes as number[];
+      for (const n of learningOutcomes) {
+        expect(n, `${node.id} has an out-of-range LO index`).toBeGreaterThanOrEqual(1);
+        expect(n, `${node.id} has an out-of-range LO index`).toBeLessThanOrEqual(9);
+      }
+    }
+  });
+});
+
 describe("weekly reflections", () => {
   const html = readFileSync(resolve("dist/assessments/weekly-reflections/index.html"), "utf8");
 

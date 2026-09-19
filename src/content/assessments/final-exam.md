@@ -6,6 +6,11 @@ description:
 week: 12
 due: 2027-06-09T12:00:00+10:00
 weight: 30
+contentScope:
+  display: "Weeks 1-4, 7-8, 10-12"
+  weeks: [1, 2, 3, 4, 7, 8, 10, 11, 12]
+learningOutcomes: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+dueWeekLabel: "Exam Period"
 marking:
   mode: weighted
   criteria:

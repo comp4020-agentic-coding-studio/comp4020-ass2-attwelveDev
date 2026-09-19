@@ -57,6 +57,14 @@ export const collections = {
         dueDisplay: z.string().trim().min(1).optional(),
         weight: z.coerce.number().positive().max(100),
         marking: z.discriminatedUnion("mode", [weightedMarking, holisticMarking]).optional(),
+        contentScope: z.object({
+          display: z.string().trim().min(1),
+          weeks: z.array(weekSchema).min(1),
+        }),
+        learningOutcomes: z.array(z.number().int().min(1).max(9)).min(1),
+        // Overrides the specsheet's rendered "Due" row with which teaching
+        // week (or period) the date falls in — e.g. "Week 4", "Exam Period".
+        dueWeekLabel: z.string().trim().min(1).optional(),
       })
       .loose(),
   }),
