@@ -126,3 +126,18 @@ wrote it:
   the plan reads as an outline rather than something runnable.
 - **N** — one or more components are missing, or the plan does not
   address the brief.
+
+## FAQ
+
+### Can the hangout and the interview both be Wednesday if they're at different times?
+
+Yes — the restriction is on the same Wednesday afternoon specifically,
+not on the whole day. A hangout on Wednesday morning and an interview
+on Wednesday afternoon is fine; both landing in the same afternoon slot
+isn't.
+
+### My grocery budget is more than 15% of my income this week. Can I round down instead of cutting the list?
+
+No — the cap is on the grocery budget itself, not a target to round
+toward. Either your stated income needs to actually support the list,
+or the list needs to shrink until it fits inside 15%.

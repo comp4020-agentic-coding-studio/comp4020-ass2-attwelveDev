@@ -1126,7 +1126,17 @@ the HD/D/C band descriptions updated to reference it.
   (stall-cue naming, exit response, band table "out of 20") stay green.
 - **Depends on:** None.
 
-### Task 19: Per-assessment FAQ sections
+### Task 19: Per-assessment FAQ sections [x] (human review: accepted, after two correctness fixes)
+
+**Execution note (2026-09-19):** two draft answers stated the wrong
+rule and were corrected per user review: A3's hangout/interview FAQ
+originally said "no" outright, when the actual restriction (Task 14)
+only bars the same Wednesday *afternoon*, not the whole day — now
+correctly says "yes." The Final Exam's leftover-time FAQ originally
+said time wasn't transferable between stations, contradicting the
+page's own stated pacing rule ("how you divide your own time between
+stations... is up to you, not a strict per-station cutoff") — now
+correctly says "yes," with the Station 3 exception noted.
 
 - **Description:** Add a "## FAQ" section with ≥2 naive-question Q&A pairs
   to each of the 5 assessment files.

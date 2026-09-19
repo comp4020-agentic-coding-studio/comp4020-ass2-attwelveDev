@@ -74,3 +74,19 @@ wrote it:
 - **P** — a product or outfit is present without any justification, or
   a justification doesn't actually reference the item it's for.
 - **N** — a product, outfit, or justification is missing.
+
+## FAQ
+
+### Does a hoodie count as a hygiene product if I wear it every day?
+
+No — the hygiene product selection is for a routine task from your week
+2 schedule (shower gel, deodorant, that kind of thing), not clothing. A
+hoodie belongs in the outfit section if it's actually worn to one of
+the three occasions.
+
+### Can the gym outfit just be whatever I already wear to the gym?
+
+Yes, if you actually justify it against the gym occasion — what it's
+for, why it's appropriate there specifically. A picture with no
+justification, or a justification that's just "it's comfortable," won't
+score well regardless of what the outfit is.

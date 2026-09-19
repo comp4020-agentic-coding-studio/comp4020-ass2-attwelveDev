@@ -30,6 +30,15 @@ const EXPECTED_WEIGHTS: Record<string, number> = {
   "assessments/final-exam": 30,
 };
 
+function faqQuestionCount(html: string): number {
+  const start = html.search(/<h2[^>]*>FAQ</);
+  if (start === -1) return 0;
+  const rest = html.slice(start);
+  const nextH2 = rest.slice(1).search(/<h2[^>]*>/);
+  const section = nextH2 === -1 ? rest : rest.slice(0, nextH2 + 1);
+  return (section.match(/<h3[^>]*>/g) ?? []).length;
+}
+
 describe("assessment scheme", () => {
   it("is a scheme of exactly five items", () => {
     expect(assessments.length).toBe(5);
@@ -329,6 +338,21 @@ describe("assignment 2 touch grass", () => {
     for (const band of ["HD", "D", "C", "P", "N"]) {
       expect(html, `missing band ${band}`).toMatch(new RegExp(`\\b${band}\\b`));
     }
+  });
+});
+
+describe("per-assessment FAQ", () => {
+  const ids = [
+    "assessments/weekly-reflections",
+    "assessments/assignment-1-makeover",
+    "assessments/assignment-2-touch-grass",
+    "assessments/assignment-3-adulting",
+    "assessments/final-exam",
+  ];
+
+  it.each(ids)("%s publishes an FAQ with at least 2 questions", (id) => {
+    const html = readFileSync(resolve(`dist/${id}/index.html`), "utf8");
+    expect(faqQuestionCount(html), `${id} has too few FAQ questions`).toBeGreaterThanOrEqual(2);
   });
 });
 

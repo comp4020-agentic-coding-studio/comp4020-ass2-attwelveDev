@@ -131,3 +131,20 @@ Read together, the five stations describe one overall band:
 
 An archived past paper from the Semester 1, 2026 sitting of this exam is
 available for revision: [the archived practice paper](/assessments/final-exam/practice-exam/).
+
+## FAQ
+
+### Can I bring my own kitchen knife to Station 5?
+
+No. The only material you bring is a black or blue pen — everything at
+Station 5, cookware and pantry included, is provided at the station.
+Bringing your own equipment is a materials-restriction breach, not a
+head start.
+
+### If I finish Station 1 early, can I use the leftover time on Station 5?
+
+Yes. The suggested durations are pacing guidance, not per-station
+cutoffs — the only fixed number is the 2 hour 50 minute total, so
+finishing a station early just leaves you more of that total for
+whatever comes next. Station 3 is the one exception: its ten-minute
+limit is enforced directly by the examiner, not by your own pacing.

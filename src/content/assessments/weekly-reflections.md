@@ -107,3 +107,17 @@ Each week's reflection is submitted on paper, sealed in an envelope, and
 handed to the Convenor's office or to your tutor — see
 [Policies](/policies/) for the full submission rule and the
 extenuating-circumstances exception.
+
+## FAQ
+
+### Can I write the reflection about something that happened to a friend, not me?
+
+No. The prompt asks what you actually ran that week, and a marker can't
+check a claim about someone else's week against anything. Write about
+your own instance.
+
+### I missed two weeks already. Can I submit a third low one and still be fine?
+
+That's exactly what the two-drop exists for — it absorbs two bad weeks
+with no form and no explanation needed. A third missed or weak week
+starts counting against the other ten.

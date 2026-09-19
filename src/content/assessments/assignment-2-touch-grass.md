@@ -98,3 +98,19 @@ who wrote it:
   restriction goes unaddressed.
 - **N** — the report doesn't name a real activity, or two or more
   restrictions go unaddressed.
+
+## FAQ
+
+### Does a study group of CS students count as one of the seven activities?
+
+No. The activity has to be one of the seven listed, and the non-CS
+requirement applies to the people there, not just the topic. A group of
+CS students doing a non-CS activity together still fails the two
+non-CS-people restriction.
+
+### My phone buzzed but I didn't check it — does that still count against me?
+
+No, and it's actually the more interesting answer to write up: state
+that you didn't check it, and connect that specifically to Week 6's
+mere-presence finding, since the effect is about the phone sitting
+there, not about looking at it.
