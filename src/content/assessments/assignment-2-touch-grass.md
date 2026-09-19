@@ -26,6 +26,8 @@ spec:
   - the report is 1000 words
 related:
   - lectures/week-05
+  - lectures/week-06
+  - lectures/week-07
 ---
 
 ## The brief

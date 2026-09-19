@@ -364,7 +364,7 @@ depend on having real `weeks`/`learningOutcomes` arrays to check against.
 
 ## 5. Task breakdown
 
-### Task 1: Add `contentScope`, `learningOutcomes`, and `dueWeekLabel` to the assessments schema and all 5 assessment files
+### Task 1: Add `contentScope`, `learningOutcomes`, and `dueWeekLabel` to the assessments schema and all 5 assessment files [x]
 
 - **Description:** Extend the Zod schema and fill in real values for every
   assessment, per requirement 4's table.
@@ -402,7 +402,22 @@ depend on having real `weeks`/`learningOutcomes` arrays to check against.
     5 assessments.
 - **Depends on:** None.
 
-### Task 2: Correct `related[]` on all 5 assessments and replace the vacuous `EXPECTED_COVERAGE` test
+### Task 2: Correct `related[]` on all 5 assessments and replace the vacuous `EXPECTED_COVERAGE` test [x]
+
+**Execution note (2026-09-19):** the `related` graph is symmetrised
+(`astro-course-university`'s `symmetriseRelated`) — `week-08.mdx`'s own
+`related` frontmatter declared `assessments/assignment-2-touch-grass`
+(a legitimate but incidental due-date mention, not a content-scope
+link), which mirrored onto A2's `related` regardless of A2's own
+frontmatter, adding `lectures/week-08` outside A2's contentScope.weeks
+`[5,6,7]`. Resolved with the user: removed that one line from
+`week-08.mdx`'s `related:` array (the plain-text mention of Assignment
+2 in its Conclusion stays; no embed directive existed, so nothing else
+changed). The "links related to exactly the lectures its content scope
+names" test is implemented as an exact match (no per-assessment
+exemption needed) since this was the only such backlink outside any
+assessment's contentScope.weeks — checked by inspecting `dist/api/index.json`
+after the fix.
 
 - **Description:** Rewrite each assessment's `related[]` to list exactly
   the lecture ids in its `contentScope.weeks`, and replace

@@ -29,6 +29,16 @@ spec:
   - Station 3's conversation ends by the ten-minute mark, whether or not it has finished
   - the survival station's output is edible
   - no materials beyond a black or blue pen are brought into the exam
+related:
+  - lectures/week-01
+  - lectures/week-02
+  - lectures/week-03
+  - lectures/week-04
+  - lectures/week-07
+  - lectures/week-08
+  - lectures/week-10
+  - lectures/week-11
+  - lectures/week-12
 ---
 
 ## The five stations

@@ -12,6 +12,7 @@ interface ApiNode {
   type: string;
   meta?: Record<string, unknown>;
   spec?: string[];
+  related?: string[];
 }
 
 interface CourseApi {
@@ -27,15 +28,6 @@ const EXPECTED_WEIGHTS: Record<string, number> = {
   "assessments/assignment-2-touch-grass": 20,
   "assessments/assignment-3-adulting": 20,
   "assessments/final-exam": 30,
-};
-
-// id -> [own coverage-end week, own `week`]
-const EXPECTED_COVERAGE: Record<string, [number, number]> = {
-  "assessments/weekly-reflections": [1, 1],
-  "assessments/assignment-1-makeover": [3, 4],
-  "assessments/assignment-2-touch-grass": [7, 8],
-  "assessments/assignment-3-adulting": [12, 12],
-  "assessments/final-exam": [12, 12],
 };
 
 describe("assessment scheme", () => {
@@ -92,13 +84,31 @@ describe("assessment scheme", () => {
     }
   });
 
-  it("never examines content from a later week", () => {
+  // Weekly Reflections is exempt: its `week: 1` frontmatter field is a
+  // pure sort key for sortedAssessments() (see src/lib/entry-order.ts),
+  // not a coverage ceiling — it's continuously graded across the whole
+  // semester by design, unlike the other four point-in-time assessments.
+  it("never examines content from a week later than its own", () => {
     for (const node of assessments) {
-      const [coverageEnd, ownWeek] = EXPECTED_COVERAGE[node.id];
-      expect(coverageEnd, `${node.id}'s coverage runs past its own week`).toBeLessThanOrEqual(
-        ownWeek,
+      if (node.id === "assessments/weekly-reflections") continue;
+      const weeks = (node.meta?.contentScope as { weeks?: number[] })?.weeks ?? [];
+      const ownWeek = Number(node.meta?.week);
+      for (const w of weeks) {
+        expect(w, `${node.id}'s coverage runs past its own week`).toBeLessThanOrEqual(ownWeek);
+      }
+    }
+  });
+
+  it("links related to exactly the lectures its content scope names", () => {
+    for (const node of assessments) {
+      const weeks = (node.meta?.contentScope as { weeks?: number[] })?.weeks ?? [];
+      const expected = weeks
+        .map((w) => `lectures/week-${String(w).padStart(2, "0")}`)
+        .sort();
+      const actual = [...(node.related ?? [])].filter((r) => r.startsWith("lectures/")).sort();
+      expect(actual, `${node.id}'s related lectures don't match its content scope`).toEqual(
+        expected,
       );
-      expect(Number(node.meta?.week), `${node.id}'s week doesn't match the scheme`).toBe(ownWeek);
     }
   });
 

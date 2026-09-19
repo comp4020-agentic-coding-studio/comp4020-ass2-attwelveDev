@@ -45,6 +45,19 @@ spec:
   - the daily routine states a fallback for the night sleep slips
   - the Wednesday interview time is confirmed by email in advance
   - the plan stands on its own without you there to narrate it
+related:
+  - lectures/week-01
+  - lectures/week-02
+  - lectures/week-03
+  - lectures/week-04
+  - lectures/week-05
+  - lectures/week-06
+  - lectures/week-07
+  - lectures/week-08
+  - lectures/week-09
+  - lectures/week-10
+  - lectures/week-11
+  - lectures/week-12
 ---
 
 ## The plan

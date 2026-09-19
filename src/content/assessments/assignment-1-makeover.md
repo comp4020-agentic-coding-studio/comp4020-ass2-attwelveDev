@@ -25,7 +25,10 @@ spec:
   - three outfits are each attached as an image
   - each outfit is justified against the occasion it is for
 related:
+  - lectures/week-01
+  - lectures/week-02
   - lectures/week-03
+  - lectures/week-04
 ---
 
 ## The brief

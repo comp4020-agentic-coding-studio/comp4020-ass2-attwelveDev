@@ -23,6 +23,19 @@ spec:
   - submitted by 12:00 the Tuesday after the week it reflects on
   - names a specific instance, not a general claim about yourself
   - each entry is under 200 words
+related:
+  - lectures/week-01
+  - lectures/week-02
+  - lectures/week-03
+  - lectures/week-04
+  - lectures/week-05
+  - lectures/week-06
+  - lectures/week-07
+  - lectures/week-08
+  - lectures/week-09
+  - lectures/week-10
+  - lectures/week-11
+  - lectures/week-12
 ---
 
 ## How the totals work
