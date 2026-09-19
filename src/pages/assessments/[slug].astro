@@ -63,7 +63,10 @@ const currentLabel = currentLabelParts.subtitle
   <section class="course-specsheet" aria-label="Assessment details">
     <dl>
       <dt>Due</dt>
-      <dd>{assessment.data.dueDisplay ?? formatCourseDateTime(assessment.data.due)}</dd>
+      <dd>
+        {assessment.data.dueDisplay ?? formatCourseDateTime(assessment.data.due)}
+        {assessment.data.dueWeekLabel && `, ${assessment.data.dueWeekLabel}`}
+      </dd>
       <dt>Weight</dt>
       <dd>{assessment.data.weight}%</dd>
     </dl>

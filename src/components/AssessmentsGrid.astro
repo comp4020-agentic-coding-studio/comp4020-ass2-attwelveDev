@@ -17,7 +17,8 @@ const visible = await sortedAssessments();
         {assessment.data.weight != null && (
           <p>
             <small>
-              Due {assessment.data.dueDisplay ?? formatCourseDateTime(assessment.data.due)} ·
+              Due {assessment.data.dueDisplay ?? formatCourseDateTime(assessment.data.due)}
+              {assessment.data.dueWeekLabel && `, ${assessment.data.dueWeekLabel}`} ·
               Weight: {assessment.data.weight}%
               {assessment.data.draft && " · Draft"}
             </small>

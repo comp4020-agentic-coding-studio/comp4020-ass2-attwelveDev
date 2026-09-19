@@ -139,6 +139,25 @@ describe("content scope and learning outcomes", () => {
   });
 });
 
+describe("due-date week labels", () => {
+  const indexHtml = readFileSync(resolve("dist/assessments/index.html"), "utf8");
+  const cases: [string, string][] = [
+    ["assessments/assignment-1-makeover", "Week 4"],
+    ["assessments/assignment-2-touch-grass", "Week 8"],
+    ["assessments/assignment-3-adulting", "Week 12"],
+    ["assessments/final-exam", "Exam Period"],
+  ];
+
+  it.each(cases)("%s's detail page states its due week label", (id, label) => {
+    const html = readFileSync(resolve(`dist/${id}/index.html`), "utf8");
+    expect(html).toContain(label);
+  });
+
+  it.each(cases)("%s's due week label appears on the main listing", (_id, label) => {
+    expect(indexHtml).toContain(label);
+  });
+});
+
 describe("weekly reflections", () => {
   const html = readFileSync(resolve("dist/assessments/weekly-reflections/index.html"), "utf8");
 

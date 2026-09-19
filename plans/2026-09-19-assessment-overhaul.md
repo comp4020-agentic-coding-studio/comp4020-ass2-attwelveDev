@@ -568,7 +568,7 @@ after the fix.
   page's existing list styling.
 - **Depends on:** None.
 
-### Task 5: Append `dueWeekLabel` to the Due row on both the specsheet and the main listing
+### Task 5: Append `dueWeekLabel` to the Due row on both the specsheet and the main listing [x]
 
 - **Description:** Render the new field wherever the due date already
   renders.
