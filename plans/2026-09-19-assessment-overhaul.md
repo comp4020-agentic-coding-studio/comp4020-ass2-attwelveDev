@@ -612,7 +612,7 @@ after the fix.
   page is unaffected (no `dueWeekLabel` set, nothing appended).
 - **Depends on:** Task 1.
 
-### Task 6: "Content scope" specsheet row
+### Task 6: "Content scope" specsheet row [x]
 
 - **Description:** Render `contentScope.display` in the specsheet.
 - **Files touched:** `src/pages/assessments/[slug].astro`.

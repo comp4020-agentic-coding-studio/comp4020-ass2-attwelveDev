@@ -158,6 +158,22 @@ describe("due-date week labels", () => {
   });
 });
 
+describe("content scope specsheet row", () => {
+  const cases: [string, string][] = [
+    ["assessments/weekly-reflections", "Weeks 1-12"],
+    ["assessments/assignment-1-makeover", "Weeks 1-4"],
+    ["assessments/assignment-2-touch-grass", "Weeks 5-7"],
+    ["assessments/assignment-3-adulting", "Weeks 1-12"],
+    ["assessments/final-exam", "Weeks 1-4, 7-8, 10-12"],
+  ];
+
+  it.each(cases)("%s's specsheet states its content scope", (id, display) => {
+    const html = readFileSync(resolve(`dist/${id}/index.html`), "utf8");
+    expect(html).toContain("Content scope");
+    expect(html).toContain(display);
+  });
+});
+
 describe("weekly reflections", () => {
   const html = readFileSync(resolve("dist/assessments/weekly-reflections/index.html"), "utf8");
 
