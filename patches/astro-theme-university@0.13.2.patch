@@ -1,0 +1,73 @@
+diff --git a/components/SearchDialog.astro b/components/SearchDialog.astro
+index 793f6f97b2b72894ebc404be77397166ea67207f..0423e3147c09f9c74a707c43515ed5eac0069ded 100644
+--- a/components/SearchDialog.astro
++++ b/components/SearchDialog.astro
+@@ -38,7 +38,9 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+         autocomplete="off"
+         data-at-search-input
+       />
+-      <kbd class="at-search-kbd">Esc</kbd>
++      <button type="button" class="at-search-kbd" aria-label="Close search" data-at-search-close>
++        Esc
++      </button>
+     </div>
+     <ul
+       class="at-search-results"
+@@ -74,7 +76,8 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+     const input = dialog.querySelector<HTMLInputElement>("[data-at-search-input]");
+     const results = dialog.querySelector<HTMLUListElement>("[data-at-search-results]");
+     const status = dialog.querySelector<HTMLElement>("[data-at-search-status]");
+-    if (!input || !results || !status) return;
++    const closeButton = dialog.querySelector<HTMLButtonElement>("[data-at-search-close]");
++    if (!input || !results || !status || !closeButton) return;
+ 
+     const base = dialog.dataset.pagefindBase ?? "/";
+     let pagefind: PagefindApi | null = null;
+@@ -187,6 +190,15 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+       requestAnimationFrame(() => input.focus());
+     });
+     dialog.addEventListener("close", reset);
++    closeButton.addEventListener("click", () => dialog.close());
++    // A native <dialog> has no separate element for its ::backdrop, so a
++    // click there is reported with the dialog itself as the target — a
++    // click anywhere inside .at-search-panel targets that panel (or one of
++    // its descendants) instead, which is how this tells "clicked outside"
++    // from "clicked the results/input/close button".
++    dialog.addEventListener("click", (event) => {
++      if (event.target === dialog) dialog.close();
++    });
+     input.addEventListener("input", () => {
+       clearTimeout(debounceTimer);
+       debounceTimer = setTimeout(() => void search(input.value), 250);
+diff --git a/styles/components.css b/styles/components.css
+index 837856c4744d275e98bbfb62c9ed88b1e987773c..e8136baa1ee6906893449bef8ecf47d3bcbe8b66 100644
+--- a/styles/components.css
++++ b/styles/components.css
+@@ -953,7 +953,13 @@
+     color: var(--at-text-muted);
+   }
+ 
++  /* Doubles as the dialog's dismiss control, so it's a <button> rather
++     than a bare <kbd> — background/appearance/cursor reset the browser's
++     own button chrome back to how the plain kbd used to look, with a
++     hover/focus state added since it's interactive now. */
+   .at-search-kbd {
++    appearance: none;
++    background: transparent;
+     font-family: var(--at-font-mono);
+     font-size: var(--at-font-size-xs);
+     padding: var(--at-spacing-xs) var(--at-spacing-sm);
+@@ -961,6 +967,13 @@
+     border-radius: var(--at-border-radius);
+     color: var(--at-text-muted);
+     line-height: 1;
++    cursor: pointer;
++  }
++
++  .at-search-kbd:hover,
++  .at-search-kbd:focus-visible {
++    background: var(--at-accent-soft);
++    color: var(--at-text);
+   }
+ 
+   .at-search-results {
