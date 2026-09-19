@@ -70,9 +70,11 @@ const destinations = [
 
   <h2>Learning outcomes</h2>
   <p>By the end of the semester, you will be able to:</p>
-  <ul>
-    {courseMeta.learningOutcomes.map((outcome) => <li>{outcome}</li>)}
-  </ul>
+  <ol>
+    {courseMeta.learningOutcomes.map((outcome, index) => (
+      <li id={`lo-${index + 1}`}>{outcome}</li>
+    ))}
+  </ol>
 
   <h2>Where to go next</h2>
   <ul class="course-list">

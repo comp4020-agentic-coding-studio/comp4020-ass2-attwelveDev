@@ -48,4 +48,16 @@ describe("homepage", () => {
     expect(html.toLowerCase()).not.toContain("status-grid");
     expect(html.toLowerCase()).not.toContain("flagged black for maintenance");
   });
+
+  it("numbers the learning outcomes with stable anchors in the new order", () => {
+    for (let n = 1; n <= 9; n++) {
+      expect(html, `missing id="lo-${n}"`).toContain(`id="lo-${n}"`);
+    }
+    const hygieneIndex = html.indexOf("hygiene and daily routines");
+    const attireIndex = html.indexOf("weather- and occasion-appropriate attire");
+    const sleepIndex = html.indexOf("sleep, nutrition, and exercise");
+    expect(hygieneIndex).toBeGreaterThan(-1);
+    expect(attireIndex).toBeGreaterThan(hygieneIndex);
+    expect(sleepIndex).toBeGreaterThan(attireIndex);
+  });
 });

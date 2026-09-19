@@ -451,7 +451,7 @@ after the fix.
     lecture week in its scope (spot-checked via `dist/assessments/<slug>/index.html` containing an `<a>` to each `lectures/week-NN/`).
 - **Depends on:** Task 1 (needs `contentScope.weeks` to exist).
 
-### Task 3: `toOutcomeRanges` pure helper and its unit test
+### Task 3: `toOutcomeRanges` pure helper and its unit test [x]
 
 - **Description:** A dependency-free function collapsing a list of 1-
   indexed outcome numbers into contiguous ranges, for both display and
@@ -515,7 +515,7 @@ after the fix.
   passes all 4 cases.
 - **Depends on:** None (can run in parallel with Tasks 1–2).
 
-### Task 4: Homepage learning-outcomes reorder, `<ol>`, and `#lo-N` anchors
+### Task 4: Homepage learning-outcomes reorder, `<ol>`, and `#lo-N` anchors [x] (human review: accepted)
 
 - **Description:** Reorder `courseMeta.learningOutcomes`, switch the
   homepage list to `<ol>`, and add stable per-item anchors.
