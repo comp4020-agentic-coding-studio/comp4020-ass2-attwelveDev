@@ -161,8 +161,8 @@ describe("due-date week labels", () => {
 describe("content scope specsheet row", () => {
   const cases: [string, string][] = [
     ["assessments/weekly-reflections", "Weeks 1-12"],
-    ["assessments/assignment-1-makeover", "Weeks 1-4"],
-    ["assessments/assignment-2-touch-grass", "Weeks 5-7"],
+    ["assessments/assignment-1-makeover", "Weeks 1-3"],
+    ["assessments/assignment-2-touch-grass", "Weeks 4-7"],
     ["assessments/assignment-3-adulting", "Weeks 1-12"],
     ["assessments/final-exam", "Weeks 1-4, 7-8, 10-12"],
   ];
@@ -501,6 +501,11 @@ describe("final exam", () => {
   it("adds a materials-compliance line to the spec", () => {
     const finalExam = assessments.find((node) => node.id === "assessments/final-exam");
     expect(finalExam?.spec?.some((line) => /pen|materials/i.test(line))).toBe(true);
+  });
+
+  it("explains why its scope excludes weeks 5, 6, and 9", () => {
+    expect(html).toMatch(/extended|self-reported/i);
+    expect(html).toMatch(/live|real[- ]time/i);
   });
 
   it("presents Station 4's scenario as live, not narrated", () => {

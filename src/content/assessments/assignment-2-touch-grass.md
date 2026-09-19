@@ -7,8 +7,8 @@ week: 8
 due: 2027-04-30T12:00:00+10:00
 weight: 20
 contentScope:
-  display: "Weeks 5-7"
-  weeks: [5, 6, 7]
+  display: "Weeks 4-7"
+  weeks: [4, 5, 6, 7]
 learningOutcomes: [3, 4, 5, 6]
 dueWeekLabel: "Week 8"
 marking:
@@ -25,6 +25,7 @@ spec:
   - the three restrictions are each addressed
   - the report is 1000 words
 related:
+  - lectures/week-04
   - lectures/week-05
   - lectures/week-06
   - lectures/week-07

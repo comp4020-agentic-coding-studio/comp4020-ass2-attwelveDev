@@ -366,6 +366,15 @@ depend on having real `weeks`/`learningOutcomes` arrays to check against.
 
 ### Task 1: Add `contentScope`, `learningOutcomes`, and `dueWeekLabel` to the assessments schema and all 5 assessment files [x]
 
+**Correction (2026-09-19, mid-execution, requested by user):** A1's
+`contentScope.weeks` is `[1,2,3]` ("Weeks 1-3"), not `[1,2,3,4]` — and
+A2's is `[4,5,6,7]` ("Weeks 4-7"), not `[5,6,7]` ("Weeks 5-7"), per the
+user's correction after Task 1's original values had already landed.
+Requirement 4's table above is superseded by this note for A1/A2;
+`learningOutcomes` and `dueWeekLabel` for both are unchanged. Task 2's
+`related[]` and the specsheet-row test cases in Task 6 were updated to
+match in the same pass — see Task 2's note.
+
 - **Description:** Extend the Zod schema and fill in real values for every
   assessment, per requirement 4's table.
 - **Files touched:** `src/content.config.ts`;
@@ -418,6 +427,17 @@ names" test is implemented as an exact match (no per-assessment
 exemption needed) since this was the only such backlink outside any
 assessment's contentScope.weeks — checked by inspecting `dist/api/index.json`
 after the fix.
+
+**Correction (2026-09-19):** following Task 1's A1/A2 scope correction
+(weeks 1-3 and 4-7, see that task's note), `assignment-1-makeover.md`'s
+`related` dropped `lectures/week-04`, `assignment-2-touch-grass.md`'s
+`related` gained `lectures/week-04`, and `week-04.mdx`'s own `related`
+lost its `assessments/assignment-1-makeover` backlink — the same class
+of incidental due-date-mention edge as the original week-08/A2 fix
+(week-04's lecture body still says "Assignment 1 (Makeover) due this
+Friday", now outside A1's scope). Verified the same way: inspected
+`dist/api/index.json` for both assessments and `lectures/week-04` after
+rebuilding — no stray edges.
 
 - **Description:** Rewrite each assessment's `related[]` to list exactly
   the lecture ids in its `contentScope.weeks`, and replace
