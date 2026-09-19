@@ -390,6 +390,11 @@ describe("final exam", () => {
     expect(html).toMatch(/leave/i);
   });
 
+  it("describes the venue as designated stations candidates walk between", () => {
+    expect(html).toMatch(/designated station/i);
+    expect(html).toMatch(/walk|move/i);
+  });
+
   it("sits after teaching ends", () => {
     const finalExam = assessments.find((node) => node.id === "assessments/final-exam");
     const week12Lecture = api.nodes.find(

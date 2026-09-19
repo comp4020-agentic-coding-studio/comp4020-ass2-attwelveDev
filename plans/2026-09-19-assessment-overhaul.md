@@ -1126,6 +1126,46 @@ wording no longer matches the built behaviour; see §7's coverage table.
   reference the finalized bands/tie-ins without contradicting them), but
   not a hard technical dependency.
 
+### Task 20: Final Exam venue/station layout note (new scope, added 2026-09-19) [x] (human review: accepted)
+
+**Execution note (2026-09-19):** after the first Human review round, the
+user asked for the identical sentence on `practice-exam.astro` too (it
+already repeats the real exam's conditions elsewhere, per
+`spec/practice-exam.test.ts`'s "repeats the real exam's conditions"
+test) — added as the same exact wording, verified with its own red test
+in `spec/practice-exam.test.ts`.
+
+- **Description:** Not one of the original 19 tasks — found by the user
+  while reviewing Task 8's overview paragraph, which mentioned exam
+  stations, prompting the observation that `final-exam.md` never states
+  how candidates physically move between the five stations at all.
+  Confirmed with the user to add now, as its own scoped addition rather
+  than deferred.
+- **Files touched:** `src/content/assessments/final-exam.md`,
+  `src/pages/assessments/final-exam/practice-exam.astro` (added after
+  Human review; see execution note above).
+- **Tests first (red):** Add to `describe("final exam")` in
+  `spec/assessment-scheme.test.ts`:
+  ```ts
+  it("describes the venue as designated stations candidates walk between", () => {
+    expect(html).toMatch(/designated station/i);
+    expect(html).toMatch(/walk|move/i);
+  });
+  ```
+  Fails today — no such text exists anywhere on the page.
+- **Implementation (green):** Add one sentence to the "Exam conditions"
+  section (after the existing "Stations may be completed in any order."
+  line) stating the venue is divided into designated station areas that
+  candidates walk between to attempt each one.
+- **Refactor:** None expected.
+- **Acceptance criteria:** New test passes; doesn't contradict "lets
+  candidates attend the five stations in any order" or "makes clear the
+  total 2 hour 50 minute session is fixed" (existing tests).
+- **Human review:** Read the added sentence for tone (matter-of-fact,
+  consistent with the surrounding Exam conditions list) and confirm it
+  doesn't imply a stricter or looser movement rule than intended.
+- **Depends on:** None.
+
 ## 6. Feature-level Definition of Done
 
 - [ ] Every task in §5 complete and its tests passing

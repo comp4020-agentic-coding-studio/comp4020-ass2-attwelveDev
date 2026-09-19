@@ -76,6 +76,8 @@ difficulty.
 
 ## Exam conditions
 
+The exam venue is divided into five designated station areas; you walk
+between them yourself as you move from one station to the next.
 Stations may be completed in any order.
 
 The only material permitted is a black or blue pen. No phones, no
