@@ -63,7 +63,18 @@ is the recording.
 ## What you submit
 
 A 1000-word report naming the activity, when it ran, and who else was
-there, addressing each of the three restrictions directly.
+there, addressing each of the three restrictions directly. Under
+Reflection, the report also:
+
+- states whether you brought your phone, whether you checked it, and
+  connects this to Week 6's finding on the mere-presence effect (Ward
+  et al., 2017);
+- states whether this activity met your Week 4 exercise plan's stated
+  frequency and named activity for the week — and if it didn't, what
+  you'd adjust;
+- for at least one of the two non-CS people, names one thing you
+  learned using the small-talk formula from Week 7 (their name, a
+  hobby, a recent trip).
 
 The report is submitted on paper. See [Policies](/policies/) for where
 to hand it in and the extenuating-circumstances exception.

@@ -304,6 +304,19 @@ describe("assignment 2 touch grass", () => {
     expect(html).toMatch(/\btwo\b.*non-CS|non-CS.*\btwo\b|\b2\b.*non-CS|non-CS.*\b2\b/is);
   });
 
+  it("connects to Week 6's mere-presence effect via the phone", () => {
+    expect(html).toMatch(/phone/i);
+    expect(html).toMatch(/mere-presence/i);
+  });
+
+  it("checks the activity against the student's Week 4 exercise plan", () => {
+    expect(html).toMatch(/exercise plan/i);
+  });
+
+  it("operationalises Week 7's small-talk formula for at least one non-CS person", () => {
+    expect(html).toMatch(/small-talk formula/i);
+  });
+
   it("sets the word count", () => {
     expect(html).toMatch(/1000|1,000/);
   });
@@ -316,6 +329,13 @@ describe("assignment 2 touch grass", () => {
     for (const band of ["HD", "D", "C", "P", "N"]) {
       expect(html, `missing band ${band}`).toMatch(new RegExp(`\\b${band}\\b`));
     }
+  });
+});
+
+describe("week 4 lab", () => {
+  it("notes the exercise plan's relevance to Assignment 2", () => {
+    const weekFourLab = readFileSync(resolve("dist/sessions/week-04/index.html"), "utf8");
+    expect(weekFourLab).toMatch(/assignment 2|touch grass/i);
   });
 });
 

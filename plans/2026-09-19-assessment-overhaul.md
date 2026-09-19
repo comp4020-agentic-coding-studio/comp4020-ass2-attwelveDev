@@ -868,7 +868,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   evidence and justification" existing test's match.
 - **Depends on:** None.
 
-### Task 13: A2's three Reflection tie-ins and the Week 4 Lab line
+### Task 13: A2's three Reflection tie-ins and the Week 4 Lab line [x]
 
 - **Description:** Add the phone/mere-presence, exercise-plan-check, and
   small-talk-formula-naming lines to A2, folded under the existing

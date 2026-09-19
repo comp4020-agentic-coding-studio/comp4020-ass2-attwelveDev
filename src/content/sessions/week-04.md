@@ -89,4 +89,6 @@ updated versions of both, marked in week 12.
 
 Keep your sleep schedule and exercise plan. Revise either before
 [Assignment 3](/assessments/assignment-3-adulting/) asks for updated
-versions of both, marked in week 12.
+versions of both, marked in week 12. [Assignment 2](/assessments/assignment-2-touch-grass/)
+also checks your activity against this same exercise plan's stated
+frequency and named activity, before then.
