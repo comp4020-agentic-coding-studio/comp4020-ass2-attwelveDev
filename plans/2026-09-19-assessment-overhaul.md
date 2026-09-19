@@ -1227,7 +1227,23 @@ in `spec/practice-exam.test.ts`.
   doesn't imply a stricter or looser movement rule than intended.
 - **Depends on:** None.
 
-### Task 21: A3 interview flexibility, triple clash rule, and assessed criterion; marking-table sort (new scope, added 2026-09-19)
+### Task 21: A3 interview flexibility, triple clash rule, and assessed criterion; marking-table sort (new scope, added 2026-09-19) [x] (human review: accepted, after one wording fix)
+
+**Execution notes (2026-09-19):**
+- Two soft-break rendering bugs surfaced during this task (the same
+  CommonMark class of issue as earlier tasks — a paragraph's mid-source
+  line wrap becomes a literal newline in the rendered HTML, not a
+  space): the "not the / assessment submission itself" wrap, fixed by
+  rejoining the line.
+- `spec/treatment.test.ts`'s hardcoded `tbodyRows(html).length).toBe(13)`
+  for A3's marking table needed updating to `14`, since splitting the
+  interview criterion into two rows changed the row count — a real,
+  legitimate update (not a weakened test), caught by the full suite run.
+- Per Human review, "within the week" was ambiguous — replaced with the
+  explicit "within week 12" in all three spots (description, the
+  interview bullet, the confirm-a-slot sentence), confirmed correct
+  since the due date (Friday 28 May) falls in the same calendar week as
+  week 12's Tuesday lecture (25 May).
 
 - **Description:** Found by the user after the plan's original scope was
   done: A3's interview needs more real detail (duration, purpose, and

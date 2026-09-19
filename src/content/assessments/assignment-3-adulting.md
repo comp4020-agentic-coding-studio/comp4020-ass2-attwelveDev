@@ -2,7 +2,7 @@
 title: "Assignment 3: Time to be an Adult"
 description:
   A week-long plan across thirteen components of independent living,
-  submitted in full and interviewed against on the Wednesday
+  submitted in full and interviewed against within week 12
 week: 12
 due: 2027-05-28T12:00:00+10:00
 weight: 20
@@ -24,26 +24,28 @@ marking:
       weight: 10
     - name: "Sleep schedule: viability and a stated fallback"
       weight: 10
-    - name: "Exercise: frequency and specificity"
-      weight: 6
     - name: "Laundry: frequency and colour separation"
       weight: 8
     - name: "The date: activity selection, booking, timing, attire"
       weight: 8
     - name: Grocery logistics
       weight: 8
-    - name: "The interview: correspondence, preparation, attire, transit"
+    - name: "Exercise: frequency and specificity"
       weight: 6
-    - name: Cleaning schedule
-      weight: 5
     - name: "The hangout: negotiation and workload clearance"
       weight: 5
+    - name: "The interview: correspondence, preparation, attire, transit"
+      weight: 4
+    - name: "The interview: professional conduct and social interaction"
+      weight: 4
     - name: Skincare
       weight: 4
+    - name: Cleaning schedule
+      weight: 3
 spec:
   - all thirteen plan components are submitted
   - the daily routine states a fallback for the night sleep slips
-  - the Wednesday interview time is confirmed by email in advance
+  - the interview time is confirmed by email in advance
   - the plan stands on its own without you there to narrate it
 related:
   - lectures/week-01
@@ -95,21 +97,21 @@ Submit a single week-long plan covering thirteen components:
 - **The hangout** — time negotiated with close friends outside the course,
   with the rest of the week's workload cleared around it.
 - **The interview** — correspondence confirming a time, a plan for attire
-  and transit, and the interview itself, held Wednesday afternoon.
+  and transit, and a 10-minute interview discussing the assignment, to
+  double-check the submission, held at a stated time within week 12.
 
-The Wednesday interview time has not been specified: email the Convenor to
-confirm a slot before the deadline. A plan submitted without a confirmed
-slot is treated as incomplete. The hangout and the interview must not
-both be scheduled for the same Wednesday afternoon.
+The interview time has not been specified: email the Convenor to
+confirm a slot within week 12, before the deadline. A plan submitted
+without a confirmed slot is treated as incomplete. The hangout, the
+interview, and the date must not clash with each other.
 
 ## Submission
 
 The plan is submitted as a single paper document — see
 [Policies](/policies/) for where to hand it in and the
 extenuating-circumstances exception. The email confirming your
-Wednesday interview slot is separate correspondence with the Convenor,
-not the assessment submission itself, and still goes by email as
-described above.
+interview slot is separate correspondence with the Convenor, not the assessment submission itself, and still goes by email as described
+above.
 
 ## How each band reads
 
@@ -129,12 +131,12 @@ wrote it:
 
 ## FAQ
 
-### Can the hangout and the interview both be Wednesday if they're at different times?
+### Can the hangout and the interview be on the same day if they're at different times?
 
-Yes — the restriction is on the same Wednesday afternoon specifically,
-not on the whole day. A hangout on Wednesday morning and an interview
-on Wednesday afternoon is fine; both landing in the same afternoon slot
-isn't.
+Yes, as long as the times don't actually overlap or crowd each other.
+The restriction is on the three components — the hangout, the
+interview, and the date — clashing with each other, not on which day
+of the week each one falls on.
 
 ### My grocery budget is more than 15% of my income this week. Can I round down instead of cutting the list?
 

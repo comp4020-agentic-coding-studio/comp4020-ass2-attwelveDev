@@ -394,9 +394,9 @@ describe("assignment 3 adulting", () => {
     expect(html).toMatch(/forecast/i);
   });
 
-  it("warns against double-booking the hangout and the interview", () => {
-    expect(html).toMatch(/(hangout|interview).{0,80}(hangout|interview)/is);
-    expect(html).toMatch(/same wednesday afternoon|both.{0,20}wednesday/i);
+  it("warns against clashing the hangout, the interview, and the date", () => {
+    expect(html).toMatch(/hangout.{0,80}interview.{0,80}date|hangout.{0,120}date.{0,120}interview/is);
+    expect(html).toMatch(/clash/i);
   });
 
   it("describes the plan, not the student", () => {
@@ -404,9 +404,28 @@ describe("assignment 3 adulting", () => {
     expect(html.toLowerCase()).not.toContain("you can't");
   });
 
-  it("puts the Wednesday interview time in the student's hands", () => {
-    expect(html).toMatch(/Wednesday/);
+  it("puts the interview time in the student's hands", () => {
     expect(html).toMatch(/not been specified|unspecified|confirm/i);
+  });
+
+  it("states the interview's duration and purpose", () => {
+    expect(html).toMatch(/10 minutes|10-minute|ten minutes|ten-minute/i);
+    expect(html).toMatch(/double-check|double check/i);
+  });
+
+  it("assesses the interview's professional conduct as its own criterion", () => {
+    const a3 = assessments.find((n) => n.id === "assessments/assignment-3-adulting");
+    const marking = a3?.meta?.marking as WeightedMarking;
+    const conduct = marking.criteria.find((c) => /professional conduct/i.test(c.name));
+    expect(conduct?.weight).toBe(4);
+  });
+
+  it("orders the marking table by weight, descending", () => {
+    const a3 = assessments.find((n) => n.id === "assessments/assignment-3-adulting");
+    const marking = a3?.meta?.marking as WeightedMarking;
+    const weights = marking.criteria.map((c) => c.weight);
+    const sorted = [...weights].sort((a, b) => b - a);
+    expect(weights).toEqual(sorted);
   });
 
   it("submits the plan as one paper document, separate from the interview-scheduling email", () => {
