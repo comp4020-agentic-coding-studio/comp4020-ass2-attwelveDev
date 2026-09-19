@@ -366,6 +366,15 @@ describe("assignment 3 adulting", () => {
     }
   });
 
+  it("requires the date's attire to suit the day's forecast", () => {
+    expect(html).toMatch(/forecast/i);
+  });
+
+  it("warns against double-booking the hangout and the interview", () => {
+    expect(html).toMatch(/(hangout|interview).{0,80}(hangout|interview)/is);
+    expect(html).toMatch(/same wednesday afternoon|both.{0,20}wednesday/i);
+  });
+
   it("describes the plan, not the student", () => {
     expect(html.toLowerCase()).not.toContain("you are");
     expect(html.toLowerCase()).not.toContain("you can't");

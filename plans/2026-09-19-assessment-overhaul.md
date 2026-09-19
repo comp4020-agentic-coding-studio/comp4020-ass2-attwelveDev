@@ -908,7 +908,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   (Before/In/Afterwards shape) stays green for Week 4's Lab.
 - **Depends on:** None.
 
-### Task 14: A3 weather clause and hangout/interview scheduling note
+### Task 14: A3 weather clause and hangout/interview scheduling note [x]
 
 - **Description:** Close the weather-appropriate-attire LO gap on "The
   date"; add the no-double-booking note.

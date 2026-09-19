@@ -91,7 +91,7 @@ Submit a single week-long plan covering thirteen components:
 - **Skincare** — a stated routine (cleanse, moisturise, SPF) with a
   frequency for each step, not just a list of products owned.
 - **The date** — an activity booked, at a stated time, with attire decided
-  in advance.
+  in advance, appropriate to the activity and the day's forecast.
 - **The hangout** — time negotiated with close friends outside the course,
   with the rest of the week's workload cleared around it.
 - **The interview** — correspondence confirming a time, a plan for attire
@@ -99,7 +99,8 @@ Submit a single week-long plan covering thirteen components:
 
 The Wednesday interview time has not been specified: email the Convenor to
 confirm a slot before the deadline. A plan submitted without a confirmed
-slot is treated as incomplete.
+slot is treated as incomplete. The hangout and the interview must not
+both be scheduled for the same Wednesday afternoon.
 
 ## Submission
 
