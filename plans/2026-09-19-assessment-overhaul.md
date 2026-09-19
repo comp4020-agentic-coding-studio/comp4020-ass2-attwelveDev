@@ -790,7 +790,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   not "good"/"bad").
 - **Depends on:** None.
 
-### Task 10: A2 grade bands
+### Task 10: A2 grade bands [x] (human review: accepted)
 
 - **Description:** Add a holistic HD/D/C/P/N table to
   `assignment-2-touch-grass.md`.

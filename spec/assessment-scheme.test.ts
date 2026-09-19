@@ -307,6 +307,12 @@ describe("assignment 2 touch grass", () => {
   it("submits the report on paper", () => {
     expect(html).toMatch(/paper/i);
   });
+
+  it("publishes five band descriptors", () => {
+    for (const band of ["HD", "D", "C", "P", "N"]) {
+      expect(html, `missing band ${band}`).toMatch(new RegExp(`\\b${band}\\b`));
+    }
+  });
 });
 
 describe("assignment 3 adulting", () => {

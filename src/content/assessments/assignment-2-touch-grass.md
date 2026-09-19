@@ -67,3 +67,22 @@ there, addressing each of the three restrictions directly.
 
 The report is submitted on paper. See [Policies](/policies/) for where
 to hand it in and the extenuating-circumstances exception.
+
+## How each band reads
+
+The bands describe the state of the submitted report, not the person
+who wrote it:
+
+- **HD** — the report names specific, checkable observations about the
+  activity and the people there, reflects on what those observations
+  actually mean rather than just recounting them, and addresses all
+  three restrictions with specific evidence.
+- **D** — the report is specific about the activity and reflects on it,
+  but one restriction is addressed only in general terms.
+- **C** — the report covers the activity and all three restrictions,
+  but the reflection mostly summarises what happened rather than
+  examining it.
+- **P** — the report is vague about what actually happened, or one
+  restriction goes unaddressed.
+- **N** — the report doesn't name a real activity, or two or more
+  restrictions go unaddressed.
