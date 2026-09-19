@@ -433,6 +433,15 @@ describe("week 10 lecture", () => {
   });
 });
 
+describe("week 10 deck", () => {
+  it("states A3's real Budget and Grocery logistics weights", () => {
+    const html = readFileSync(resolve("dist/decks/week-10/index.html"), "utf8");
+    expect(html).toMatch(/Budget \(10%\)/);
+    expect(html).toMatch(/Grocery logistics \(8%\)/);
+    expect(html).not.toMatch(/Budget \(12%\)/);
+  });
+});
+
 describe("final exam", () => {
   const html = readFileSync(resolve("dist/assessments/final-exam/index.html"), "utf8");
 

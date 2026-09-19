@@ -1227,6 +1227,103 @@ in `spec/practice-exam.test.ts`.
   doesn't imply a stricter or looser movement rule than intended.
 - **Depends on:** None.
 
+### Task 21: A3 interview flexibility, triple clash rule, and assessed criterion; marking-table sort (new scope, added 2026-09-19)
+
+- **Description:** Found by the user after the plan's original scope was
+  done: A3's interview needs more real detail (duration, purpose, and
+  scheduling flexibility — one fixed Wednesday afternoon for every
+  student is impractical), should itself be formally assessed
+  (professional conduct/interaction, not just logistics), the
+  hangout/interview/date clash rule needs to cover all three components
+  (not just hangout/interview), and the "How it is marked" table should
+  be sorted by weight, descending (Exercise currently breaks that order).
+  Resolved via `AskUserQuestion`: interview moves to any day/time within
+  the plan's own week (not fixed Wednesday afternoon, and not week 13 —
+  that would put it in a different week than the hangout/date, making
+  the clash rule meaningless); it is formally assessed via a new
+  criterion.
+- **Files touched:** `src/content/assessments/assignment-3-adulting.md`;
+  `spec/assessment-scheme.test.ts`.
+- **Design decisions (confirmed via `AskUserQuestion`):**
+  - Interview timing: any day/time within the plan's own week, not
+    restricted to Wednesday afternoon.
+  - Interview duration: 10 minutes (matches the course's other
+    short-format checks).
+  - Interview purpose: discusses the assignment, to double-check the
+    submission.
+  - Interview is formally assessed: a new criterion, "The interview:
+    professional conduct and social interaction," weight 4.
+  - Reweight to make room (net zero, sum stays 100): "The interview:
+    correspondence, preparation, attire, transit" 6→4; "Cleaning
+    schedule" 5→3; new criterion added at 4.
+  - "How it is marked" table sorted by weight, descending — ties broken
+    by keeping the two interview criteria adjacent, then Skincare.
+- **Tests first (red):** In `spec/assessment-scheme.test.ts`'s
+  `describe("assignment 3 adulting")` block:
+  - Update `"warns against double-booking the hangout and the
+    interview"` → rename `"warns against clashing the hangout, the
+    interview, and the date"`, drop the Wednesday-specific regex, add
+    a check that all three named components appear together with a
+    clash/overlap warning.
+  - Update `"puts the Wednesday interview time in the student's
+    hands"` → drop the literal `Wednesday` requirement (the interview
+    is no longer fixed to that day), keep the "confirm a slot" check.
+  - Add `"states the interview's duration and purpose"` — checks for
+    "10 minutes" (or similar) and "double-check" / "double check" (or
+    similar) language.
+  - Add `"assesses the interview's professional conduct as its own
+    criterion"` — checks a criterion matching `/professional conduct/i`
+    exists with weight 4.
+  - Add `"orders the marking table by weight, descending"` — reads
+    `node.meta.marking.criteria` and asserts the weight sequence equals
+    itself sorted descending.
+  All fail today: the old Wednesday-specific wording and order are
+  still in place, and the new criterion doesn't exist.
+- **Implementation (green):** Rewrite the frontmatter (`description`,
+  `marking.criteria` — 14 entries now, reordered and reweighted per the
+  decisions above, `spec`'s "Wednesday interview time" line
+  genericized) and the body (`The interview` bullet gains duration/
+  purpose/flexible-timing wording; the paragraph after the plan's bullet
+  list generalizes "The Wednesday interview time" to "The interview
+  time" and extends the clash warning to all three of the hangout, the
+  interview, and the date; the Submission section's "Wednesday interview
+  slot" wording genericized). Also rewrite the FAQ's first Q&A (which
+  was specifically about "both Wednesday, different times") to match the
+  new, more general clash rule.
+- **Refactor:** None expected.
+- **Acceptance criteria:** All new/changed tests pass; the existing
+  "marks every item with weighted criteria summing to 100" test stays
+  green (net-zero reweight); "requires all eleven named plan components"
+  and "requires the date's attire to suit the day's forecast" stay
+  green.
+- **Human review:** Read the reworded interview bullet, the
+  triple-clash sentence, the reweight, and the reordered marking table
+  for internal consistency and tone.
+- **Depends on:** None.
+
+### Task 22: Week 10 slide deck states A3's real Budget/Grocery weights (new scope, added 2026-09-19) [x]
+
+- **Description:** Found by the user: `src/content/lectures/week-10.mdx`
+  was fixed in Task 15, but `src/decks/week-10.deck.mdx` (the slide deck,
+  a separate content file) states the same wrong numbers ("Budget
+  (12%)... Grocery logistics (6%)") and was missed.
+- **Files touched:** `src/decks/week-10.deck.mdx`; `spec/assessment-scheme.test.ts`.
+- **Tests first (red):** Add a `describe("week 10 deck")` block reading
+  `dist/decks/week-10/index.html`, asserting `Budget (10%)` and `Grocery
+  logistics (8%)` are present and `Budget (12%)` is absent — mirrors the
+  existing `describe("week 10 lecture")` block from Task 15.
+- **Implementation (green):** Update the deck's "Key point 5" slide
+  text from "Budget (12%)... Grocery logistics (6%)" to "Budget
+  (10%)... Grocery logistics (8%)" — same correction as Task 15's
+  lecture-page fix.
+- **Refactor:** None expected.
+- **Acceptance criteria:** New test passes; `astromotion`'s existing
+  structural-violation check on the deck stays green.
+- **Human review:** None needed — this is a direct factual correction
+  mirroring an already-approved fix, not new prose.
+- **Depends on:** None (but is the same correction as Task 15, just in
+  a file Task 15 missed).
+
 ## 6. Feature-level Definition of Done
 
 - [x] Every task in §5 complete and its tests passing (Tasks 1–20, 20
