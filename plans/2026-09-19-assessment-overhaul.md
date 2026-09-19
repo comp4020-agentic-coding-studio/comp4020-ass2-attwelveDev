@@ -726,7 +726,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
 - **Depends on:** Tasks 1, 3, 4 (needs the field, the helper, and the
   homepage anchors to link to).
 
-### Task 8: Assessment index overview paragraph
+### Task 8: Assessment index overview paragraph [x] (human review: accepted, after wording fixes)
 
 - **Description:** Replace the placeholder line with real overview prose.
 - **Files touched:** `src/pages/assessments/index.mdx`.

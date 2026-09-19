@@ -199,6 +199,20 @@ describe("learning outcomes specsheet row", () => {
   });
 });
 
+describe("assessment index overview", () => {
+  const html = readFileSync(resolve("dist/assessments/index.html"), "utf8");
+
+  it("no longer carries the placeholder weights line", () => {
+    expect(html).not.toContain("Weights should sum to 100.");
+  });
+
+  it("describes the five-item scheme before the grid", () => {
+    expect(html).toMatch(/twelve|weekly reflections/i);
+    expect(html).toMatch(/three assignments|assignment/i);
+    expect(html).toMatch(/final exam/i);
+  });
+});
+
 describe("weekly reflections", () => {
   const html = readFileSync(resolve("dist/assessments/weekly-reflections/index.html"), "utf8");
 
