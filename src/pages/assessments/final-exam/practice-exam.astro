@@ -65,6 +65,7 @@ const description =
     <li>Bedtime: ________________________________</li>
     <li>Laundry: ________________________________</li>
     <li>Exercise: ________________________________</li>
+    <li>Hobby or interest: ________________________________</li>
   </ul>
   <p>
     Then fill in the schedule below with your own logged entries for the
@@ -75,16 +76,16 @@ const description =
   <div class="course-schedule">
     <table>
     <thead>
-      <tr><th>Day</th><th>Shower</th><th>Actual sleep time</th><th>Laundry</th><th>Exercise logged</th></tr>
+      <tr><th>Day</th><th>Shower</th><th>Actual sleep time</th><th>Laundry</th><th>Exercise logged</th><th>Hobby/interest time</th></tr>
     </thead>
     <tbody>
-      <tr><td>Mon</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Tue</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Wed</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Thu</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Fri</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Sat</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Sun</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Mon</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Tue</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Wed</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Thu</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Fri</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Sat</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Sun</td><td></td><td></td><td></td><td></td><td></td></tr>
     </tbody>
   </table>
   </div>
@@ -94,37 +95,42 @@ const description =
     <p>
       For a candidate whose stated intent was "shower daily, bedtime
       11:00pm, laundry before the pile is visible from the doorway, two
-      named exercise sessions a week," a schedule that meets every
-      definition looks like this: a shower recorded every day; a bedtime
-      at or before 11:00pm each night, satisfying the definition of
-      Bedtime as a specific, named clock time; laundry done by midweek,
-      well before any pile becomes visible from the doorway; and exercise
-      entries that name a stated activity on a schedule, such as
-      "30-minute run" or "gym session", not an incidental walk to the
-      vending machine. Checking a real schedule against your own stated
-      intent and the course's definitions, entry by entry, and naming
-      which definition each one passes or fails, is what earns marks here
-      — not whether the result happens to be a pass or a fail.
+      named exercise sessions a week, one hobby session a week," a
+      schedule that meets every definition looks like this: a shower
+      recorded every day; a bedtime at or before 11:00pm each night,
+      satisfying the definition of Bedtime as a specific, named clock
+      time; laundry done by midweek, well before any pile becomes visible
+      from the doorway; exercise entries that name a stated activity on a
+      schedule, such as "30-minute run" or "gym session", not an
+      incidental walk to the vending machine; and a hobby/interest entry
+      naming the same hobby stated as intent, on at least one day —
+      satisfying the definition of Hobby as a recurring activity
+      undertaken for enjoyment, not involving a compiler. Checking a real
+      schedule against your own stated intent and the
+      course's definitions, entry by entry, and naming which definition
+      each one passes or fails, is what earns marks here — not whether
+      the result happens to be a pass or a fail.
     </p>
     <h3>Poor solution</h3>
     <p>
       Stated intent: "shower daily, bedtime 11:00pm, laundry before the
       pile is visible from the doorway, two named exercise sessions a
-      week." An example submission that fails several entries against it:
+      week, one hobby session a week." An example submission that fails
+      several entries against it:
     </p>
     <div class="course-schedule">
     <table>
       <thead>
-        <tr><th>Day</th><th>Shower</th><th>Actual sleep time</th><th>Laundry</th><th>Exercise logged</th></tr>
+        <tr><th>Day</th><th>Shower</th><th>Actual sleep time</th><th>Laundry</th><th>Exercise logged</th><th>Hobby/interest time</th></tr>
       </thead>
       <tbody>
-        <tr><td>Mon</td><td>Yes, 7:40am</td><td>1:15am</td><td>—</td><td>—</td></tr>
-        <tr><td>Tue</td><td>No</td><td>12:40am</td><td>—</td><td>"walk to vending machine"</td></tr>
-        <tr><td>Wed</td><td>Yes</td><td>11:50pm</td><td>—</td><td>—</td></tr>
-        <tr><td>Thu</td><td>No</td><td>2:05am</td><td>—</td><td>—</td></tr>
-        <tr><td>Fri</td><td>Yes</td><td>11:40pm</td><td>Started, not finished</td><td>—</td></tr>
-        <tr><td>Sat</td><td>Yes</td><td>3:20am</td><td>—</td><td>—</td></tr>
-        <tr><td>Sun</td><td>No</td><td>1:00am</td><td>Pile now visible from the doorway</td><td>—</td></tr>
+        <tr><td>Mon</td><td>Yes, 7:40am</td><td>1:15am</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Tue</td><td>No</td><td>12:40am</td><td>—</td><td>"walk to vending machine"</td><td>—</td></tr>
+        <tr><td>Wed</td><td>Yes</td><td>11:50pm</td><td>—</td><td>—</td><td>"Coding a side project"</td></tr>
+        <tr><td>Thu</td><td>No</td><td>2:05am</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Fri</td><td>Yes</td><td>11:40pm</td><td>Started, not finished</td><td>—</td><td>—</td></tr>
+        <tr><td>Sat</td><td>Yes</td><td>3:20am</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Sun</td><td>No</td><td>1:00am</td><td>Pile now visible from the doorway</td><td>—</td><td>—</td></tr>
       </tbody>
     </table>
   </div>
@@ -140,17 +146,22 @@ const description =
       does include a failure, the exercise entry is the one most often
       missed: students frequently accept a walk to the vending machine as
       satisfying their stated intent, when the definition of Exercise
-      specifically excludes it as a non-example.
+      specifically excludes it as a non-example. The poor solution above
+      makes the equivalent mistake with the hobby/interest entry: it logs
+      "coding a side project," which fails the definition of Hobby from
+      Week 6 on its own terms — not involving a compiler — the same way
+      the vending-machine walk fails Exercise.
     </p>
     <h3>Rubric — out of 15</h3>
     <div class="course-schedule">
     <table>
       <thead><tr><th>Criterion</th><th>Marks</th></tr></thead>
       <tbody>
-        <tr><td>Checks every exercise entry against the definition, excluding incidental walks</td><td>4</td></tr>
-        <tr><td>Checks the laundry entry against the pile-visible threshold</td><td>4</td></tr>
-        <tr><td>Checks every shower entry against the daily-shower definition</td><td>4</td></tr>
+        <tr><td>Checks every exercise entry against the definition, excluding incidental walks</td><td>3</td></tr>
+        <tr><td>Checks the laundry entry against the pile-visible threshold</td><td>3</td></tr>
+        <tr><td>Checks every shower entry against the daily-shower definition</td><td>3</td></tr>
         <tr><td>Checks every bedtime entry against the specific-clock-time definition</td><td>3</td></tr>
+        <tr><td>Checks the hobby/interest entry against the stated intent</td><td>3</td></tr>
       </tbody>
     </table>
   </div>
@@ -158,9 +169,9 @@ const description =
     <table>
       <thead><tr><th>Band</th><th>Marks</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>HD</td><td>13–15</td><td>Checks all four categories against their exact definitions, citing specific days and correct pass/fail reasoning throughout.</td></tr>
-        <tr><td>D</td><td>10–12</td><td>Checks three of the four categories specifically; the fourth is only general.</td></tr>
-        <tr><td>C</td><td>7–9</td><td>Checks two of the four categories specifically.</td></tr>
+        <tr><td>HD</td><td>13–15</td><td>Checks all five categories against their exact definitions or stated intent, citing specific days and correct pass/fail reasoning throughout.</td></tr>
+        <tr><td>D</td><td>10–12</td><td>Checks four of the five categories specifically; the fifth is only general.</td></tr>
+        <tr><td>C</td><td>7–9</td><td>Checks three of the five categories specifically.</td></tr>
         <tr><td>P</td><td>4–6</td><td>Submits a schedule but checks it only in general terms ("pretty bad", "should shower more").</td></tr>
         <tr><td>N</td><td>0–3</td><td>No schedule submitted, or no attempt to check it against any definition.</td></tr>
       </tbody>

@@ -146,6 +146,11 @@ describe("station 1: hygiene and health", () => {
     expect(section).toMatch(/\bN\b/);
     expect(section).toMatch(/out of 15/);
   });
+
+  it("checks a hobby or interest alongside hygiene, sleep, laundry, and exercise", () => {
+    const section = html.slice(html.indexOf("<h2>Station 1"), html.indexOf("<h2>Station 2"));
+    expect(section).toMatch(/Hobby|Interest/);
+  });
 });
 
 describe("station 2: fashion", () => {

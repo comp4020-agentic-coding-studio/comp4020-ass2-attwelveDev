@@ -1023,7 +1023,33 @@ wording no longer matches the built behaviour; see §7's coverage table.
   defensive) and check it doesn't imply weeks 5/6/9 are less important.
 - **Depends on:** None.
 
-### Task 17: Station 1 hobby/interest check (real exam page and practice exam)
+### Task 17: Station 1 hobby/interest check (real exam page and practice exam) [x] (human review: accepted, after several rounds)
+
+**Execution notes (2026-09-19):**
+- Real-exam wording went through two rounds: dropped the requirement
+  that the hobby be "the one you named in Week 6's Lab brainstorm"
+  (the practice exam doesn't enforce that either), then dropped the
+  "kind of check Week 6's Lab brainstorm first introduced" attribution
+  clause too as unclear — final wording is plain: "plus a hobby or
+  interest you engage in."
+- The poor-solution schedule was strengthened per user feedback: rather
+  than a blank hobby entry, it logs "Coding a side project" — which
+  fails Week 6's actual formal Hobby definition ("not involving a
+  compiler") the same way the existing vending-machine-walk entry fails
+  Exercise. `compiler` intentionally kept, not changed to `computer`,
+  per user decision — it's Week 6's own pre-existing definition text,
+  out of this plan's scope to edit.
+- Adding the hobby check pulled Week 6 itself into the Final Exam's
+  content scope (the check traces to Week 6's Lab, even though the
+  wording above no longer says so explicitly) — caught by the user,
+  not by a test. Cascaded into: `contentScope.weeks`/`display` gained
+  6 (now "Weeks 1-4, 6-8, 10-12"), `related[]` gained `lectures/week-06`,
+  and Task 16's rationale paragraph was corrected — weeks 5 and 9 are
+  now the excluded set (not 5, 6, 9), "a week of device discipline"
+  dropped from the reasoning, and 6 added to the kept-weeks list. No
+  stray backlink issue this time (`week-06.mdx`/`week-06.md` had no
+  existing `related` edge to `final-exam`). Requirement 4's Final Exam
+  row and Task 16's own description are superseded by this note.
 
 - **Description:** Add the LO4 hobby/interest check to Station 1 on both
   pages, rebalancing the practice exam's rubric to 5 criteria.

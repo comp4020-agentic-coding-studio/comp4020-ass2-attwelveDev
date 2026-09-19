@@ -164,7 +164,7 @@ describe("content scope specsheet row", () => {
     ["assessments/assignment-1-makeover", "Weeks 1-3"],
     ["assessments/assignment-2-touch-grass", "Weeks 4-7"],
     ["assessments/assignment-3-adulting", "Weeks 1-12"],
-    ["assessments/final-exam", "Weeks 1-4, 7-8, 10-12"],
+    ["assessments/final-exam", "Weeks 1-4, 6-8, 10-12"],
   ];
 
   it.each(cases)("%s's specsheet states its content scope", (id, display) => {
@@ -458,6 +458,11 @@ describe("final exam", () => {
     expect(html).toMatch(/walk|move/i);
   });
 
+  it("adds a hobby or interest check to Station 1, tied to Week 6's Lab", () => {
+    const station1 = html.slice(html.indexOf("Station 1:"), html.indexOf("Station 2:"));
+    expect(station1).toMatch(/hobby|interest/i);
+  });
+
   it("sits after teaching ends", () => {
     const finalExam = assessments.find((node) => node.id === "assessments/final-exam");
     const week12Lecture = api.nodes.find(
@@ -503,7 +508,7 @@ describe("final exam", () => {
     expect(finalExam?.spec?.some((line) => /pen|materials/i.test(line))).toBe(true);
   });
 
-  it("explains why its scope excludes weeks 5, 6, and 9", () => {
+  it("explains why its scope excludes weeks 5 and 9", () => {
     expect(html).toMatch(/extended|self-reported/i);
     expect(html).toMatch(/live|real[- ]time/i);
   });
