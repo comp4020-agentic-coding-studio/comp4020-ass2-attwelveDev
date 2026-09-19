@@ -1089,7 +1089,12 @@ wording no longer matches the built behaviour; see §7's coverage table.
   also address or conspicuously omit the hobby/interest criterion).
 - **Depends on:** None.
 
-### Task 18: Station 4 incident-report tie-in (real exam page and practice exam)
+### Task 18: Station 4 incident-report tie-in (real exam page and practice exam) [x] (human review: accepted)
+
+**Execution note (2026-09-19):** per user feedback, the practice
+exam's rubric gained a 5th criterion — "Structures the answer as an
+incident report" — rebalanced to 4/4/4/4/4=20 (from 5/5/5/5=20), with
+the HD/D/C band descriptions updated to reference it.
 
 - **Description:** Make Station 4's format explicitly mirror Week 8's
   incident-report structure.

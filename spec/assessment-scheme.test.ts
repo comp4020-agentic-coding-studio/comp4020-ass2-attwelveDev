@@ -517,6 +517,10 @@ describe("final exam", () => {
     expect(html).toMatch(/plays out in front of you/i);
   });
 
+  it("ties Station 4's format to Week 8's incident-report structure", () => {
+    expect(html).toMatch(/incident[\s-]report/i);
+  });
+
   it("links to the archived practice paper without duplicating its content", () => {
     expect(html).toMatch(/href="[^"]*\/assessments\/final-exam\/practice-exam\/"/);
     expect(html).not.toMatch(/Model solution/);

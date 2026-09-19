@@ -258,6 +258,11 @@ describe("station 4: reading the room", () => {
     expect(section).toMatch(/\bN\b/);
     expect(section).toMatch(/out of 20/);
   });
+
+  it("names the incident-report structure from Week 8", () => {
+    const section = html.slice(html.indexOf("<h2>Station 4"), html.indexOf("<h2>Station 5"));
+    expect(section).toMatch(/incident report/i);
+  });
 });
 
 describe("station 5: daily survival", () => {
