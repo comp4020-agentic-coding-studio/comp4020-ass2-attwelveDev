@@ -94,6 +94,27 @@ An official exam answer booklet is issued for your written answers.
 
 Breaking any of the above is academic misconduct.
 
+## How each band reads
+
+Each station is marked on its own rubric against the weights above.
+Read together, the five stations describe one overall band:
+
+- **HD** — every station is completed with the target skill actively
+  demonstrated, not just attempted, and the two stations most reliant
+  on live judgement (Small Talk, Reading the Room) hold up under real
+  time pressure.
+- **D** — every station is completed and the target skill is
+  demonstrated in most of them; one station falls back to a lower band
+  under time pressure.
+- **C** — every station is attempted, but two or more stations show
+  only partial evidence of the target skill.
+- **P** — most stations are attempted, but coverage is thin enough
+  that the session reads as five separate near-misses rather than five
+  demonstrated skills.
+- **N** — one or more stations are not attempted or fail on their own
+  stated terms (the meal isn't edible, the conversation stalls before
+  the ten-minute mark).
+
 ## Practice paper
 
 An archived past paper from the Semester 1, 2026 sitting of this exam is

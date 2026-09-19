@@ -818,7 +818,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   consistency with A1's and A3's tables.
 - **Depends on:** None.
 
-### Task 11: Final Exam grade bands (real page)
+### Task 11: Final Exam grade bands (real page) [x] (human review: accepted)
 
 - **Description:** Add a holistic HD/D/C/P/N table to `final-exam.md`,
   distinct from its existing per-station weighted criteria.

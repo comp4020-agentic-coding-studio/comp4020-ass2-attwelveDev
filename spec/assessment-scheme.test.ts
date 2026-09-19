@@ -465,4 +465,11 @@ describe("final exam", () => {
   it("names the practice paper's sitting explicitly as Semester 1, 2026", () => {
     expect(html).toMatch(/Semester 1, 2026/);
   });
+
+  it("publishes five overall band descriptors, distinct from the per-station weights", () => {
+    for (const band of ["HD", "D", "C", "P", "N"]) {
+      expect(html, `missing band ${band}`).toMatch(new RegExp(`\\b${band}\\b`));
+    }
+    expect(html).toMatch(/How each band reads/i);
+  });
 });
