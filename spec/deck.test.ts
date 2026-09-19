@@ -95,4 +95,12 @@ describe("deck — authoring conventions", () => {
   it.each(deckFiles)("$name gives its signposting its own slide", ({ name, source }) => {
     expect(source, `${name} has no "What's ahead" slide`).toMatch(/^## What's ahead$/m);
   });
+
+  it("week 6's deck tells students their reflection isn't due during the teaching break", () => {
+    const week06 = deckFiles.find((file) => file.name === "week-06.deck.mdx");
+    expect(week06, "week-06.deck.mdx not found").toBeTruthy();
+    const slideMatch = week06?.source.match(/^## This week's reflection$([\s\S]*?)(?=^---$)/m);
+    expect(slideMatch, "week-06.deck.mdx has no reflection slide body").toBeTruthy();
+    expect(slideMatch?.[1]).toMatch(/break/i);
+  });
 });
