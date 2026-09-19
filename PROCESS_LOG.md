@@ -550,3 +550,125 @@ documentation-only change.
 section in `spec/README.md`.
 
 **Commit:** [`32949a6`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/32949a6766ca0250a3bfd6c248c1fbcc918ff9e6)
+
+## 2026-09-19 — A universal coverage rule that failed on the plan's own data
+
+**Obvious approach:** Implement the assessment-overhaul plan's coverage
+test exactly as specified — for every assessment, assert every
+`contentScope.weeks` value is less than or equal to that assessment's own
+`week` field, with no exceptions.
+
+**What I decided instead, and why:** Weekly Reflections has `week: 1` but
+a `contentScope.weeks` spanning 1 through 12 — both values the plan's own
+Task 1 specifies — so the universal rule fails immediately, not on a bug
+but on a false premise. Reading `src/lib/entry-order.ts`'s
+`sortedAssessments()` showed `week` is used only as an `Array.sort`
+comparator across all five assessments; it carries no "latest week
+examined" meaning anywhere in the codebase. Rather than silently loosen
+the rule for every assessment, or guess at a fix, I raised the
+contradiction to the user before writing the test and exempted only
+Weekly Reflections, with a comment explaining why.
+
+**How I knew it was right:** the plan's own out-of-scope section already
+described Weekly Reflections as "already correctly scoped at weeks
+1–12," which corroborated the exemption rather than contradicted it, and
+the other four assessments' data all satisfy the rule without
+exception, so nothing else needed loosening.
+
+**Landed in the harness as:** a per-assessment exemption with an inline
+comment in `spec/assessment-scheme.test.ts`'s "never examines content
+from a week later than its own" test, rather than a blanket rule or a
+silently weakened assertion.
+
+**Commit:** [`82f0c88`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/82f0c886e4918125aec600db38309715e6d783de)
+
+## 2026-09-19 — A symmetrised relation graph, invisible from the frontmatter alone
+
+**Obvious approach:** Trust that setting an assessment's own `related:`
+frontmatter array fully determines what appears in its rendered "Related"
+list, and write the exact-match coverage test purely against that array.
+
+**What I decided instead, and why:** Building and inspecting
+`dist/api/index.json` before finalising the test showed the related
+graph is symmetrised by `astro-course-university`'s `symmetriseRelated`
+— any other page's own declared `related:` link creates a backlink edge
+on this page too, regardless of what this page itself declares. This
+surfaced twice: week-08's lecture linked to Assignment 2, and separately
+week-04's linked to Assignment 1, both incidental due-date mentions in
+their Conclusion sections, not content-scope links, each landing outside
+the assessment's real content scope once the exact-match rule existed.
+In both cases I removed the one incidental edge from the lecture's own
+`related:` array rather than loosen the assessment's exact-match rule.
+
+**How I knew it was right:** verified by rebuilding after each fix and
+reading `dist/api/index.json`'s `related` array directly, confirming it
+matched `contentScope.weeks` exactly — not by trusting the frontmatter
+edit alone — and confirmed with the user before removing either edge,
+since it meant editing a file outside the task's stated scope.
+
+**Landed in the harness as:** Task 2's "links related to exactly the
+lectures its content scope names" test is a generic, symmetrised-graph-
+aware check across all five assessments — once it existed, it caught
+the second recurrence (week-04/A1) automatically, without needing a new
+per-instance check.
+
+**Commit:** [`82f0c88`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/82f0c886e4918125aec600db38309715e6d783de) (week-08/A2), [`5aa72cb`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/5aa72cb3c1ecbabf9ce22ed41ff27d493c212432) (week-04/A1)
+
+## 2026-09-19 — A Human-review gate catching a UX-affordance bug no automated check could see
+
+**Obvious approach:** Ship the Learning Outcomes specsheet row as
+originally planned — a compact "LO 1–4, 7–9" range display with only the
+range endpoints as clickable links — since it passed typecheck, build,
+and every automated test on the first attempt.
+
+**What I decided instead, and why:** The user's Human review caught that
+collapsing to a range visually implies the in-between numbers (2, 3 in
+"1–4") are clickable when they aren't — a real design defect no
+assertion could catch, since the tests only checked that some range or
+link existed, not what a viewer would infer from it. Rather than defend
+the shipped version, I iterated through five rounds with the user
+(enumerate+tooltip → `<abbr>` → link+tooltip → styled to read
+hover-first) until the affordance actually matched the interaction.
+
+**How I knew it was right:** each round was rebuilt and re-approved by
+the user explicitly against the live page at both viewports, not assumed
+to carry forward from the previous round's approval.
+
+**Landed in the harness as:** the redesign made `toOutcomeRanges` (added
+earlier the same session with its own passing unit test) genuinely
+unused. Grepped for callers, confirmed zero remained, then deleted the
+helper and its test rather than leaving unreferenced code behind, per
+`CLAUDE.md`'s "if you are certain something is unused, you can delete it
+completely."
+
+**Commit:** [`0dc85ca`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/0dc85ca92a02602e309de96257dfc65070301fc7)
+
+## 2026-09-19 — A contradiction between two of the user's own new requirements, caught before writing any code
+
+**Obvious approach:** Implement both new A3 requests literally as given —
+move the interview to "anytime in week 13," and separately extend the
+"must not clash" rule to cover the hangout, the interview, and the date.
+
+**What I decided instead, and why:** If the interview moves to week 13
+while the hangout and the date stay within the plan's own week (week
+12), the three can never actually occupy overlapping time — they're in
+different weeks. Implementing both requests as literally stated would
+have produced a "must not clash" rule that could never fire against real
+data. Rather than pick one requirement over the other or implement
+something structurally incoherent, I asked directly before touching the
+file: does the interview really move to week 13 (decoupling it from the
+clash rule entirely), or should it stay within the plan's own week
+(keeping the clash rule meaningful)?
+
+**How I knew it was right:** the user's own answer resolved the
+contradiction directly — interview stays within the plan's own week — 
+which is exactly what lets the flexible-timing request and the
+triple-clash rule hold at the same time without one silently defeating
+the other.
+
+**Landed in the harness as:** `spec/assessment-scheme.test.ts`'s "warns
+against clashing the hangout, the interview, and the date" test is
+testing a rule that is actually reachable in the finished content, not a
+scheduling hazard that could never occur given the other requirement.
+
+**Commit:** [`b1a2cd1`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/b1a2cd1a47b178948baa6ddfee978e6d5bd23590)
