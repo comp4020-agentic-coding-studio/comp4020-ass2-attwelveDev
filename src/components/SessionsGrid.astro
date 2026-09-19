@@ -1,6 +1,5 @@
 ---
 import { withBase } from "astro-theme-university/url";
-import TopicChips from "./TopicChips.astro";
 import { formatCourseDate } from "../lib/dates";
 import { sortedSessions } from "../lib/entry-order";
 
@@ -14,7 +13,7 @@ const visible = await sortedSessions();
         <th scope="col">Week</th>
         <th scope="col">Date</th>
         <th scope="col">Title</th>
-        <th scope="col">Topics</th>
+        <th scope="col">Description</th>
       </tr>
     </thead>
     <tbody>
@@ -26,9 +25,7 @@ const visible = await sortedSessions();
             <td>
               <a href={withBase(`/sessions/${session.id}/`)}>{session.data.title}</a>
             </td>
-            <td>
-              <TopicChips topics={session.data.spec} />
-            </td>
+            <td>{session.data.description}</td>
           </tr>
         ))
       }

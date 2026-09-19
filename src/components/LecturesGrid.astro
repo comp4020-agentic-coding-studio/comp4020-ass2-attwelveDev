@@ -1,10 +1,8 @@
 ---
 import Icon from "astro-theme-university/components/Icon.astro";
 import { withBase } from "astro-theme-university/url";
-import TopicChips from "./TopicChips.astro";
 import { formatCourseDate } from "../lib/dates";
 import { sortedLectures } from "../lib/entry-order";
-import { extractContentTopics } from "../lib/topics";
 
 const visible = await sortedLectures();
 ---
@@ -16,7 +14,7 @@ const visible = await sortedLectures();
         <th scope="col">Week</th>
         <th scope="col">Date</th>
         <th scope="col">Title</th>
-        <th scope="col">Topics</th>
+        <th scope="col">Description</th>
         <th scope="col">Slides</th>
       </tr>
     </thead>
@@ -29,9 +27,7 @@ const visible = await sortedLectures();
             <td>
               <a href={withBase(`/lectures/${lecture.id}/`)}>{lecture.data.title}</a>
             </td>
-            <td>
-              <TopicChips topics={extractContentTopics(lecture.body ?? "")} />
-            </td>
+            <td>{lecture.data.description}</td>
             <td>
               {lecture.data.slides && (
                 <a

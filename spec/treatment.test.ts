@@ -275,34 +275,33 @@ describe("treatment — slides link", () => {
   });
 });
 
-describe("treatment — topics", () => {
-  it("gives the lectures table a Topics column", () => {
+describe("treatment — descriptions", () => {
+  it("gives the lectures table a Description column", () => {
     const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
     const thead = html.match(/<thead[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? "";
-    expect(thead).toContain("Topics");
+    expect(thead).toContain("Description");
   });
 
-  it("shows one topic chip per Body key point", () => {
+  it("shows each lecture's own description in its row", () => {
     const html = readFileSync(resolve("dist/lectures/index.html"), "utf8");
     const week04Row = findRowByWeek(tbodyRows(html), 4);
     expect(week04Row, "no row found for week 4").toBeDefined();
-    const chips = [...(week04Row ?? "").matchAll(/<li class="course-topic">/g)];
-    expect(chips.length, "week 4 has 5 Body key points").toBe(5);
+    // week-04's lecture description, confirmed in src/content/lectures/week-04.mdx.
+    expect(week04Row).toContain("the plate-level version of nutrition");
   });
 
-  it("gives the Labs table a Topics column", () => {
+  it("gives the Labs table a Description column", () => {
     const html = readFileSync(resolve("dist/sessions/index.html"), "utf8");
     const thead = html.match(/<thead[^>]*>([\s\S]*?)<\/thead>/)?.[1] ?? "";
-    expect(thead).toContain("Topics");
+    expect(thead).toContain("Description");
   });
 
-  it("shows one topic chip per spec item for a Lab", () => {
+  it("shows each session's own description in its row", () => {
     const html = readFileSync(resolve("dist/sessions/index.html"), "utf8");
     const week01Row = findRowByWeek(tbodyRows(html), 1);
     expect(week01Row, "no row found for week 1").toBeDefined();
-    // week-01's session has exactly 2 spec items (confirmed in src/content/sessions/week-01.md).
-    const chips = [...(week01Row ?? "").matchAll(/<li class="course-topic">/g)];
-    expect(chips.length).toBe(2);
+    // week-01's session description, confirmed in src/content/sessions/week-01.md.
+    expect(week01Row).toContain("The first Lab");
   });
 
   it("gives the lectures table a Slides column, every week now that every week has a deck", () => {
