@@ -164,23 +164,33 @@ const { previous, next, currentLabel } = Astro.props;
       display: none;
     }
 
-    /* Narrow viewports can't fit "Week N" at its natural width, the
-       side's own guaranteed floor (below), and the center label's own
-       permanent 50% reservation all at once — so "Week N" collapses
-       once the header is stuck and the center label actually needs
-       that room, and the side's floor relaxes with it (below).
-       A prior attempt sized "Week N" down permanently instead, to avoid
-       any resize at all — but reserving that fixed width at all times,
-       on top of the center label's own *permanent* 50% (needed for the
-       desktop subtitle-wrap fix — see .week-nav-current), left far less
-       than 50% actually available once both were honored together, so
-       the center label wrapped into an unreadably cramped multi-line
-       stack. The center label needs the room back more than "Week N"
-       needs to avoid an instant, non-animated snap. */
-    .week-nav-title {
-      max-width: 5rem;
+    /* On mobile the center label is always in the DOM (only opacity
+       toggles), so if it were allowed to wrap it would occupy however
+       many lines its *current* available width forces — and that width
+       shrinks whenever the side "Week N" labels are showing (below).
+       That made the whole footer resize across the scroll boundary even
+       though the center label is invisible half the time. Pinning it to
+       one line with an ellipsis makes its box height constant regardless
+       of how much width the sides are claiming, which is what actually
+       fixes the footer's height. */
+    .week-nav-current {
       overflow: hidden;
       white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* Now that the center label can no longer be pushed into extra
+       wrapped lines by a narrower box (above), "Week N" is free to keep
+       enough width to show labels like "Assignment 2" in full instead of
+       being clipped mid-word — the old 5rem budget was sized for short
+       "Week N" labels and truncated anything longer. Ellipsis is still
+       here as a fallback for the rare longer title ("Weekly
+       Reflections") that doesn't fit even this wider budget. */
+    .week-nav-title {
+      max-width: 8rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       /* Only opacity is transitioned — max-width itself still snaps
          instantly (see the comment above), since animating it is what
          caused the earlier reflow jank.
@@ -207,34 +217,31 @@ const { previous, next, currentLabel } = Astro.props;
     }
 
     /* Guarantees each side its full icon + title width while "Week N" is
-       showing (at rest — the center label is invisible then, so there's
-       no competing demand yet), matching the icon/title's own natural
-       requirement, not an arbitrary round number. Relaxes to 0 the
-       moment "Week N" collapses, since the icon (flex-shrink: 0, above)
-       needs no floor of its own to stay full size, and the freed room
-       is exactly what the center label needs to avoid the cramped wrap
-       above. Because the icon sits at the row's own outer edge (first
-       child for the previous link, last for the next, already pinned
-       there by .week-nav-inner's space-between) rather than the inner
-       edge next to the center label, its on-screen position is the
-       same before and after this — only the *boundary* between this
-       side and the center label moves. */
+       showing, matching the icon/title's own natural requirement (8rem
+       title budget + icon + gap), not an arbitrary round number. Relaxes
+       to 0 the moment "Week N" collapses, since the icon (flex-shrink: 0,
+       above) needs no floor of its own to stay full size. Because the
+       icon sits at the row's own outer edge (first child for the
+       previous link, last for the next, already pinned there by
+       .week-nav-inner's space-between) rather than the inner edge next
+       to the center label, its on-screen position is the same before and
+       after this — only the *boundary* between this side and the center
+       label moves. */
     .week-nav-side {
-      min-width: 6.5rem;
+      min-width: 9.5rem;
       /* Delayed 200ms, same as .week-nav-title's own reappearance and
-         for the same reason: restoring this floor reclaims room from
-         the center label's box, and if that happens the instant
-         scrolling-up crosses the boundary — before the center label
-         has actually finished its own 200ms fade-out — the center
-         label's still-*visible* text gets its available width yanked
-         out from under it mid-fade (its wrap can visibly reflow while
-         still on screen, not merely while invisible like "Week N"'s own
-         resize is). This is mobile-only (this whole block lives under
-         the narrow-viewport query) — there's no equivalent min-width
-         tug-of-war at wide viewports, since nothing there needs the
-         center label's room back. Restoring only after the center
-         label has had its full 200ms to disappear removes the tug
-         entirely. */
+         for the same reason: restoring this floor reclaims room from the
+         center label's box, and if that happens the instant scrolling-up
+         crosses the boundary — before the center label has actually
+         finished its own 200ms fade-out — the center label's still-
+         *visible* text gets its ellipsis truncation point yanked inward
+         mid-fade (visibly re-truncating while still on screen, not
+         merely while invisible like "Week N"'s own resize is). This is
+         mobile-only (this whole block lives under the narrow-viewport
+         query) — there's no equivalent min-width tug-of-war at wide
+         viewports, since nothing there needs the center label's room
+         back. Restoring only after the center label has had its full
+         200ms to disappear removes the tug entirely. */
       transition: min-width 0s linear 200ms;
     }
 
