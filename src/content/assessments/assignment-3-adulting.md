@@ -25,13 +25,13 @@ marking:
     - name: "Sleep schedule: viability and a stated fallback"
       weight: 10
     - name: "Exercise: frequency and specificity"
-      weight: 8
+      weight: 6
     - name: "Laundry: frequency and colour separation"
       weight: 8
     - name: "The date: activity selection, booking, timing, attire"
       weight: 8
     - name: Grocery logistics
-      weight: 6
+      weight: 8
     - name: "The interview: correspondence, preparation, attire, transit"
       weight: 6
     - name: Cleaning schedule

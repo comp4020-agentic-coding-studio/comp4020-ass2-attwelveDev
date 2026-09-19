@@ -933,7 +933,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   eleven named plan components" test unaffected.
 - **Depends on:** None.
 
-### Task 15: A3 reweight and the Week 10 lecture percentage fix
+### Task 15: A3 reweight and the Week 10 lecture percentage fix [x]
 
 - **Description:** Swap Grocery logistics/Exercise weights and correct the
   now-doubly-relevant Week 10 lecture bug.

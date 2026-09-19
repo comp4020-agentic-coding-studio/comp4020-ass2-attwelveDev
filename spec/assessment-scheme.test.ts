@@ -389,6 +389,24 @@ describe("assignment 3 adulting", () => {
     expect(html).toMatch(/paper/i);
     expect(html).toMatch(/not the assessment submission|separate from the (?:assessment )?submission/i);
   });
+
+  it("weighs grocery logistics above exercise, reflecting its complexity", () => {
+    const a3 = assessments.find((n) => n.id === "assessments/assignment-3-adulting");
+    const marking = a3?.meta?.marking as WeightedMarking;
+    const grocery = marking.criteria.find((c) => c.name === "Grocery logistics");
+    const exercise = marking.criteria.find((c) => /^Exercise/.test(c.name));
+    expect(grocery?.weight).toBe(8);
+    expect(exercise?.weight).toBe(6);
+  });
+});
+
+describe("week 10 lecture", () => {
+  it("states A3's real Budget and Grocery logistics weights", () => {
+    const html = readFileSync(resolve("dist/lectures/week-10/index.html"), "utf8");
+    expect(html).toMatch(/Budget \(10%\)/);
+    expect(html).toMatch(/Grocery logistics \(8%\)/);
+    expect(html).not.toMatch(/Budget \(12%\)/);
+  });
 });
 
 describe("final exam", () => {
