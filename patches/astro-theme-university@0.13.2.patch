@@ -1,19 +1,27 @@
 diff --git a/components/SearchDialog.astro b/components/SearchDialog.astro
-index 793f6f97b2b72894ebc404be77397166ea67207f..0423e3147c09f9c74a707c43515ed5eac0069ded 100644
+index 793f6f97b2b72894ebc404be77397166ea67207f..2e94a3df151f390cff71b00f873afdcd6ff65992 100644
 --- a/components/SearchDialog.astro
 +++ b/components/SearchDialog.astro
-@@ -38,7 +38,9 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+@@ -1,4 +1,6 @@
+ ---
++import Icon from "./Icon.astro";
++
+ export interface Props {
+   /** Site base path used to load the generated Pagefind index. */
+   basePath?: string;
+@@ -38,7 +40,10 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
          autocomplete="off"
          data-at-search-input
        />
 -      <kbd class="at-search-kbd">Esc</kbd>
 +      <button type="button" class="at-search-kbd" aria-label="Close search" data-at-search-close>
 +        Esc
++        <Icon name="xmark" size={16} />
 +      </button>
      </div>
      <ul
        class="at-search-results"
-@@ -74,7 +76,8 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+@@ -74,7 +79,8 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
      const input = dialog.querySelector<HTMLInputElement>("[data-at-search-input]");
      const results = dialog.querySelector<HTMLUListElement>("[data-at-search-results]");
      const status = dialog.querySelector<HTMLElement>("[data-at-search-status]");
@@ -23,7 +31,7 @@ index 793f6f97b2b72894ebc404be77397166ea67207f..0423e3147c09f9c74a707c43515ed5ea
  
      const base = dialog.dataset.pagefindBase ?? "/";
      let pagefind: PagefindApi | null = null;
-@@ -187,6 +190,15 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+@@ -187,6 +193,15 @@ const pagefindBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
        requestAnimationFrame(() => input.focus());
      });
      dialog.addEventListener("close", reset);
@@ -40,24 +48,28 @@ index 793f6f97b2b72894ebc404be77397166ea67207f..0423e3147c09f9c74a707c43515ed5ea
        clearTimeout(debounceTimer);
        debounceTimer = setTimeout(() => void search(input.value), 250);
 diff --git a/styles/components.css b/styles/components.css
-index 837856c4744d275e98bbfb62c9ed88b1e987773c..e8136baa1ee6906893449bef8ecf47d3bcbe8b66 100644
+index 837856c4744d275e98bbfb62c9ed88b1e987773c..85f7dbaae511479198507f3bddd0eac5527c8b76 100644
 --- a/styles/components.css
 +++ b/styles/components.css
-@@ -953,7 +953,13 @@
+@@ -953,7 +953,17 @@
      color: var(--at-text-muted);
    }
  
 +  /* Doubles as the dialog's dismiss control, so it's a <button> rather
 +     than a bare <kbd> — background/appearance/cursor reset the browser's
 +     own button chrome back to how the plain kbd used to look, with a
-+     hover/focus state added since it's interactive now. */
++     hover/focus state added since it's interactive now, and flex/gap to
++     line the "Esc" text up with its new close icon. */
    .at-search-kbd {
++    display: inline-flex;
++    align-items: center;
++    gap: var(--at-spacing-xs);
 +    appearance: none;
 +    background: transparent;
      font-family: var(--at-font-mono);
      font-size: var(--at-font-size-xs);
      padding: var(--at-spacing-xs) var(--at-spacing-sm);
-@@ -961,6 +967,13 @@
+@@ -961,6 +971,13 @@
      border-radius: var(--at-border-radius);
      color: var(--at-text-muted);
      line-height: 1;
