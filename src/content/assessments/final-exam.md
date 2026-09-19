@@ -51,6 +51,15 @@ per-station cutoff. The exception is Station 3, where the examiner
 enforces the ten-minute mark directly, since no examiner can spend
 unlimited time with one candidate.
 
+The exam doesn't examine every week's content. Weeks 5, 6, and 9 are
+left out because their evidence is inherently extended-duration or
+self-reported — 15 minutes outdoors, a week of device discipline, an
+opening message sent into the world — and none of that compresses into
+a ten-minute station without becoming fake. The weeks that are kept
+(1–4, 7, 8, 10–12) are kept for the opposite reason: each one reduces
+to a live, observable action worth re-checking under real-time
+pressure, regardless of whether it was already assessed elsewhere.
+
 1. **Station 1: Hygiene and Health (suggested 10 minutes).** A rapid
    check of your hygiene and sleep schedules against what you actually
    ran this semester.

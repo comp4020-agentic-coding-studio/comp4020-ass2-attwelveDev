@@ -997,7 +997,7 @@ wording no longer matches the built behaviour; see §7's coverage table.
   one commit per the spec's handoff note — the reweight and the lecture
   fix are one unit).
 
-### Task 16: Final Exam scope rationale
+### Task 16: Final Exam scope rationale [x] (human review: accepted)
 
 - **Description:** Add the live-checkable-vs-extended-duration explanation
   for the exam's partial scope.
