@@ -39,178 +39,6 @@ brief's own named failure mode is "twelve weeks that repeat one another", and a
 rule with exceptions is exactly how twelve weeks drift into twelve differently
 shaped pages.
 
-## 2026-09-17 — A prose rule ("introduce before you reference") became a mechanical check, not just a CLAUDE.md line
-
-**Obvious approach:** Add the rule to `CLAUDE.md` — "a case study must be
-introduced in a lecture before a lab or later week references it" — and rely on
-whoever writes each week's content to remember to check the earlier weeks by
-hand.
-
-**What I decided instead, and why:** The same failure mode as the weekly-
-structure rule: a prose-only rule survives exactly as long as no one is tired
-or in a hurry. Labs and assessments in this course already named case studies
-(Jordan's Week, the 600-word message, "reading the room") that no lecture had
-actually taught first — the violation the rule exists to prevent had already
-happened, repeatedly, before the rule was even written. So instead of trusting
-memory, `caseStudies` became a typed frontmatter field on both `lectures` and
-`sessions` (`src/content.config.ts`), and `spec/case-study-provenance.test.ts`
-asserts every lab's tagged case study appears on that week's lecture first —
-`pnpm test` now fails the build if a future week violates the rule, rather
-than relying on a future re-read of `CLAUDE.md`.
-
-**How I knew it was right:** Before writing the real check, I set a temporary
-`caseStudies: ["red-check"]` on a lab with no matching lecture tag and
-confirmed the test failed with the exact message naming the mismatch — then
-removed it. That's the difference between "I wrote a test" and "I wrote a
-test that actually catches the bug it's for."
-
-**Landed in the harness as:** `src/content.config.ts`'s `caseStudies` field,
-`spec/case-study-provenance.test.ts`.
-
-**Commit:** [`00930a1`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/00930a1), [`482cc21`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/482cc21)
-
-## 2026-09-17 — A silent data-loss bug in citation deduplication, found by asking "what happens to X" rather than by a failing test
-
-**Obvious approach:** Ship the citation-note styling fix (Task 22) and move on
-to the references/lectures cross-linking (Task 24) as two independent,
-already-scoped tasks — `pnpm check` was green after each, and nothing in the
-plan flagged a data problem in `references/index.astro`.
-
-**What I decided instead, and why:** When I asked what should happen to a
-citation referenced by more than one lecture, checking the actual rendered
-output showed the references page displayed "Callback to Week 1." for Lally
-et al. (2010) — silently dropping the real "Average 66 days..." note. The
-existing dedup (`new Map(citations.map(c => [c.text, c])).values()`) kept
-whichever lecture's citation object was processed *last*, so a later week's
-throwaway callback note clobbered the original substantive one, with no error
-anywhere: `pnpm check` was green the whole time because nothing asserted what
-the note's *content* should be, only that a `.course-citation-note` span
-existed. Fixing it required restructuring the dedup to carry every
-contributing lecture's own note through (not picking one "winner"), which is
-also exactly what Task 24's back-linking needed anyway.
-
-**How I knew it was right:** Added `spec/references-page.test.ts` assertions
-that the Lally citation's rendered `<li>` contains *both* "66 days" and
-"Callback to Week 1" — a test that would have caught the original bug, and
-now prevents the dedup logic from regressing to last-write-wins again.
-
-**Landed in the harness as:** `src/pages/references/index.astro`'s
-`byText` dedup (keeps every contributing lecture's `{note, lectureId}`, not
-one), `spec/references-page.test.ts`'s "shows every contributing lecture's
-own note" test.
-
-**Commit:** [`9c56911`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/9c56911)
-
-## 2026-09-17 — "How, not just what/why" was under-scoped in the plan itself, not just in the content
-
-**Obvious approach:** Follow the plan's Task 9 exactly as written — add one
-procedural "how" per week, to the single gap each week's task named (Week 2's
-skincare, Week 5's attention-restoration procedure, and so on), leaving
-Weeks 1/4/7/10/12 untouched as "already adequate."
-
-**What I decided instead, and why:** After Week 2's human review, the
-reviewer pointed out that showering, deodorant, and haircuts were still bare
-definitions with no procedure — the plan's Task 9 had only fixed skincare,
-the one gap it happened to name, even though `CLAUDE.md`'s own standing rule
-already said "a how for every concept it teaches," not "a how for one
-concept per week." The plan had quietly under-implemented its own rule. Since
-the rule already existed and was correctly worded, the fix wasn't a new rule
-— it was refusing to let a plan task's narrower phrasing override the
-standing rule it was supposed to satisfy. I updated the plan file in place to
-require full per-concept coverage going forward, then went back through
-every already-committed week auditing every Definitions entry, not just the
-one flagged gap.
-
-**How I knew it was right:** The same gap kept recurring even after the
-scope was declared "fixed" — Week 8's "Listening to someone" was defined with
-zero procedure and slipped through an entire review cycle before the
-reviewer caught it a second time. That repetition is what confirmed the
-narrow, one-gap-per-week reading was the actual bug, not a one-off miss — and
-it's why the fix is now recorded as a standing audit step (walk every
-Definitions entry, not just Body bullets) rather than trusted to memory
-again.
-
-**Landed in the harness as:** `plans/2026-09-17-lecture-consistency-pass.md`
-requirement 9, expanded in place; the corresponding rule in `CLAUDE.md` was
-already correct and needed no change — the bug was in the plan's narrower
-implementation of it, not the rule's own wording.
-
-**Commit:** [`27c4170`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/27c4170), [`6d58742`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/6d58742)
-
-## 2026-09-17 — A graded rubric asked for content the course never taught, and a load-bearing component had no weight at all
-
-**Obvious approach:** Do exactly what Task 21 asked — add "Cleaning schedule"
-and "Skincare" bullets to Assignment 3's "## The plan" section, since those
-were the two components the plan named as missing against the marking table,
-and move on.
-
-**What I decided instead, and why:** A full read of the marking table against
-"## The plan" during Phase 1 review showed the gap was four components, not
-two — "Hygiene routine" (14%, the single largest criterion) and "Sleep
-schedule" (10%) were also missing bullets. Separately, during human review,
-the reviewer caught two more real bugs the plan never named: "Daily routine"
-— the first, most load-bearing bullet in the whole plan — had no marking
-criterion at all, and the "Meal plan" criterion graded "nutritional
-coverage," content Week 4's lecture explicitly puts out of scope. Both are
-worse than a missing bullet: a rubric that grades content nobody taught, or
-that leaves the plan's foundational component unweighted, breaks the same
-introduce-before-reference principle the whole plan exists to fix — just in
-the assessment file instead of a lecture. I added a real "Daily routine"
-criterion rather than leaving it implicit, and reworded "nutritional
-coverage" to "food-group variety," grounded in what Week 2/4's Balanced meal
-definition and Week 10's cooking method actually taught.
-
-**How I knew it was right:** The weights had to keep summing to exactly 100
-— `spec/assessment-scheme.test.ts`'s "marks every item with weighted criteria
-summing to 100" test enforces this on every assessment already, so I couldn't
-just add a criterion without deciding where its weight came from. Redistributed
-2% from Budget into Daily routine per the reviewer's explicit direction (equal-
-highest weighting, not a new total), then let that existing test confirm the
-arithmetic rather than trusting my own addition.
-
-**Landed in the harness as:** `src/content/assessments/assignment-3-adulting.md`'s
-marking `criteria` array (13 criteria, still summing to 100) and "## The plan"
-(13 bullets matching them 1:1); verified by the pre-existing
-`spec/assessment-scheme.test.ts` weight-sum check plus updated component-count
-assertions in the same file and `spec/treatment.test.ts`.
-
-**Commit:** [`c8b5280`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/c8b5280)
-
-## 2026-09-17 — The same stale rule was duplicated into a component, one layer down from where the task said to look
-
-**Obvious approach:** Task 19 named exactly two files — `week-12.mdx` and
-`week-12.deck.mdx` — as the places describing the reflection drop rule that
-needed to change. Fix the prose in those two files, confirm `pnpm check` is
-green, call the task done.
-
-**What I decided instead, and why:** After the content fix, the reviewer
-pointed out the Week 12 lecture page still showed "(ungraded)" and Week 11
-still showed "(last graded)" next to the Reflection-due date — text that
-wasn't in either `.mdx`/`.deck.mdx` file I'd just edited. Rather than assume
-this was some other content file the task missed, I grepped the actual
-rendered `dist/` HTML for the literal strings and traced them to a hardcoded
-conditional in `src/components/WeekMeta.astro` (`week === 11 ? " (last
-graded)" : week === 12 ? " (ungraded)" : ""`) — a second, independent
-encoding of the same "week 12 is ungraded" fact the task was already fixing
-in prose. Deleted it rather than patch it to a new week number, since the
-new rule (all twelve prompts graded identically) means the note has no
-correct value to hold anymore.
-
-**How I knew it was right:** Grepping `dist/` for the exact rendered strings,
-not just re-reading source files, is what surfaced this — a source-only
-review would have missed a fact re-derived by a component at build time
-rather than typed by hand. Confirmed fixed by rebuilding and checking the
-same `dist/` output no longer contained either string.
-
-**Landed in the harness as:** removal of the stale `reflectionNote` logic
-from `src/components/WeekMeta.astro` — no new test was added here (a gap:
-nothing in `spec/` currently pins the Reflection-due row's exact text), which
-is why this moment is weaker than the others above and a candidate to skip
-for the final `PROCESS.md` cut unless space allows explaining the pattern
-(the same fact, encoded in more than one place) rather than just the fix.
-
-**Commit:** [`71d8450`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/71d8450)
-
 **How I knew it was right:** The contradiction was demonstrated against my own
 draft before I chose, not argued in the abstract. And the rule is no longer
 something an agent can quietly drift from: it is asserted over rendered HTML,
@@ -461,6 +289,178 @@ retires the open question the 2026-09-10 `4e0dcf5` entry left, using
 the evidence.
 
 **Commit:** [`9e9b814...b450bcf`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/compare/9e9b814...b450bcf)
+
+## 2026-09-17 — A prose rule ("introduce before you reference") became a mechanical check, not just a CLAUDE.md line
+
+**Obvious approach:** Add the rule to `CLAUDE.md` — "a case study must be
+introduced in a lecture before a lab or later week references it" — and rely on
+whoever writes each week's content to remember to check the earlier weeks by
+hand.
+
+**What I decided instead, and why:** The same failure mode as the weekly-
+structure rule: a prose-only rule survives exactly as long as no one is tired
+or in a hurry. Labs and assessments in this course already named case studies
+(Jordan's Week, the 600-word message, "reading the room") that no lecture had
+actually taught first — the violation the rule exists to prevent had already
+happened, repeatedly, before the rule was even written. So instead of trusting
+memory, `caseStudies` became a typed frontmatter field on both `lectures` and
+`sessions` (`src/content.config.ts`), and `spec/case-study-provenance.test.ts`
+asserts every lab's tagged case study appears on that week's lecture first —
+`pnpm test` now fails the build if a future week violates the rule, rather
+than relying on a future re-read of `CLAUDE.md`.
+
+**How I knew it was right:** Before writing the real check, I set a temporary
+`caseStudies: ["red-check"]` on a lab with no matching lecture tag and
+confirmed the test failed with the exact message naming the mismatch — then
+removed it. That's the difference between "I wrote a test" and "I wrote a
+test that actually catches the bug it's for."
+
+**Landed in the harness as:** `src/content.config.ts`'s `caseStudies` field,
+`spec/case-study-provenance.test.ts`.
+
+**Commit:** [`00930a1`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/00930a1), [`482cc21`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/482cc21)
+
+## 2026-09-17 — A silent data-loss bug in citation deduplication, found by asking "what happens to X" rather than by a failing test
+
+**Obvious approach:** Ship the citation-note styling fix (Task 22) and move on
+to the references/lectures cross-linking (Task 24) as two independent,
+already-scoped tasks — `pnpm check` was green after each, and nothing in the
+plan flagged a data problem in `references/index.astro`.
+
+**What I decided instead, and why:** When I asked what should happen to a
+citation referenced by more than one lecture, checking the actual rendered
+output showed the references page displayed "Callback to Week 1." for Lally
+et al. (2010) — silently dropping the real "Average 66 days..." note. The
+existing dedup (`new Map(citations.map(c => [c.text, c])).values()`) kept
+whichever lecture's citation object was processed *last*, so a later week's
+throwaway callback note clobbered the original substantive one, with no error
+anywhere: `pnpm check` was green the whole time because nothing asserted what
+the note's *content* should be, only that a `.course-citation-note` span
+existed. Fixing it required restructuring the dedup to carry every
+contributing lecture's own note through (not picking one "winner"), which is
+also exactly what Task 24's back-linking needed anyway.
+
+**How I knew it was right:** Added `spec/references-page.test.ts` assertions
+that the Lally citation's rendered `<li>` contains *both* "66 days" and
+"Callback to Week 1" — a test that would have caught the original bug, and
+now prevents the dedup logic from regressing to last-write-wins again.
+
+**Landed in the harness as:** `src/pages/references/index.astro`'s
+`byText` dedup (keeps every contributing lecture's `{note, lectureId}`, not
+one), `spec/references-page.test.ts`'s "shows every contributing lecture's
+own note" test.
+
+**Commit:** [`9c56911`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/9c56911)
+
+## 2026-09-17 — "How, not just what/why" was under-scoped in the plan itself, not just in the content
+
+**Obvious approach:** Follow the plan's Task 9 exactly as written — add one
+procedural "how" per week, to the single gap each week's task named (Week 2's
+skincare, Week 5's attention-restoration procedure, and so on), leaving
+Weeks 1/4/7/10/12 untouched as "already adequate."
+
+**What I decided instead, and why:** After Week 2's human review, the
+reviewer pointed out that showering, deodorant, and haircuts were still bare
+definitions with no procedure — the plan's Task 9 had only fixed skincare,
+the one gap it happened to name, even though `CLAUDE.md`'s own standing rule
+already said "a how for every concept it teaches," not "a how for one
+concept per week." The plan had quietly under-implemented its own rule. Since
+the rule already existed and was correctly worded, the fix wasn't a new rule
+— it was refusing to let a plan task's narrower phrasing override the
+standing rule it was supposed to satisfy. I updated the plan file in place to
+require full per-concept coverage going forward, then went back through
+every already-committed week auditing every Definitions entry, not just the
+one flagged gap.
+
+**How I knew it was right:** The same gap kept recurring even after the
+scope was declared "fixed" — Week 8's "Listening to someone" was defined with
+zero procedure and slipped through an entire review cycle before the
+reviewer caught it a second time. That repetition is what confirmed the
+narrow, one-gap-per-week reading was the actual bug, not a one-off miss — and
+it's why the fix is now recorded as a standing audit step (walk every
+Definitions entry, not just Body bullets) rather than trusted to memory
+again.
+
+**Landed in the harness as:** `plans/2026-09-17-lecture-consistency-pass.md`
+requirement 9, expanded in place; the corresponding rule in `CLAUDE.md` was
+already correct and needed no change — the bug was in the plan's narrower
+implementation of it, not the rule's own wording.
+
+**Commit:** [`27c4170`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/27c4170), [`6d58742`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/6d58742)
+
+## 2026-09-17 — A graded rubric asked for content the course never taught, and a load-bearing component had no weight at all
+
+**Obvious approach:** Do exactly what Task 21 asked — add "Cleaning schedule"
+and "Skincare" bullets to Assignment 3's "## The plan" section, since those
+were the two components the plan named as missing against the marking table,
+and move on.
+
+**What I decided instead, and why:** A full read of the marking table against
+"## The plan" during Phase 1 review showed the gap was four components, not
+two — "Hygiene routine" (14%, the single largest criterion) and "Sleep
+schedule" (10%) were also missing bullets. Separately, during human review,
+the reviewer caught two more real bugs the plan never named: "Daily routine"
+— the first, most load-bearing bullet in the whole plan — had no marking
+criterion at all, and the "Meal plan" criterion graded "nutritional
+coverage," content Week 4's lecture explicitly puts out of scope. Both are
+worse than a missing bullet: a rubric that grades content nobody taught, or
+that leaves the plan's foundational component unweighted, breaks the same
+introduce-before-reference principle the whole plan exists to fix — just in
+the assessment file instead of a lecture. I added a real "Daily routine"
+criterion rather than leaving it implicit, and reworded "nutritional
+coverage" to "food-group variety," grounded in what Week 2/4's Balanced meal
+definition and Week 10's cooking method actually taught.
+
+**How I knew it was right:** The weights had to keep summing to exactly 100
+— `spec/assessment-scheme.test.ts`'s "marks every item with weighted criteria
+summing to 100" test enforces this on every assessment already, so I couldn't
+just add a criterion without deciding where its weight came from. Redistributed
+2% from Budget into Daily routine per the reviewer's explicit direction (equal-
+highest weighting, not a new total), then let that existing test confirm the
+arithmetic rather than trusting my own addition.
+
+**Landed in the harness as:** `src/content/assessments/assignment-3-adulting.md`'s
+marking `criteria` array (13 criteria, still summing to 100) and "## The plan"
+(13 bullets matching them 1:1); verified by the pre-existing
+`spec/assessment-scheme.test.ts` weight-sum check plus updated component-count
+assertions in the same file and `spec/treatment.test.ts`.
+
+**Commit:** [`c8b5280`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/c8b5280)
+
+## 2026-09-17 — The same stale rule was duplicated into a component, one layer down from where the task said to look
+
+**Obvious approach:** Task 19 named exactly two files — `week-12.mdx` and
+`week-12.deck.mdx` — as the places describing the reflection drop rule that
+needed to change. Fix the prose in those two files, confirm `pnpm check` is
+green, call the task done.
+
+**What I decided instead, and why:** After the content fix, the reviewer
+pointed out the Week 12 lecture page still showed "(ungraded)" and Week 11
+still showed "(last graded)" next to the Reflection-due date — text that
+wasn't in either `.mdx`/`.deck.mdx` file I'd just edited. Rather than assume
+this was some other content file the task missed, I grepped the actual
+rendered `dist/` HTML for the literal strings and traced them to a hardcoded
+conditional in `src/components/WeekMeta.astro` (`week === 11 ? " (last
+graded)" : week === 12 ? " (ungraded)" : ""`) — a second, independent
+encoding of the same "week 12 is ungraded" fact the task was already fixing
+in prose. Deleted it rather than patch it to a new week number, since the
+new rule (all twelve prompts graded identically) means the note has no
+correct value to hold anymore.
+
+**How I knew it was right:** Grepping `dist/` for the exact rendered strings,
+not just re-reading source files, is what surfaced this — a source-only
+review would have missed a fact re-derived by a component at build time
+rather than typed by hand. Confirmed fixed by rebuilding and checking the
+same `dist/` output no longer contained either string.
+
+**Landed in the harness as:** removal of the stale `reflectionNote` logic
+from `src/components/WeekMeta.astro` — no new test was added here (a gap:
+nothing in `spec/` currently pins the Reflection-due row's exact text), which
+is why this moment is weaker than the others above and a candidate to skip
+for the final `PROCESS.md` cut unless space allows explaining the pattern
+(the same fact, encoded in more than one place) rather than just the fix.
+
+**Commit:** [`71d8450`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-attwelveDev/commit/71d8450)
 
 ## 2026-09-18 — A stated exam budget with nothing to check it against
 
