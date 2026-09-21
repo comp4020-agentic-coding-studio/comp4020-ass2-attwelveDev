@@ -195,16 +195,14 @@ describe("learning outcomes specsheet row", () => {
     );
   });
 
-  it("lists A3's non-contiguous outcomes individually, not collapsed into ranges", () => {
+  it("lists A3's outcomes individually, not collapsed into ranges", () => {
     const html = readFileSync(
       resolve("dist/assessments/assignment-3-adulting/index.html"),
       "utf8",
     );
-    for (const n of [1, 2, 3, 4, 7, 8, 9]) {
+    for (const n of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
       expect(html).toMatch(new RegExp(`href="[^"]*/#lo-${n}"`));
     }
-    expect(html).not.toMatch(/href="[^"]*\/#lo-5"/);
-    expect(html).not.toMatch(/href="[^"]*\/#lo-6"/);
   });
 });
 
